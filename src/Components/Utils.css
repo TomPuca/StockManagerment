@@ -1,0 +1,4 @@
+.historyhomeframe {
+  display: Flex;
+  flex-direction: column;
+}

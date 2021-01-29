@@ -1,0 +1,55 @@
+.item_border {
+  display: flex;
+  border: 1px solid lightgray;
+  align-items: center;
+  border-radius: 3px;
+}
+
+.date_frame {
+  text-align: center;
+  border-right: 1px solid lightgray;
+  padding: 6px;
+}
+
+.date_frame_day {
+  font-weight: bold;
+  font-size: x-large;
+}
+
+.date_frame_month {
+  font-size: larger;
+}
+
+.date_frame_year {
+  font-size: smaller;
+}
+
+.common_frame {
+  /*font-size: larger;*/
+  text-align: center;
+  padding: 6px;
+  border-right: 1px solid lightgray;
+}
+
+.common_frame_value {
+  font-size: larger;
+  padding: 6px;
+}
+
+.common_frame_end {
+  text-align: center;
+  padding: 6px;
+}
+
+.common_frame_gain {
+  width: 100px;
+  border-right: 1px solid lightgray;
+  text-align: center;
+  padding: 6px;
+}
+.common_frame_Gain {
+  width: 100px;
+  border-right: 1px solid lightgray;
+  text-align: center;
+  padding: 6px;
+}

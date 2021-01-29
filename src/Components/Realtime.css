@@ -1,0 +1,79 @@
+.time__loaddata {
+  font-size: small;
+  background: white;
+  text-align: right;
+  padding-right: 10px;
+  border-radius: 8px;
+  margin: 5px;
+}
+
+.stock__board {
+  display: flex;
+  /* background-color: #f1f2f5; */
+}
+
+.stockCard {
+  display: flex;
+  padding: 5px;
+  /* border: 1px solid black; */
+  height: 114px;
+  background-color: white;
+  /*border-radius: 10px;*/
+  border-bottom: 1px solid #eff2f5;
+  margin: 5px;
+}
+
+.StockCard__Header {
+  border: 1px solid black;
+  border-radius: 7px;
+  width: 70px;
+  text-align: right;
+  padding-right: 5px;
+}
+
+.stockCard__Buy {
+  border: 1px;
+  padding: 0px 15px;
+  width: 100px;
+  border-right: 1px solid #eff2f5;
+}
+
+.stockCard__Sell {
+  border: 1px;
+  padding: 0px 15px;
+  width: 100px;
+}
+
+.BuyAmount {
+  justify-content: space-between;
+  display: flex;
+  padding: 2px 0px;
+}
+
+.SellAmount {
+  justify-content: space-between;
+  display: flex;
+  padding: 2px 0px;
+}
+
+.jsonValue {
+  width: 322px;
+  padding: 15px;
+  /* flex:1; */
+  word-break: break-all;
+}
+.minusstock {
+  border: 1px solid black;
+  height: 10px;
+  width: 10px;
+  border-radius: 7px;
+  text-align: center;
+}
+
+.VNIndexContent {
+  display: flex;
+  padding-left: 5px;
+}
+.VnIndex {
+  padding-right: 10px;
+}

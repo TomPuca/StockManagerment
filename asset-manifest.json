@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/StockManagement/static/css/main.ca75aff5.chunk.css",
+    "main.css": "/StockManagement/static/css/main.bdfa7568.chunk.css",
     "main.js": "/StockManagement/static/js/main.f30a7540.chunk.js",
     "main.js.map": "/StockManagement/static/js/main.f30a7540.chunk.js.map",
     "runtime-main.js": "/StockManagement/static/js/runtime-main.43abbb66.js",
@@ -10,14 +10,14 @@
     "static/js/3.6f2e4ac4.chunk.js": "/StockManagement/static/js/3.6f2e4ac4.chunk.js",
     "static/js/3.6f2e4ac4.chunk.js.map": "/StockManagement/static/js/3.6f2e4ac4.chunk.js.map",
     "index.html": "/StockManagement/index.html",
-    "static/css/main.ca75aff5.chunk.css.map": "/StockManagement/static/css/main.ca75aff5.chunk.css.map",
+    "static/css/main.bdfa7568.chunk.css.map": "/StockManagement/static/css/main.bdfa7568.chunk.css.map",
     "static/js/2.8f760428.chunk.js.LICENSE.txt": "/StockManagement/static/js/2.8f760428.chunk.js.LICENSE.txt",
     "static/media/logo.6ce24c58.svg": "/StockManagement/static/media/logo.6ce24c58.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.43abbb66.js",
     "static/js/2.8f760428.chunk.js",
-    "static/css/main.ca75aff5.chunk.css",
+    "static/css/main.bdfa7568.chunk.css",
     "static/js/main.f30a7540.chunk.js"
   ]
 }

@@ -10,8 +10,11 @@
   border-radius: 3px;
   /* justify-content: center; */
   /* padding: 0px; */
-  height: 30px;
+  height: 30px !important;
   border: 1px solid lightgray;
+}
+.stockadd {
+  /*height: 30px !important;*/
 }
 
 .mack {
@@ -48,6 +51,7 @@
   width: 60px;
   text-align: right;
   border-right: 5px solid white;
+  padding-left: 2px;
 }
 
 .total {
@@ -91,4 +95,7 @@
   /* text-align: center; */
   margin-top: 15px;
   margin-left: 10px;
+}
+.sellbutton {
+  padding-left: 6px;
 }

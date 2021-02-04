@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import "./Realtime.css";
 import io from "socket.io-client";
 import { useStateValue } from "../StateProvider";
-import { strimstring } from "./Functions";
+import { strimstring, useInterval } from "./Functions";
+import VnIndexChart from "./VNIndexChart";
+
 //index link: https://bgapidatafeed.vps.com.vn/getlistindexdetail/10
 
 function Realtime() {
@@ -12,8 +14,9 @@ function Realtime() {
   const [VNIndex, setVNIndex] = useState([]);
   // const [WebSocketInitState, setWebSocketInitState] = useState(false);
   const [{ currentstockprice }, dispatch] = useStateValue();
-  var Stocklist = ["TCM", "HPG", "VGT", "GIL", "DXG"];
+  var Stocklist = ["TCM", "HPG", "VGT", "BID", "DXG"];
   const [InitStockItems, setInitStockItems] = useState(false);
+  const [IsConnected, setIsConnected] = useState(false);
   let vStockPs;
   let socket;
 
@@ -28,6 +31,7 @@ function Realtime() {
   useEffect(() => {
     // initstockitems();
     if (InitStockItems === true) {
+      // console.log(StockItems);
       initWebsocket();
       socketConnect();
     }
@@ -53,26 +57,9 @@ function Realtime() {
     getVNindex();
     console.log("index update", Date());
   }, 60000);
+
   //thiet lap vong lap lay du lieu
-  function useInterval(callback, delay) {
-    const savedCallback = useRef();
 
-    // Remember the latest function.
-    useEffect(() => {
-      savedCallback.current = callback;
-    }, [callback]);
-
-    // Set up the interval.
-    useEffect(() => {
-      function tick() {
-        savedCallback.current();
-      }
-      if (delay !== null) {
-        let id = setInterval(tick, delay);
-        return () => clearInterval(id);
-      }
-    }, [delay]);
-  }
   function getVNindex() {
     const request = require("request");
     const options = {
@@ -87,11 +74,13 @@ function Realtime() {
       let tempindex = { ...VNIndex };
       if (body !== undefined) {
         tempindex.idx = JSON.parse(body)[0].cIndex;
+        tempindex.idxopen = JSON.parse(body)[0].oIndex;
         tempindex.idxchg = JSON.parse(body)[0].ot.split("|")[0];
         tempindex.idxpct = JSON.parse(body)[0].ot.split("|")[1];
         // tempindex.ttrd = indexcontent.ttrd;
         tempindex.tval = JSON.parse(body)[0].ot.split("|")[2];
         tempindex.tvol = JSON.parse(body)[0].vol;
+        tempindex.status = body[0].status;
         setVNIndex(tempindex);
       }
     });
@@ -113,58 +102,58 @@ function Realtime() {
       // console.log(JSON.stringify(body));
     });
   }
-  const orderRows = (arr) =>
+
+  function ColorText(item1, item2) {
+    //{{ color: item.lastPrice < item.r ? "red" : item.lastPrice > item.r ? "blue" : item.lastPrice = item.c ? "#ff25ff" : item.lastPrice = item.f ? "#1eeeee" : "black", }}
+    if (parseFloat(item1) === item2.f) {
+      return "txt-gia-san";
+    } else if (parseFloat(item1) === item2.c) {
+      return "txt-gia-tran";
+    } else if (parseFloat(item1) === 0) {
+      return "txt-gia-tc";
+    } else if (parseFloat(item1) < item2.r) {
+      return "txt-gia-thap";
+    } else if (parseFloat(item1) > item2.r) {
+      return "txt-gia-cao";
+    } else {
+      return "txt-gia-tc";
+    }
+  }
+
+  const StockRows = (arr) =>
     arr &&
     arr.map((item, index) => (
       <div className="stockCard" key={index}>
-        <div
-          className="StockCard__Header"
-          // prettier-ignore
-          style={{ color: item.lastPrice < item.r ? "red" : item.lastPrice > item.r ? "blue" : "black", }}
-        >
+        {/*prettier-ignore*/}
+        <div className={ "stockCard__Header " +  ColorText(item.lastPrice, item) } id = {item.sym} >
           <div>{item.sym}</div>
-          <div>{item.ot}</div>
-          <div>{item.lastPrice}</div>
-          <div>{strimstring(item.lastVolume.toString())}</div>
-          <div>{item.changePc}%</div>
-          <div>{strimstring(item.lot.toString())}</div>
+          <div className="backgroundwhite" id = {item.sym + "-ot"} >{item.ot}</div>
+          <div className="backgroundwhite" id = {item.sym + "-lastPrice"}>{item.lastPrice}</div>
+          <div className="backgroundwhite" id = {item.sym + "-lastVolume"}>{strimstring(item.lastVolume.toString())}</div>
+          <div className="backgroundwhite" id = {item.sym + "-changePc"}>{item.changePc}%</div>
+          <div className="backgroundwhite" id = {item.sym + "-lot"}>{strimstring(item.lot.toString())}</div>
         </div>
-
         <div className="stockCard__Buy">
-          <div
-            className="BuyAmount"
-            // style={{
-            //   borderBottomWidth: 1,
-            //   borderBottomColor: "#A9A9A9",
-            //   borderBottomStyle: "solid",
-            // }}
-          >
+          <div className="BuyAmount">
             <div>Amount</div> <div>Price</div>
           </div>
-          <div className="BuyAmount">
-            <div>{strimstring(item.g1.split("|")[1])}</div>
-            {/*prettier-ignore*/}
-            <div style={{ color: (item.g1.split("|")[0]) < (item.r) ? "red" : (item.g1.split("|")[0]) > (item.r) ? "blue" : "black", }}>{item.g1.split("|")[0]}</div>
+          {/*prettier-ignore*/}
+          <div className={"BuyAmount " + ColorText(item.g1.split("|")[0], item)} id = {item.sym + "-g1"}>
+            <div className="backgroundwhite" id = {item.sym + "-g1-vol"}>{strimstring(item.g1.split("|")[1])}</div>
+            <div className="backgroundwhite" id = {item.sym + "-g1-price"}>{item.g1.split("|")[0]}</div>
           </div>
-          <div className="BuyAmount">
-            <div>{strimstring(item.g2.split("|")[1])}</div>
-            {/*prettier-ignore*/}
-            <div style={{ color: parseFloat(item.g2.split("|")[0]) < parseFloat(item.r) ? "red" : parseFloat(item.g2.split("|")[0]) > parseFloat(item.r) ? "blue" : "black", }}>{item.g2.split("|")[0]}</div>
+          {/*prettier-ignore*/}
+          <div className={"BuyAmount " + ColorText(item.g2.split("|")[0], item)} id = {item.sym + "-g2"}>
+            <div className="backgroundwhite " id = {item.sym + "-g2-vol"}>{strimstring(item.g2.split("|")[1])}</div>
+            <div className="backgroundwhite " id = {item.sym + "-g2-price"}>{item.g2.split("|")[0]}</div>
           </div>
-          <div className="BuyAmount">
-            <div>{strimstring(item.g3.split("|")[1])}</div>
-            {/*prettier-ignore*/}
-            <div style={{ color: parseFloat(item.g3.split("|")[0]) < parseFloat(item.r) ? "red" : parseFloat(item.g3.split("|")[0]) > parseFloat(item.r) ? "blue" : "black", }}>{item.g3.split("|")[0]}</div>
+          {/*prettier-ignore*/}
+          <div className={"BuyAmount " + ColorText(item.g3.split("|")[0], item)} id = {item.sym + "-g3"}>
+            <div className="backgroundwhite " id = {item.sym + "-g3-vol"}>{strimstring(item.g3.split("|")[1])}</div>
+            <div className="backgroundwhite " id = {item.sym + "-g3-price"}>{item.g3.split("|")[0]}</div>
           </div>
-          <div
-            className="BuyAmount"
-            style={{
-              color: item.low < item.ref ? "red" : "blue",
-              borderTopWidth: 1,
-              borderTopColor: "#A9A9A9",
-              borderTopStyle: "solid",
-            }}
-          >
+          {/*prettier-ignore*/}
+          <div className={"BuyAmount backgroundwhite "+ ColorText(item.lowPrice, item)} style={{  borderTopWidth: 1, borderTopColor: "#A9A9A9",borderTopStyle: "solid",}}>
             <div>Min</div> <div>{item.lowPrice}</div>
           </div>
         </div>
@@ -172,30 +161,23 @@ function Realtime() {
           <div className="BuyAmount">
             <div>Amount</div> <div>Price</div>
           </div>
-          <div className="SellAmount">
-            <div>{strimstring(item.g4.split("|")[1])}</div>
-            {/*prettier-ignore*/}
-            <div style={{ color: parseFloat(item.g4.split("|")[0]) < parseFloat(item.r) ? "red" : parseFloat(item.g4.split("|")[0]) > parseFloat(item.r) ? "blue" : "black", }}>{item.g4.split("|")[0]}</div>
+          {/*prettier-ignore*/}
+          <div className={"SellAmount " + ColorText(item.g4.split("|")[0], item)} id = {item.sym + "-g4"}>
+            <div className="backgroundwhite " id = {item.sym + "-g4-vol"}>{strimstring(item.g4.split("|")[1])}</div>
+            <div className="backgroundwhite " id = {item.sym + "-g4-price"}>{item.g4.split("|")[0]}</div>
           </div>
-          <div className="SellAmount">
-            <div>{strimstring(item.g5.split("|")[1])}</div>
-            {/*prettier-ignore*/}
-            <div style={{ color: (item.g5.split("|")[0]) < (item.r) ? "red" : (item.g5.split("|")[0]) > (item.r) ? "blue" : "black", }}>{item.g5.split("|")[0]}</div>
+          {/*prettier-ignore*/}
+          <div className={"SellAmount " + ColorText(item.g5.split("|")[0], item)} id = {item.sym + "-g5"}>
+            <div className="backgroundwhite" id = {item.sym + "-g5-vol"}>{strimstring(item.g5.split("|")[1])}</div>
+            <div className="backgroundwhite" id = {item.sym + "-g5-price"}>{item.g5.split("|")[0]}</div>
           </div>
-          <div className="SellAmount">
-            <div>{strimstring(item.g6.split("|")[1])}</div>
-            {/*prettier-ignore*/}
-            <div style={{ color: (item.g6.split("|")[0]) < (item.r) ? "red" : (item.g6.split("|")[0]) > (item.r) ? "blue" : "black", }}>{item.g6.split("|")[0]}</div>
+          {/*prettier-ignore*/}
+          <div className={"SellAmount " + ColorText(item.g6.split("|")[0], item)} id = {item.sym + "-g6"}>
+            <div className="backgroundwhite " id = {item.sym + "-g6-vol"}>{strimstring(item.g6.split("|")[1])}</div>
+            <div  className="backgroundwhite " id = {item.sym + "-g6-price"}>{item.g6.split("|")[0]}</div>
           </div>
-          <div
-            className="BuyAmount"
-            style={{
-              color: item.hig < item.ref ? "red" : "blue",
-              borderTopWidth: 1,
-              borderTopColor: "#A9A9A9",
-              borderTopStyle: "solid",
-            }}
-          >
+          {/*prettier-ignore*/}
+          <div className={"BuyAmount backgroundwhite "+ ColorText(item.highPrice, item)} style={{  borderTopWidth: 1, borderTopColor: "#A9A9A9",borderTopStyle: "solid",}}>
             <div>Max</div> <div>{item.highPrice}</div>
           </div>
         </div>
@@ -208,6 +190,15 @@ function Realtime() {
       console.log("initial websocket");
       socket.on("connect", function (data) {
         console.log("CONNECT");
+        setIsConnected(true);
+        const connectioncircleID = document.querySelector("#connectioncircle");
+        // console.log(connectioncircleID);
+        connectioncircleID.style.backgroundColor = "blue";
+        // connectioncircleID.classList.replace("notconnected", "connected");
+        const timeout = setTimeout(() => {
+          setIsConnected(false);
+        }, 3000);
+        return () => clearTimeout(timeout);
         // socket.emit("regs", msg);
         // console.log(data);
         // this.('#status-connect').text('Connected').css('color', '#50C979');
@@ -222,6 +213,10 @@ function Realtime() {
 
     socket.on("disconnect", () => {
       socket.removeAllListeners();
+      setIsConnected(false);
+      const connectioncircleID = document.querySelector("#connectioncircle");
+      // console.log(connectioncircleID);
+      connectioncircleID.style.backgroundColor = "gray";
       // $('#status-connect').text('Disconnect').css('color', '#DA5664');
     });
     socket.on("connect_error", () => {
@@ -275,25 +270,72 @@ function Realtime() {
     if (InitStockItems === true && item.id === 3210) {
       let newStockItems = StockItems;
       let indexnum = Stocklist.indexOf(item.sym);
+      //xac dinh chung khoan co thong tin thay doi
       let tempstock = { ...StockItems[indexnum] };
       if (item.side === "B") {
+        // console.log(tempstock);
+        //prettier-ignore
+        if (tempstock.g1.split("|")[1] !== item.g1.split("|")[1]) { ChangeBackground("#" + item.sym + "-g1-vol")}
+        // console.log("#" + item.sym + "-g1-vol");
+        //prettier-ignore
+        if (tempstock.g1.split("|")[0] !== item.g1.split("|")[0]) { ChangeBackground("#" + item.sym + "-g1-price")}
+        //prettier-ignore
+        if (tempstock.g2.split("|")[1] !== item.g2.split("|")[1]) { ChangeBackground("#" + item.sym + "-g2-vol")}
+        //prettier-ignore
+        if (tempstock.g2.split("|")[0] !== item.g2.split("|")[0]) { ChangeBackground("#" + item.sym + "-g2-price")}
+        //prettier-ignore
+        if (tempstock.g3.split("|")[1] !== item.g3.split("|")[1]) { ChangeBackground("#" + item.sym + "-g3-vol")}
+        //prettier-ignore
+        if (tempstock.g3.split("|")[0] !== item.g3.split("|")[0]) { ChangeBackground("#" + item.sym + "-g3-price")}
         tempstock.g1 = item.g1;
         tempstock.g2 = item.g2;
         tempstock.g3 = item.g3;
+        newStockItems[indexnum] = tempstock;
+        setStockItems([...newStockItems]);
+        // console.log("temp", tempstock);
+        // console.log("new: ", item);
+        // volume
+        //prettier-ignore
       } else {
+        //prettier-ignore
+        if (tempstock.g4.split("|")[1] !== item.g1.split("|")[1]) { ChangeBackground("#" + item.sym + "-g4-vol")}
+        //prettier-ignore
+        if (tempstock.g4.split("|")[0] !== item.g1.split("|")[0]) { ChangeBackground("#" + item.sym + "-g4-price")}
+        //prettier-ignore
+        if (tempstock.g5.split("|")[1] !== item.g2.split("|")[1]) { ChangeBackground("#" + item.sym + "-g5-vol")}
+        //prettier-ignore
+        if (tempstock.g5.split("|")[0] !== item.g2.split("|")[0]) { ChangeBackground("#" + item.sym + "-g5-price")}
+        //prettier-ignore
+        if (tempstock.g6.split("|")[1] !== item.g3.split("|")[1]) { ChangeBackground("#" + item.sym + "-g6-vol")}
+        //prettier-ignore
+        if (tempstock.g6.split("|")[0] !== item.g3.split("|")[0]) { ChangeBackground("#" + item.sym + "-g6-price")}
         tempstock.g4 = item.g1;
         tempstock.g5 = item.g2;
         tempstock.g6 = item.g3;
+        newStockItems[indexnum] = tempstock;
+        setStockItems([...newStockItems]);
       }
 
       // console.log("Temp: ", tempstock);
       // StockItems[indexnum].lastPrice = item.lastPrice;
-      newStockItems[indexnum] = tempstock;
-      setStockItems([...newStockItems]);
+
       // console.log(item);
     }
   }
-
+  //doi nen background sang gray khi co thay doi
+  function ChangeBackground(DivID) {
+    //boi den thong so neu co thay doi
+    // let temp = "#" + item.sym + "-lastPrice";
+    let connectioncircleID = document.querySelector(DivID);
+    // console.log(connectioncircleID);
+    // connectioncircleID.style.backgroundColor = "lightgray";
+    // prettier-ignore
+    connectioncircleID.classList.replace("backgroundwhite" , "backgroundgray");
+    const timeout = setTimeout(() => {
+      // prettier-ignore
+      connectioncircleID.classList.replace("backgroundgray","backgroundwhite");
+    }, 3000);
+  }
   //Cap nhat thong tin ve khop lenh
   function updatestockmatch(item) {
     if (InitStockItems === true) {
@@ -314,13 +356,29 @@ function Realtime() {
         },
       });
       //uddate thong tin ck
-      console.log(item);
+      // console.log(item);
       let tempstock = { ...StockItems[indexnum] };
-      tempstock.lastPrice = item.lastPrice;
-      tempstock.lastVolume = item.lastVol;
-      tempstock.change = item.change;
-      tempstock.changePc = item.changePc;
-      tempstock.lot = item.totalVol;
+      if (tempstock.ot !== item.change) {
+        tempstock.ot = item.change;
+        ChangeBackground("#" + item.sym + "-ot");
+      }
+      if (tempstock.lastPrice !== item.lastPrice) {
+        tempstock.lastPrice = item.lastPrice;
+        ChangeBackground("#" + item.sym + "-lastPrice");
+      }
+      if (tempstock.lastVolume !== item.lastVol) {
+        tempstock.lastVolume = item.lastVol;
+        ChangeBackground("#" + item.sym + "-lastVolume");
+      }
+      if (tempstock.changePc !== item.changePc) {
+        tempstock.changePc = item.changePc;
+        ChangeBackground("#" + item.sym + "-changePc");
+      }
+      if (tempstock.lot !== item.totalVol) {
+        tempstock.lot = item.totalVol;
+        ChangeBackground("#" + item.sym + "-lot");
+      }
+
       tempstock.highPrice = item.hp;
       tempstock.lowPrice = item.lp;
 
@@ -337,35 +395,29 @@ function Realtime() {
   return (
     <div>
       {/* kiem tra co du lieu moi xuat ko bi loi */}
-      <div
-        className="VNIndexContent"
-        style={{
-          color: VNIndex.idxchg < 0 ? "red" : "blue",
-        }}
-      >
-        <div className="VnIndex">
-          {VNIndex.idx !== undefined
-            ? parseFloat(VNIndex.idx).toLocaleString("en-US", {
-                style: "decimal",
-                currency: "USD",
-              })
-            : "0"}
+      {/*prettier-ignore*/}
+      <div className="VNIndexContain">
+        <div>{<VnIndexChart />}</div>
+        <div className="VNIndexContent" style={{ color: VNIndex.idx < VNIndex.idxopen ? "red" :  VNIndex.idx > VNIndex.idxopen ? "blue" : "black", }} >
+          {/*prettier-ignore*/}
+          <div className="VnIndex"> {VNIndex.idx !== undefined ? parseFloat(VNIndex.idx).toLocaleString("en-US", { style: "decimal", currency: "USD", }) : "0"} </div>
+          {/*prettier-ignore*/}
+          <div className="VnIndex">      {VNIndex.idxchg !== undefined ? VNIndex.idxchg : "0"}   </div>
+          {/*prettier-ignore*/}
+          <div className="VnIndex">      {VNIndex.idxpct !== undefined ? VNIndex.idxpct : "0"}   </div>
+          {/*prettier-ignore*/}
+          <div className="VnIndex">{VNIndex.tval !== undefined ? parseInt(VNIndex.tval).toLocaleString("en-US", {style: "decimal",currency: "USD",}) : "0"} </div>
+          {/*prettier-ignore*/}
+          <div> <a className="connection-circle notconnected" id="connectioncircle"></a> </div>
         </div>
-        <div className="VnIndex">
-          {VNIndex.idxchg !== undefined ? VNIndex.idxchg : "0"}
-        </div>
-        <div>
-          {VNIndex.tval !== undefined
-            ? parseInt(VNIndex.tval).toLocaleString("en-US", {
-                style: "decimal",
-                currency: "USD",
-              })
-            : "0"}
-        </div>
-      </div>
 
-      <div className="realtime">{orderRows(StockItems)}</div>
+      </div>
+      <div className="realtime">{StockRows(StockItems)}</div>
       <div className="jsonValue">{newstockvalue}</div>
+      {/*prettier-ignore*/}
+      <div  className= {IsConnected ? "alert alert-success connection-alert connected-alert text-center fadeIn":  "fadeOut"}>
+        <strong>Connected!</strong>
+      </div>
     </div>
   );
 }

@@ -1,8 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
 import Realtime from "./Components/Realtime";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import BuySell from "./Components/BuySell"
+import BuySell from "./Components/BuySell";
+import HistoryTransactions from "./Components/HistoryTransactions";
+import VnIndexChart from "./Components/VNIndexChart";
+import StyleTest from "./Components/StyleTest";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 //https://bgapidatafeed.vps.com.vn/getliststockdata/DXG,VGT,TCM
 //wss://bgdatafeed.vps.com.vn/socket.io
@@ -15,8 +19,9 @@ function App() {
         <div className="app">
           <Switch>
             <Route path="/StockManager">{<Realtime />}</Route>
-            <Route path="/Utils">{<Realtime />}</Route>
-            <Route path="/HistoryTransactions">{<Realtime />}</Route>
+            <Route path="/StyleTest">{<StyleTest />}</Route>
+            <Route path="/VnIndexChart">{<VnIndexChart />}</Route>
+            <Route path="/HistoryTransactions">{<HistoryTransactions />}</Route>
             <Route path="/">
               <Realtime />
               <BuySell />

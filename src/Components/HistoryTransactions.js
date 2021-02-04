@@ -4,6 +4,7 @@ import TransactionItem from "./TransactionItem";
 import db, { StockRef } from "./firebase";
 import FormDialog from "./FormDialog";
 import Chart from "./Chart/BarChart";
+// import "./CSS/bootstrap.min.css";
 
 function HistoryTransactions() {
   const [stocks, setStocks] = useState([]);
@@ -12,13 +13,13 @@ function HistoryTransactions() {
   // const stocks = [];
   useEffect(() => {
     //  Get data from Firebase
-    // db.collection("Stock2020")
-    //   .orderBy("Percent", "desc")
-    //   .onSnapshot((snapshot) => {
-    //     setStocks(snapshot.docs.map((doc) => doc.data()));
-    //   });
+    db.collection("Stocks")
+      .orderBy("Percent", "desc")
+      .onSnapshot((snapshot) => {
+        setStocks(snapshot.docs.map((doc) => doc.data()));
+      });
     //  Load Data from Backup File
-    LoadDataFromFile();
+    // LoadDataFromFile();
   }, []);
 
   async function LoadDataFromFile() {
@@ -60,6 +61,7 @@ function HistoryTransactions() {
     return parseInt(GainTotal);
   }
   let GainTotal = stocks.reduce(function (prev, cur) {
+    // console.log(cur.Gain);
     if (cur.SoldPrice > 0) {
       return prev + cur.Gain;
     } else {
@@ -77,9 +79,47 @@ function HistoryTransactions() {
 
   return (
     <div>
+      <ul className="nav nav-tabs" role="tablist">
+        <li role="presentation" className="active">
+          <a
+            href="#listening"
+            aria-controls="profile"
+            role="tab"
+            data-toggle="tab"
+          >
+            Listening
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="#emiting" aria-controls="home" role="tab" data-toggle="tab">
+            Emiting
+          </a>
+        </li>
+        <li role="presentation">
+          <a
+            href="#emitHistory"
+            aria-controls="history"
+            role="tab"
+            data-toggle="tab"
+          >
+            Emit History
+          </a>
+        </li>
+        <li role="presentation">
+          <a
+            href="#emitAckRes"
+            aria-controls="ackRes"
+            role="tab"
+            data-toggle="tab"
+          >
+            Emiting AckRes
+          </a>
+        </li>
+      </ul>
+
       {/*prettier-ignore*/}
       <div style={{ color: "blue", display: "flex",  }}>
-        <div className="Transactions">Transactions:</div>
+        <div className="Transactions">Transactions: </div>
         {/*prettier-ignore*/}
         <div>{GainTotal.toLocaleString("en-US", {style: "decimal",currency: "USD",})}</div>
       </div>

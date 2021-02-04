@@ -6,7 +6,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Button from "@material-ui/core/Button";
 import db from "./firebase";
 import TextField from "@material-ui/core/TextField";
-
+// import "bootstrap/dist/css/bootstrap.min.css";
 import { useStateValue } from "../StateProvider";
 import { getCurrentDate } from "./Functions";
 // import { ExpectedInterest } from "./TransactionItem";
@@ -81,9 +81,13 @@ function BuySell() {
   // }, 0);
 
   var soldTotal = sellstocks.reduce(function (prev, cur) {
-    return (
-      prev + ExpectedInterest(cur.BoughtPrice, cur.SoldPrice, cur.Amount)[0]
-    );
+    // console.log(cur.MaCK, cur.Gain);
+    // console.log(
+    //   cur.MaCK,
+    //   ExpectedInterest(cur.BoughtPrice, cur.SoldPrice, cur.Amount)[0]
+    // );
+    // return (   prev + ExpectedInterest(cur.BoughtPrice, cur.SoldPrice, cur.Amount)[0]  );
+    return prev + cur.Gain;
   }, 0);
 
   var expectTotal = buystocks.reduce(function (prev, cur) {
@@ -243,7 +247,9 @@ function BuySell() {
         {/* <div>
           {ExpectedInterest(item.BoughtPrice, item.SoldPrice, item.Amount)[0]}
         </div> */}
-        {item.IsSold ? "" : <FormDialog stockitem={item} />}
+        <div className="sellbutton">
+          {item.IsSold ? "" : <FormDialog stockitem={item} />}
+        </div>
       </div>
       // console.log(random(5)),
     ));
@@ -253,6 +259,8 @@ function BuySell() {
       <div className="addstockform">
         <form>
           <div className="stockadd">
+            {/*prettier-ignore*/}
+            {/*<input className="form-control form-control-sm" type="text" placeholder=".form-control-sm" aria-label=".form-control-sm example" />*/}
             <div>
               <TextField
                 id="StockCodeID"
@@ -309,6 +317,7 @@ function BuySell() {
                 }}
               />
             </div>
+
             {/* <input
               // value=""
               onChange={(e) => {
@@ -359,18 +368,8 @@ function BuySell() {
         <div className="showbought">
           <h2>Sold Stocks</h2>
           <div className="showlable">
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={showbought}
-                  onChange={showboughtClick}
-                  // name="checkedA"
-                  inputProps={{ "aria-label": "secondary checkbox" }}
-                  color="primary"
-                />
-              }
-              // label="Show"
-            />
+            {/*prettier-ignore*/}
+            <FormControlLabel control={<Switch checked={showbought} onChange={showboughtClick} inputProps={{ "aria-label": "secondary checkbox" }} color="primary" />}/>
           </div>
           {/* <div className="minusstock1" onClick={showboughtClick}></div> */}
         </div>

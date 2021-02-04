@@ -1,3 +1,7 @@
+. {
+  line-height: 1.2 !important;
+}
+
 .time__loaddata {
   font-size: small;
   background: white;
@@ -8,7 +12,7 @@
 }
 
 .stock__board {
-  display: flex;
+  display: flex !important;
   /* background-color: #f1f2f5; */
 }
 
@@ -16,32 +20,33 @@
   display: flex;
   padding: 5px;
   /* border: 1px solid black; */
-  height: 114px;
+  height: 118px;
   background-color: white;
   /*border-radius: 10px;*/
   border-bottom: 1px solid #eff2f5;
   margin: 5px;
 }
 
-.StockCard__Header {
+.stockCard__Header {
   border: 1px solid black;
   border-radius: 7px;
-  width: 70px;
+  width: 75px;
   text-align: right;
   padding-right: 5px;
+  height: 118px;
 }
 
 .stockCard__Buy {
   border: 1px;
   padding: 0px 15px;
-  width: 100px;
+  width: 110px;
   border-right: 1px solid #eff2f5;
 }
 
 .stockCard__Sell {
   border: 1px;
   padding: 0px 15px;
-  width: 100px;
+  width: 110px;
 }
 
 .BuyAmount {
@@ -69,11 +74,104 @@
   border-radius: 7px;
   text-align: center;
 }
+.VNIndexContain {
+  display: flex;
+  padding-left: 10px;
+  padding-top: 5px;
+  /*border-radius: 7px;*/
+}
 
 .VNIndexContent {
-  display: flex;
+  /*display: flex;*/
   padding-left: 5px;
 }
 .VnIndex {
   padding-right: 10px;
+}
+
+.connected{
+  background-color: blue;
+}
+.notconnected{
+  background-color: gray;
+}
+
+.txt-gia-tran{
+  color: #ff25ff;
+}
+.txt-gia-san{
+  color: #1eeeee;
+}
+
+.backgroundgray{
+  background-color: lightgrey;
+  border-radius: 3px;
+}
+
+.backgroundwhite{
+  background-color: white;
+}
+
+.txt-gia-tc{
+  color: black;
+  /*color: #ffd900;*/
+}
+
+.txt-gia-thap{
+  color: red;
+}
+
+.txt-gia-cao{
+  color: blue;
+}
+
+.connection-circle {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  text-align: center;
+  border-radius: 50%;
+  /*background-color: #0066FF;*/
+  /*background-color: lightgrey;*/
+  /*color: #fff;*/
+  padding: 8px;
+  /*font-size: 2rem;*/
+}
+
+.connection-alert {
+  width: 100px;
+  position: fixed;
+  bottom: 10px;
+  right: 30px;
+}
+
+.alert-success {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  color: #468847;
+}
+
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.fadeOut{
+  opacity:0;
+  width:0;
+  height:0;
+  /*transition: width 0.5s 0.5s, height 0.5s 0.5s, opacity 0.5s;*/
+}
+.fadeIn{
+  opacity:1;
+  /*width:100px;*/
+  /*height:100px;*/
+  transition: width 0.5s, height 0.5s, opacity 0.5s 0.5s;
+
 }

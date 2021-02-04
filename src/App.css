@@ -1,4 +1,9 @@
 .app {
   /* text-align: center; */
   display: flex;
+  /*font-weight: 400;*/
+  /*line-height: 1.2 !important;*/
+}
+.body {
+
 }

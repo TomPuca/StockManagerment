@@ -2,15 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41c6bcc6-2d69-48a0-a864-942c25f8fb48" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Components/CSS/bootstrap.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Components/Chart/BarChart.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Components/StyleTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Components/Styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Components/VNIndexChart.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Components/VnIndexChart.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Components/chart code.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Note/GitCommand.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/BuySell.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/BuySell.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/BuySell.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/BuySell.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/DateMonthYear.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/DateMonthYear.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/FormDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/FormDialog.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/Functions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Functions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/HistoryTransactions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/HistoryTransactions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Realtime.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Realtime.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/Realtime.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Realtime.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,12 +33,16 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="CSS File" />
         <option value="JavaScript File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
   <component name="ProjectId" id="1ngv3Tja9B9wr7cqENHAX75D04M" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -38,7 +55,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Components" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Components/CSS" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -49,6 +67,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/Components/CSS" />
       <recent name="$PROJECT_DIR$/src/Components" />
       <recent name="$PROJECT_DIR$/src" />
     </key>
@@ -62,6 +81,9 @@
       <option name="presentableId" value="Default" />
       <updated>1611824351242</updated>
       <workItem from="1611824354150" duration="32189000" />
+      <workItem from="1611993055006" duration="356000" />
+      <workItem from="1611993441426" duration="61000" />
+      <workItem from="1611993520469" duration="63694000" />
     </task>
     <servers />
   </component>
@@ -78,15 +100,40 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/Components/Realtime.js</url>
-          <line>272</line>
+          <url>file://$PROJECT_DIR$/src/Components/chart code.js</url>
+          <line>95</line>
           <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="2" />
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/Components/VNIndexChart.js</url>
+          <line>7</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/Components/VNIndexChart.js</url>
+          <line>8</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/Components/VNIndexChart.js</url>
+          <line>192</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/Components/Realtime.js</url>
+          <line>186</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/StockManagement/static/css/main.e1e2318e.chunk.css",
-    "main.js": "/StockManagement/static/js/main.6e5e0a65.chunk.js",
-    "main.js.map": "/StockManagement/static/js/main.6e5e0a65.chunk.js.map",
-    "runtime-main.js": "/StockManagement/static/js/runtime-main.e9d288bb.js",
-    "runtime-main.js.map": "/StockManagement/static/js/runtime-main.e9d288bb.js.map",
-    "static/js/2.5c22c81f.chunk.js": "/StockManagement/static/js/2.5c22c81f.chunk.js",
-    "static/js/2.5c22c81f.chunk.js.map": "/StockManagement/static/js/2.5c22c81f.chunk.js.map",
-    "static/js/3.8b4090e2.chunk.js": "/StockManagement/static/js/3.8b4090e2.chunk.js",
-    "static/js/3.8b4090e2.chunk.js.map": "/StockManagement/static/js/3.8b4090e2.chunk.js.map",
+    "main.css": "/StockManagement/static/css/main.a466723a.chunk.css",
+    "main.js": "/StockManagement/static/js/main.899359fd.chunk.js",
+    "main.js.map": "/StockManagement/static/js/main.899359fd.chunk.js.map",
+    "runtime-main.js": "/StockManagement/static/js/runtime-main.27645cf1.js",
+    "runtime-main.js.map": "/StockManagement/static/js/runtime-main.27645cf1.js.map",
+    "static/js/2.803b3ac1.chunk.js": "/StockManagement/static/js/2.803b3ac1.chunk.js",
+    "static/js/2.803b3ac1.chunk.js.map": "/StockManagement/static/js/2.803b3ac1.chunk.js.map",
+    "static/js/3.28c7094f.chunk.js": "/StockManagement/static/js/3.28c7094f.chunk.js",
+    "static/js/3.28c7094f.chunk.js.map": "/StockManagement/static/js/3.28c7094f.chunk.js.map",
     "index.html": "/StockManagement/index.html",
-    "static/css/main.e1e2318e.chunk.css.map": "/StockManagement/static/css/main.e1e2318e.chunk.css.map",
-    "static/js/2.5c22c81f.chunk.js.LICENSE.txt": "/StockManagement/static/js/2.5c22c81f.chunk.js.LICENSE.txt",
+    "static/css/main.a466723a.chunk.css.map": "/StockManagement/static/css/main.a466723a.chunk.css.map",
+    "static/js/2.803b3ac1.chunk.js.LICENSE.txt": "/StockManagement/static/js/2.803b3ac1.chunk.js.LICENSE.txt",
     "static/media/logo.6ce24c58.svg": "/StockManagement/static/media/logo.6ce24c58.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.e9d288bb.js",
-    "static/js/2.5c22c81f.chunk.js",
-    "static/css/main.e1e2318e.chunk.css",
-    "static/js/main.6e5e0a65.chunk.js"
+    "static/js/runtime-main.27645cf1.js",
+    "static/js/2.803b3ac1.chunk.js",
+    "static/css/main.a466723a.chunk.css",
+    "static/js/main.899359fd.chunk.js"
   ]
 }

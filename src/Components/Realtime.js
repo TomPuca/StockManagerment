@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Realtime.css";
-import io from "socket.io-client";
 import { useStateValue } from "../StateProvider";
-import { strimstring, useInterval } from "./Functions";
+import { getCurrentDate, strimstring, useInterval } from "./Functions";
 import VnIndexChart from "./VNIndexChart";
 
 //index link: https://bgapidatafeed.vps.com.vn/getlistindexdetail/10
@@ -13,33 +12,33 @@ function Realtime() {
   const [StockItems, setStockItems] = useState([]);
   const [VNIndex, setVNIndex] = useState([]);
   // const [WebSocketInitState, setWebSocketInitState] = useState(false);
-  const [{ currentstockprice }, dispatch] = useStateValue();
-  var Stocklist = ["TCM", "HPG", "VGT", "BID", "DXG"];
+  // prettier-ignore
+  const [{ socket   , currentstockprice }, dispatch] = useStateValue();
+  // prettier-ignore
+  const [Stocklist, setStocklist] = useState(["IDJ","FRT","TCM","HPG","CTG","BID"]);
   const [InitStockItems, setInitStockItems] = useState(false);
   const [IsConnected, setIsConnected] = useState(false);
-  let vStockPs;
-  let socket;
 
+  const isStockItems = useRef(false);
+  const isFirstRef = useRef(true);
+  const isNewStockItems = useRef(false);
+
+  // let socket;
+  // initWebsocket();
   // socketConnect();
   useEffect(() => {
-    console.log("init stock items");
-    initstockitems();
-    getVNindex();
-    // initWebsocket();
-    // socketConnect();
+    //for the first render
+    if (isFirstRef.current) {
+      console.log("First Render");
+      initstockitems();
+      getVNindex();
+      isFirstRef.current = false;
+      isStockItems.current = true;
+      socketConnect();
+      return;
+    }
   }, []);
   useEffect(() => {
-    // initstockitems();
-    if (InitStockItems === true) {
-      // console.log(StockItems);
-      initWebsocket();
-      socketConnect();
-    }
-  }, [InitStockItems]);
-
-  //sau khi có du lieu thi update thong tin gia ban
-  useEffect(() => {
-    // console.log(StockItems);
     StockItems.map((item) =>
       dispatch({
         type: "UPDATE_TO_CURRENTSTOCKPRICE",
@@ -49,58 +48,329 @@ function Realtime() {
         },
       })
     );
-  }, [InitStockItems]);
-  // console.log("star dispach", currentstockprice);
+    showlog();
+  }, [StockItems]);
+  useEffect(() => {
+    if (isNewStockItems.current) {
+      initstockitems();
+      isNewStockItems.current = false;
+    }
+    // đăng ký lại room
+    let msg = '{"action":"join","list":"' + Stocklist.join(",") + '"}';
+    // console.log(msg);
+    socket.emit("regs", msg);
+    console.log("CONNECTED");
+    setIsConnected(true);
+    const connectioncircleID = document.querySelector("#connectioncircle");
+    // console.log(connectioncircleID);
+    connectioncircleID.style.backgroundColor = "blue";
+    // connectioncircleID.classList.replace("notconnected", "connected");
+    const timeout = setTimeout(() => {
+      setIsConnected(false);
+    }, 3000);
+
+    // showlog();
+  }, [Stocklist]);
+
+  async function getdata() {
+    console.log("before", Stocklist);
+    const response = await fetch(
+      "https://bgapidatafeed.vps.com.vn/getliststockdata/" + Stocklist.join(",")
+    );
+    const body = await response.json();
+    console.log("data", body);
+    if (body !== undefined) {
+      setStockItems((current) => body);
+      console.log("After", StockItems);
+    }
+  }
+
+  function socketConnect() {
+    socket.on("board", function (zdata) {
+      // sendQueue(zdata.data);
+      // console.log("board:", zdata.data);
+      //Cap nhat thong tin bang gia
+      // 42["board",{"data":{"id":3210,"sym":"REE","side":"S","g1":"34.90|314|i","g2":"35.00|1|i","g3":"35.10|259|i","vol4":0}}]
+      //42["board",{"data":{"id":3310,"sym":"VCG","BVolume":43820,"SVolume":28860,"Total":13770,"AvePrice":17.2,"APColor":"e"}}]
+      // console.log(InitStockItems);
+
+      // console.log(zdata.data);
+      // console.log(isStockItems.current);
+      if (isStockItems.current) {
+        updatestock(zdata.data);
+        // console.log(zdata.data);
+      }
+      // console.log(socket);
+    });
+
+    socket.on("index", function (zdata) {
+      // console.log(zdata.data);
+    });
+    //Nếu khớp lệnh trả về thông tin khớp, chỉ trả về thông tin mã khớp
+    socket.on("stock", function (zdata) {
+      // console.log(socket);
+      if (isStockItems.current) {
+        updatestockmatch(zdata.data);
+      }
+    });
+    socket.on("disconnect", () => {
+      socket.removeAllListeners();
+      setIsConnected(false);
+      const connectioncircleID = document.querySelector("#connectioncircle");
+      // console.log(connectioncircleID);
+      connectioncircleID.style.backgroundColor = "gray";
+      // $('#status-connect').text('Disconnect').css('color', '#DA5664');
+    });
+  }
 
   useInterval(() => {
-    // Your custom logic here
     getVNindex();
-    console.log("index update", Date());
   }, 60000);
 
   //thiet lap vong lap lay du lieu
 
-  function getVNindex() {
-    const request = require("request");
-    const options = {
-      method: "GET",
-      url: "https://bgapidatafeed.vps.com.vn/getlistindexdetail/10",
-    };
-    request(options, function (error, response, body) {
-      if (error) throw new Error(error);
-      // console.log(body.id);
-      // JSON.parse(body).content.forEach((indexcontent) => {
-      //   if (indexcontent.brd === "HOSE") {
+  async function getVNindex() {
+    // prettier-ignore
+    const response = await fetch("https://bgapidatafeed.vps.com.vn/getlistindexdetail/10");
+    const body = await response.json();
+    // console.log(body);
+    if (body !== undefined) {
       let tempindex = { ...VNIndex };
-      if (body !== undefined) {
-        tempindex.idx = JSON.parse(body)[0].cIndex;
-        tempindex.idxopen = JSON.parse(body)[0].oIndex;
-        tempindex.idxchg = JSON.parse(body)[0].ot.split("|")[0];
-        tempindex.idxpct = JSON.parse(body)[0].ot.split("|")[1];
-        // tempindex.ttrd = indexcontent.ttrd;
-        tempindex.tval = JSON.parse(body)[0].ot.split("|")[2];
-        tempindex.tvol = JSON.parse(body)[0].vol;
-        tempindex.status = body[0].status;
-        setVNIndex(tempindex);
-      }
-    });
+      tempindex.idx = body[0].cIndex;
+      tempindex.idxopen = body[0].oIndex;
+      tempindex.idxchg = body[0].ot.split("|")[0];
+      tempindex.idxpct = body[0].ot.split("|")[1];
+      // tempindex.ttrd = indexcontent.ttrd;
+      tempindex.tval = body[0].ot.split("|")[2];
+      tempindex.tvol = body[0].vol;
+      tempindex.status = body[0].status;
+      // console.log(tempindex);
+      setVNIndex(tempindex);
+    }
+    // console.log(VNIndex.idx);
   }
   async function initstockitems() {
-    const request = require("request");
-    const options = {
-      method: "GET",
-      // url: "https://bgapidatafeed.vps.com.vn/getliststockdata/VGT,TCM,DXG",
-      url:
-        "https://bgapidatafeed.vps.com.vn/getliststockdata/" +
-        Stocklist.join(","),
-    };
+    console.log("getdata");
+    // prettier-ignore
+    const response = await fetch("https://bgapidatafeed.vps.com.vn/getliststockdata/" + Stocklist.join(","));
+    const body = await response.json();
+    if (body !== undefined) {
+      setStockItems((current) => body);
+    }
+    setInitStockItems(true);
+    // showlog();
+  }
+  function showlog() {
+    const temp = StockItems;
+    console.log("tempstock", temp);
+  }
 
-    await request(options, function (error, response, body) {
-      if (error) throw new Error(error);
-      setStockItems(JSON.parse(body));
-      setInitStockItems(true);
-      // console.log(JSON.stringify(body));
+  //Cap nhat thong tin ve bang gia, neu ben ban thi la S, mua la B
+  function updatestock(item) {
+    //Neu gia khop la san ha noi se co id la 3310 voi thong tin tong mua, ban ngoai bang
+    // if (item.id === 3310) console.log("Board", item);
+    // if (item.id != 3310 && item.id != 3210) console.log("Board", item);
+    // du kien khop lenh ma 3220
+    //Realtime.js:272 Board {id: 3220, sym: "TCM", lastPrice: 74, lastVol: 0, cl: "d", …
+    // console.log("cap nhat thong tin bang gia:", InitStockItems);
+    //
+    // console.log("Board", item);
+    //Khop lenh ma 3210
+    if (isStockItems.current === true) {
+      if (item.id === 3210) {
+        let tempID;
+        // console.log(item.side);
+        if (item.side === "B") {
+          //buy 1
+          tempID = document.querySelector("#" + item.sym + "-g1-vol");
+          //prettier-ignore
+          if (tempID.innerHTML !== strimstring(item.g1.split("|")[1])) {
+            ChangeBackground("#" + item.sym + "-g1-vol")
+            tempID.innerHTML = strimstring(item.g1.split("|")[1]);
+          }
+          tempID = document.querySelector("#" + item.sym + "-g1-price");
+          //prettier-ignore
+          if (tempID.innerHTML !== item.g1.split("|")[0]) {
+            ChangeBackground("#" + item.sym + "-g1-price")
+            tempID.innerHTML = item.g1.split("|")[0];
+          }
+          //prettier-ignore
+          ChangeClolorBuySell (("#" + item.sym + "-g1"), ColorPrice(item.g1.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+          //buy 2
+          tempID = document.querySelector("#" + item.sym + "-g2-vol");
+          //prettier-ignore
+          if (tempID.innerHTML !== strimstring(item.g2.split("|")[1])) {
+            ChangeBackground("#" + item.sym + "-g2-vol")
+            tempID.innerHTML = strimstring(item.g2.split("|")[1]);
+          }
+          tempID = document.querySelector("#" + item.sym + "-g2-price");
+          //prettier-ignore
+          if (tempID.innerHTML !== item.g2.split("|")[0]) {
+            ChangeBackground("#" + item.sym + "-g2-price")
+            tempID.innerHTML = item.g2.split("|")[0];
+          }
+          //prettier-ignore
+          ChangeClolorBuySell (("#" + item.sym + "-g2"), ColorPrice(item.g2.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+          //buy 3
+          tempID = document.querySelector("#" + item.sym + "-g3-vol");
+          //prettier-ignore
+          if (tempID.innerHTML !== strimstring(item.g3.split("|")[1])) {
+            ChangeBackground("#" + item.sym + "-g3-vol")
+            tempID.innerHTML = strimstring(item.g3.split("|")[1]);
+          }
+          tempID = document.querySelector("#" + item.sym + "-g3-price");
+          //prettier-ignore
+          if (tempID.innerHTML !== item.g3.split("|")[0]) {
+            ChangeBackground("#" + item.sym + "-g3-price")
+            tempID.innerHTML = item.g3.split("|")[0];
+          }
+          //prettier-ignore
+          ChangeClolorBuySell (("#" + item.sym + "-g3"), ColorPrice(item.g3.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+        } else {
+          //buy 4
+          tempID = document.querySelector("#" + item.sym + "-g4-vol");
+          // prettier - ignore;
+          if (tempID.innerHTML !== strimstring(item.g1.split("|")[1])) {
+            ChangeBackground("#" + item.sym + "-g4-vol");
+            tempID.innerHTML = strimstring(item.g1.split("|")[1]);
+          }
+          tempID = document.querySelector("#" + item.sym + "-g4-price");
+          //prettier-ignore
+          if (tempID.innerHTML !== item.g1.split("|")[0]) {
+            ChangeBackground("#" + item.sym + "-g4-price")
+            tempID.innerHTML = item.g1.split("|")[0];
+          }
+          //prettier-ignore
+          ChangeClolorBuySell (("#" + item.sym + "-g4"), ColorPrice(item.g1.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+          //buy 5
+          tempID = document.querySelector("#" + item.sym + "-g5-vol");
+          // prettier - ignore;
+          if (tempID.innerHTML !== strimstring(item.g2.split("|")[1])) {
+            ChangeBackground("#" + item.sym + "-g5-vol");
+            tempID.innerHTML = strimstring(item.g2.split("|")[1]);
+          }
+          tempID = document.querySelector("#" + item.sym + "-g5-price");
+          //prettier-ignore
+          if (tempID.innerHTML !== item.g2.split("|")[0]) {
+            ChangeBackground("#" + item.sym + "-g5-price")
+            tempID.innerHTML = item.g2.split("|")[0];
+          }
+          //prettier-ignore
+          ChangeClolorBuySell (("#" + item.sym + "-g5"), ColorPrice(item.g2.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+          //buy 6
+          tempID = document.querySelector("#" + item.sym + "-g6-vol");
+          // prettier - ignore;
+          if (tempID.innerHTML !== strimstring(item.g3.split("|")[1])) {
+            ChangeBackground("#" + item.sym + "-g6-vol");
+            tempID.innerHTML = strimstring(item.g3.split("|")[1]);
+          }
+          tempID = document.querySelector("#" + item.sym + "-g6-price");
+          //prettier-ignore
+          if (tempID.innerHTML !== item.g3.split("|")[0]) {
+            ChangeBackground("#" + item.sym + "-g6-price")
+            tempID.innerHTML = item.g3.split("|")[0];
+          }
+          //prettier-ignore
+          ChangeClolorBuySell (("#" + item.sym + "-g6"), ColorPrice(item.g3.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+        }
+      }
+      //{"id":3220,"sym":"TCB","lastPrice":25.3,"lastVol":100,"cl":"i","change":"0.50","changePc":"2.02","totalVol":108810,"time":"10:49:56","hp":25.3,"ch":"i","lp":24.9,"lc":"i","ap":25.1,"ca":"i"}
+      else if (item.id === 3220) {
+        updatestockmatch(item);
+      }
+    }
+  }
+  //Cap nhat thong tin ve bang gia, neu ben ban thi la S, mua la B
+  function updatestockmatch(item) {
+    //{"id":3220,"sym":"TCB","lastPrice":25.3,"lastVol":100,"cl":"i","change":"0.50","changePc":"2.02","totalVol":108810,"time":"10:49:56","hp":25.3,"ch":"i","lp":24.9,"lc":"i","ap":25.1,"ca":"i"}
+    // console.log(item);
+    let date = new Date();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+    let newStockItems = StockItems;
+    let indexnum = Stocklist.indexOf(item.sym);
+    let tempID;
+    // prettier-ignore
+    setnewstockvalue(hours + ":" + minutes + ":" + seconds + ": " + JSON.stringify(item) );
+    //update thông tin giá các mã đã mua
+    dispatch({
+      type: "UPDATE_TO_CURRENTSTOCKPRICE",
+      item: {
+        sym: item.sym,
+        lastPrice: item.lastPrice,
+      },
     });
+    //uddate thong tin ck
+    // console.log(item);
+    //change the title of the webpage
+
+    // let tempstock = { ...StockItems[indexnum] };
+    tempID = document.querySelector("#" + item.sym + "-ot");
+    if (tempID.innerHTML !== item.change) {
+      tempID.innerHTML = item.change;
+      ChangeBackground("#" + item.sym + "-ot");
+    }
+    tempID = document.querySelector("#" + item.sym + "-lastPrice");
+    if (parseFloat(tempID.innerHTML) !== parseFloat(item.lastPrice)) {
+      tempID.innerHTML = item.lastPrice;
+      ChangeBackground("#" + item.sym + "-lastPrice");
+    }
+    tempID = document.querySelector("#" + item.sym + "-lastVolume");
+    if (tempID.innerHTML !== strimstring(item.lastVol.toString())) {
+      tempID.innerHTML = strimstring(item.lastVol.toString());
+      ChangeBackground("#" + item.sym + "-lastVolume");
+    }
+    tempID = document.querySelector("#" + item.sym + "-changePc");
+    if (tempID.innerHTML !== item.changePc + "%") {
+      tempID.innerHTML = item.changePc + "%";
+      ChangeBackground("#" + item.sym + "-changePc");
+    }
+    tempID = document.querySelector("#" + item.sym + "-lot");
+    if (tempID.innerHTML !== strimstring(item.totalVol.toString())) {
+      // console.log(tempID.innerHTML, ":", item.totalVol);
+      tempID.innerHTML = strimstring(item.totalVol.toString());
+      ChangeBackground("#" + item.sym + "-lot");
+    }
+    tempID = document.querySelector("#" + item.sym + "-Max");
+    if (tempID.innerHTML !== item.hp) {
+      tempID.innerHTML = item.hp;
+      ChangeBackground("#" + item.sym + "-Max");
+      //prettier-ignore
+      ChangeClolorBuySell(("#" + item.sym + "-MaxAll"),ColorPrice(item.hp,document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+    }
+    // tempstock.highPrice = item.hp;
+    tempID = document.querySelector("#" + item.sym + "-Min");
+    if (tempID.innerHTML !== item.hp) {
+      tempID.innerHTML = item.lp;
+      ChangeBackground("#" + item.sym + "-Min");
+      //prettier-ignore
+      ChangeClolorBuySell(("#" + item.sym + "-MinAll"),ColorPrice(item.lp,document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+    }
+
+    //change tittle
+    if (item.sym === "IDJ") {
+      document.title =
+        item.sym +
+        "|" +
+        document.querySelector("#" + item.sym + "-lastPrice").innerHTML +
+        "|" +
+        document.querySelector("#" + item.sym + "-changePc").innerHTML;
+    }
+    //change color depend on Price
+    //prettier-ignore
+    ChangeClolorBuySell (("#" + item.sym ), ColorPrice(item.lastPrice,document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+
+    // tempstock.lowPrice = item.lp;
+    //
+    // newStockItems[indexnum] = tempstock;
+    // setStockItems([...newStockItems]);
+    // console.log(Stocklist);
+    // console.log(StockItems);
+
+    // console.log(indexnum);
+    // var dnow = new Date();
+    // console.log("stock", item.timeServer + "ToT" + dnow.getTime());
   }
 
   function ColorText(item1, item2) {
@@ -119,6 +389,21 @@ function Realtime() {
       return "txt-gia-tc";
     }
   }
+  function ColorPrice(pricenew, pricer, pricef, pricec) {
+    //{{ color: item.lastPrice < item.r ? "red" : item.lastPrice > item.r ? "blue" : item.lastPrice = item.c ? "#ff25ff" : item.lastPrice = item.f ? "#1eeeee" : "black", }}
+    // console.log(pricenew, pricer);
+    if (parseFloat(pricenew) === parseFloat(pricef)) {
+      return "txt-gia-san";
+    } else if (parseFloat(pricenew) === parseFloat(pricec)) {
+      return "txt-gia-tran";
+    } else if (parseFloat(pricenew) === parseFloat(pricer)) {
+      return "txt-gia-tc";
+    } else if (parseFloat(pricenew) < parseFloat(pricer)) {
+      return "txt-gia-thap";
+    } else if (parseFloat(pricenew) > parseFloat(pricer)) {
+      return "txt-gia-cao";
+    }
+  }
 
   const StockRows = (arr) =>
     arr &&
@@ -132,6 +417,12 @@ function Realtime() {
           <div className="backgroundwhite" id = {item.sym + "-lastVolume"}>{strimstring(item.lastVolume.toString())}</div>
           <div className="backgroundwhite" id = {item.sym + "-changePc"}>{item.changePc}%</div>
           <div className="backgroundwhite" id = {item.sym + "-lot"}>{strimstring(item.lot.toString())}</div>
+          {/*//tham chieu*/}
+          <div  className= {  "fadeOut"} id = {item.sym + "-r"}>{item.r} </div>
+          {/*//san*/}
+          <div  className= {  "fadeOut"} id = {item.sym + "-f"}>{item.f} </div>
+          {/*//tran*/}
+          <div  className= {  "fadeOut"} id = {item.sym + "-c"}>{item.c} </div>
         </div>
         <div className="stockCard__Buy">
           <div className="BuyAmount">
@@ -153,8 +444,8 @@ function Realtime() {
             <div className="backgroundwhite " id = {item.sym + "-g3-price"}>{item.g3.split("|")[0]}</div>
           </div>
           {/*prettier-ignore*/}
-          <div className={"BuyAmount backgroundwhite "+ ColorText(item.lowPrice, item)} style={{  borderTopWidth: 1, borderTopColor: "#A9A9A9",borderTopStyle: "solid",}}>
-            <div>Min</div> <div>{item.lowPrice}</div>
+          <div className={"BuyAmount "+ ColorText(item.lowPrice, item) + " backgroundwhite"} id = {item.sym + "-MinAll"} style={{  borderTopWidth: 1, borderTopColor: "#A9A9A9",borderTopStyle: "solid",}}>
+            <div>Min</div> <div  id = {item.sym + "-Min"}>{item.lowPrice}</div>
           </div>
         </div>
         <div className="stockCard__Sell">
@@ -177,155 +468,34 @@ function Realtime() {
             <div  className="backgroundwhite " id = {item.sym + "-g6-price"}>{item.g6.split("|")[0]}</div>
           </div>
           {/*prettier-ignore*/}
-          <div className={"BuyAmount backgroundwhite "+ ColorText(item.highPrice, item)} style={{  borderTopWidth: 1, borderTopColor: "#A9A9A9",borderTopStyle: "solid",}}>
-            <div>Max</div> <div>{item.highPrice}</div>
+          <div className={"BuyAmount "+ ColorText(item.highPrice, item) + " backgroundwhite"} id = {item.sym + "-MaxAll"} style={{  borderTopWidth: 1, borderTopColor: "#A9A9A9",borderTopStyle: "solid",}}>
+            <div>Max</div> <div id = {item.sym + "-Max"}>{item.highPrice}</div>
           </div>
         </div>
       </div>
     ));
 
-  function initWebsocket() {
-    if (socket == null || typeof socket === "undefined") {
-      socket = io(socketLink);
-      console.log("initial websocket");
-      socket.on("connect", function (data) {
-        console.log("CONNECT");
-        setIsConnected(true);
-        const connectioncircleID = document.querySelector("#connectioncircle");
-        // console.log(connectioncircleID);
-        connectioncircleID.style.backgroundColor = "blue";
-        // connectioncircleID.classList.replace("notconnected", "connected");
-        const timeout = setTimeout(() => {
-          setIsConnected(false);
-        }, 3000);
-        return () => clearTimeout(timeout);
-        // socket.emit("regs", msg);
-        // console.log(data);
-        // this.('#status-connect').text('Connected').css('color', '#50C979');
-      });
-    } else {
-      if (Stocklist != null && typeof Stocklist !== "undefined") {
-        // đăng ký lại room
-        let msg = '{"action":"leave","list":"' + Stocklist.join(",") + '"}';
-        socket.emit("regs", msg);
-      }
-    }
-
-    socket.on("disconnect", () => {
-      socket.removeAllListeners();
-      setIsConnected(false);
-      const connectioncircleID = document.querySelector("#connectioncircle");
-      // console.log(connectioncircleID);
-      connectioncircleID.style.backgroundColor = "gray";
-      // $('#status-connect').text('Disconnect').css('color', '#DA5664');
-    });
-    socket.on("connect_error", () => {
-      // $('#status-connect').text('Disconnect').css('color', '#DA5664');
-    });
-    socket.on("reconnect_error", () => {
-      // $('#status-connect').text('Disconnect').css('color', '#DA5664');
-    });
-
-    socket.on("reconnect", () => {
-      socketConnect();
-      // $('#status-connect').text('Connected').css('color', '#50C979');
-    });
-
-    //socketConnect();
-  }
-
-  function socketConnect() {
-    // var dmck = $.jStorage.get("DANH-MUC-CHUNG-KHOAN", []);
-    // var stockHandle = _.find(dmck, function (o) { return o.active == true });
-    // if (!stockHandle) {
-    //     return;
-    // }
-    // var msg = "{\"action\":\"join\",\"list\":\""+ "TCM" +"\"}";
-    let msg = '{"action":"join","list":"' + Stocklist.join(",") + '"}';
-    // console.log(msg);
-    socket.emit("regs", msg);
-
-    socket.on("board", function (zdata) {
-      // sendQueue(zdata.data);
-      // console.log("board:", zdata.data);
-      //Cap nhat thong tin bang gia
-      // 42["board",{"data":{"id":3210,"sym":"REE","side":"S","g1":"34.90|314|i","g2":"35.00|1|i","g3":"35.10|259|i","vol4":0}}]
-      //42["board",{"data":{"id":3310,"sym":"VCG","BVolume":43820,"SVolume":28860,"Total":13770,"AvePrice":17.2,"APColor":"e"}}]
-      updatestock(zdata.data);
-    });
-
-    socket.on("index", function (zdata) {
-      // console.log(zdata.data);
-    });
-    //Nếu khớp lệnh trả về thông tin khớp, chỉ trả về thông tin mã khớp
-    socket.on("stock", function (zdata) {
-      //{"id":3220,"sym":"TCB","lastPrice":25.3,"lastVol":100,"cl":"i","change":"0.50","changePc":"2.02","totalVol":108810,"time":"10:49:56","hp":25.3,"ch":"i","lp":24.9,"lc":"i","ap":25.1,"ca":"i"}
-      updatestockmatch(zdata.data);
-    });
-  }
-
-  //Cap nhat thong tin ve bang gia, neu ben ban thi la S, mua la B
-  function updatestock(item) {
-    // console.log("Board", item);
-    if (InitStockItems === true && item.id === 3210) {
-      let newStockItems = StockItems;
-      let indexnum = Stocklist.indexOf(item.sym);
-      //xac dinh chung khoan co thong tin thay doi
-      let tempstock = { ...StockItems[indexnum] };
-      if (item.side === "B") {
-        // console.log(tempstock);
-        //prettier-ignore
-        if (tempstock.g1.split("|")[1] !== item.g1.split("|")[1]) { ChangeBackground("#" + item.sym + "-g1-vol")}
-        // console.log("#" + item.sym + "-g1-vol");
-        //prettier-ignore
-        if (tempstock.g1.split("|")[0] !== item.g1.split("|")[0]) { ChangeBackground("#" + item.sym + "-g1-price")}
-        //prettier-ignore
-        if (tempstock.g2.split("|")[1] !== item.g2.split("|")[1]) { ChangeBackground("#" + item.sym + "-g2-vol")}
-        //prettier-ignore
-        if (tempstock.g2.split("|")[0] !== item.g2.split("|")[0]) { ChangeBackground("#" + item.sym + "-g2-price")}
-        //prettier-ignore
-        if (tempstock.g3.split("|")[1] !== item.g3.split("|")[1]) { ChangeBackground("#" + item.sym + "-g3-vol")}
-        //prettier-ignore
-        if (tempstock.g3.split("|")[0] !== item.g3.split("|")[0]) { ChangeBackground("#" + item.sym + "-g3-price")}
-        tempstock.g1 = item.g1;
-        tempstock.g2 = item.g2;
-        tempstock.g3 = item.g3;
-        newStockItems[indexnum] = tempstock;
-        setStockItems([...newStockItems]);
-        // console.log("temp", tempstock);
-        // console.log("new: ", item);
-        // volume
-        //prettier-ignore
-      } else {
-        //prettier-ignore
-        if (tempstock.g4.split("|")[1] !== item.g1.split("|")[1]) { ChangeBackground("#" + item.sym + "-g4-vol")}
-        //prettier-ignore
-        if (tempstock.g4.split("|")[0] !== item.g1.split("|")[0]) { ChangeBackground("#" + item.sym + "-g4-price")}
-        //prettier-ignore
-        if (tempstock.g5.split("|")[1] !== item.g2.split("|")[1]) { ChangeBackground("#" + item.sym + "-g5-vol")}
-        //prettier-ignore
-        if (tempstock.g5.split("|")[0] !== item.g2.split("|")[0]) { ChangeBackground("#" + item.sym + "-g5-price")}
-        //prettier-ignore
-        if (tempstock.g6.split("|")[1] !== item.g3.split("|")[1]) { ChangeBackground("#" + item.sym + "-g6-vol")}
-        //prettier-ignore
-        if (tempstock.g6.split("|")[0] !== item.g3.split("|")[0]) { ChangeBackground("#" + item.sym + "-g6-price")}
-        tempstock.g4 = item.g1;
-        tempstock.g5 = item.g2;
-        tempstock.g6 = item.g3;
-        newStockItems[indexnum] = tempstock;
-        setStockItems([...newStockItems]);
-      }
-
-      // console.log("Temp: ", tempstock);
-      // StockItems[indexnum].lastPrice = item.lastPrice;
-
-      // console.log(item);
+  //doi nen background sang gray khi co thay doi
+  function ChangeClolorBuySell(DivID, newstyle) {
+    //boi den thong so neu co thay doi
+    // let temp = "#" + item.sym + "-lastPrice";
+    // console.log(newstyle);
+    let tempID = document.querySelector(DivID);
+    // console.log("classlist", tempID.classList.item(1));
+    let tempstyle = tempID.classList.item(1);
+    // console.log(connectioncircleID);
+    // connectioncircleID.style.backgroundColor = "lightgray";
+    // prettier-ignore
+    if(tempstyle !== newstyle){
+      tempID.classList.replace(tempstyle , newstyle);
     }
   }
+
   //doi nen background sang gray khi co thay doi
   function ChangeBackground(DivID) {
     //boi den thong so neu co thay doi
     // let temp = "#" + item.sym + "-lastPrice";
+
     let connectioncircleID = document.querySelector(DivID);
     // console.log(connectioncircleID);
     // connectioncircleID.style.backgroundColor = "lightgray";
@@ -337,60 +507,37 @@ function Realtime() {
     }, 3000);
   }
   //Cap nhat thong tin ve khop lenh
-  function updatestockmatch(item) {
-    if (InitStockItems === true) {
-      let date = new Date();
-      let hours = date.getHours();
-      let minutes = date.getMinutes();
-      let seconds = date.getSeconds();
-      let newStockItems = StockItems;
-      let indexnum = Stocklist.indexOf(item.sym);
-      // prettier-ignore
-      setnewstockvalue(hours + ":" + minutes + ":" + seconds + ": " + JSON.stringify(item) );
-      //update thông tin giá các mã đã mua
-      dispatch({
-        type: "UPDATE_TO_CURRENTSTOCKPRICE",
-        item: {
-          sym: item.sym,
-          lastPrice: item.lastPrice,
-        },
-      });
-      //uddate thong tin ck
-      // console.log(item);
-      let tempstock = { ...StockItems[indexnum] };
-      if (tempstock.ot !== item.change) {
-        tempstock.ot = item.change;
-        ChangeBackground("#" + item.sym + "-ot");
-      }
-      if (tempstock.lastPrice !== item.lastPrice) {
-        tempstock.lastPrice = item.lastPrice;
-        ChangeBackground("#" + item.sym + "-lastPrice");
-      }
-      if (tempstock.lastVolume !== item.lastVol) {
-        tempstock.lastVolume = item.lastVol;
-        ChangeBackground("#" + item.sym + "-lastVolume");
-      }
-      if (tempstock.changePc !== item.changePc) {
-        tempstock.changePc = item.changePc;
-        ChangeBackground("#" + item.sym + "-changePc");
-      }
-      if (tempstock.lot !== item.totalVol) {
-        tempstock.lot = item.totalVol;
-        ChangeBackground("#" + item.sym + "-lot");
-      }
 
-      tempstock.highPrice = item.hp;
-      tempstock.lowPrice = item.lp;
-
-      // console.log("Temp: ", tempstock);
-      // StockItems[indexnum].lastPrice = item.lastPrice;
-      newStockItems[indexnum] = tempstock;
-      setStockItems([...newStockItems]);
-      // console.log(indexnum);
-      var dnow = new Date();
-      // console.log("stock", item.timeServer + "ToT" + dnow.getTime());
+  const addstocktolistclick = async (e) => {
+    e.preventDefault();
+    // prettier-ignore
+    let tempstock = document.getElementById("stockcodeinput").value.toUpperCase();
+    if (tempstock !== "") {
+      let index = Stocklist.findIndex(
+        (StocklistItem) => StocklistItem === tempstock
+      );
+      // console.log(tempindex);
+      if (index >= 0) {
+        console.log("khong can thay doi");
+      } else {
+        console.log("updatelist", tempstock);
+        let newStocklist = Stocklist;
+        setStocklist([...newStocklist, tempstock]);
+      }
     }
-  }
+    isNewStockItems.current = true;
+  };
+  const delstocktolistclick = (e) => {
+    e.preventDefault();
+    // prettier-ignore
+    if (document.getElementById("stockcodeinput").value.toUpperCase() !== "") {
+      dispatch({
+        type: "DEL_STOCK_TO_LIST",
+        item: document.getElementById("stockcodeinput").value.toUpperCase(),
+      });
+      // console.log(tempstock);
+    }
+  };
 
   return (
     <div>
@@ -400,24 +547,42 @@ function Realtime() {
         <div>{<VnIndexChart />}</div>
         <div className="VNIndexContent" style={{ color: VNIndex.idx < VNIndex.idxopen ? "red" :  VNIndex.idx > VNIndex.idxopen ? "blue" : "black", }} >
           {/*prettier-ignore*/}
-          <div className="VnIndex"> {VNIndex.idx !== undefined ? parseFloat(VNIndex.idx).toLocaleString("en-US", { style: "decimal", currency: "USD", }) : "0"} </div>
+          <div className="VnIndex">{VNIndex.idx !== undefined ? parseFloat(VNIndex.idx).toLocaleString("en-US", { style: "decimal", currency: "USD", }) : "0"} </div>
           {/*prettier-ignore*/}
-          <div className="VnIndex">      {VNIndex.idxchg !== undefined ? VNIndex.idxchg : "0"}   </div>
+          <div className="VnIndex">{VNIndex.idxchg !== undefined ? VNIndex.idxchg : "0"}   </div>
           {/*prettier-ignore*/}
-          <div className="VnIndex">      {VNIndex.idxpct !== undefined ? VNIndex.idxpct : "0"}   </div>
+          <div className="VnIndex">{VNIndex.idxpct !== undefined ? VNIndex.idxpct : "0"}   </div>
           {/*prettier-ignore*/}
           <div className="VnIndex">{VNIndex.tval !== undefined ? parseInt(VNIndex.tval).toLocaleString("en-US", {style: "decimal",currency: "USD",}) : "0"} </div>
           {/*prettier-ignore*/}
-          <div> <a className="connection-circle notconnected" id="connectioncircle"></a> </div>
+          <div>
+            <a className="connection-circle notconnected" id="connectioncircle"></a>
+          </div>
         </div>
-
       </div>
+      <form>
+        <div>
+          <input
+            className="stockcodeinput"
+            // defaultValue={Stocklist.join(",")}
+            id="stockcodeinput"
+            onChange={(e) => {
+              e.target.value = e.target.value.toUpperCase();
+            }}
+          />
+          {/*prettier-ignore*/}
+          <button className="addstocktolist" onClick={addstocktolistclick}>Add Stock</button>
+          {/*prettier-ignore*/}
+          <button className="addstocktolist" onClick={delstocktolistclick}>Del Stock</button>
+        </div>
+      </form>
       <div className="realtime">{StockRows(StockItems)}</div>
       <div className="jsonValue">{newstockvalue}</div>
       {/*prettier-ignore*/}
       <div  className= {IsConnected ? "alert alert-success connection-alert connected-alert text-center fadeIn":  "fadeOut"}>
         <strong>Connected!</strong>
       </div>
+      <div>{Stocklist.join(",")}</div>
     </div>
   );
 }

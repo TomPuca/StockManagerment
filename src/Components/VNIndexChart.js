@@ -21,8 +21,8 @@ function VnIndexChart() {
   let eYear = date.getFullYear();
   let eMonth = date.getMonth() + 1;
   let eDay = date.getDate();
-  let eHour = 14;
-  let eMin = 46;
+  let eHour = 11;
+  let eMin = 0;
   let stockChart;
   let newOptions;
   // let openIndex = 1075.56;
@@ -40,13 +40,32 @@ function VnIndexChart() {
   useInterval(() => {
     // Your custom logic here
     getMarketIndicator("10");
-    console.log("HSX update:", Date());
+    // console.log("HSX update:", Date());
   }, 60000);
 
   async function getMarketIndicator(marketCode) {
     const res = await fetch(historyIndicatorLink + marketCode);
     const zdata = await res.json();
     // console.log("zdata", zdata);
+    // eMin = date.getMinutes();
+    // if (eMin < 50) {
+    //   eHour = date.getHours() + 2;
+    //   // console.log(eHour);
+    //   eMin = eMin;
+    // } else {
+    //   eHour = date.getHours() + 4;
+    //   console.log("else", eHour);
+    //   eMin = 5;
+    // }
+    eHour = date.getHours();
+    if (eHour > 8 && eHour <= 12) {
+      eHour = date.getHours() + 2;
+      eMin = 0;
+    } else {
+      eHour = 14;
+      eMin = 16;
+    }
+
     if (zdata != null) {
       let code = zdata.marketCode;
       let openIndex = 0;

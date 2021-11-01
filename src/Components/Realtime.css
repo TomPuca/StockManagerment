@@ -96,6 +96,20 @@
   background-color: gray;
 }
 
+.addstocktolist {
+  background-color: transparent;
+  border: 1px solid lightgrey;
+  border-radius: 5px ;
+  margin-left: 4px;
+}
+.stockcodeinput {
+  background-color: transparent;
+  border: 1px solid lightgrey;
+  border-radius: 5px ;
+  margin-top: 5px;
+  margin-left: 10px;
+}
+
 .txt-gia-tran{
   color: #ff25ff;
 }
@@ -135,6 +149,7 @@
   /*background-color: lightgrey;*/
   /*color: #fff;*/
   padding: 8px;
+  margin-right: 4px;
   /*font-size: 2rem;*/
 }
 

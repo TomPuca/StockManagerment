@@ -137,9 +137,9 @@ function BuySell() {
       MonthSold: 0,
       YearSold: 0,
     });
-    console.log(document.getElementById("StockCodeID").value);
-    console.log(document.getElementById("StockAmount").value);
-    console.log(document.getElementById("BuyPrice").value);
+    // console.log(document.getElementById("StockCodeID").value);
+    // console.log(document.getElementById("StockAmount").value);
+    // console.log(document.getElementById("BuyPrice").value);
     // console.log(stockrecentbuy);
 
     // console.log("Add Stock Clicked !!!");

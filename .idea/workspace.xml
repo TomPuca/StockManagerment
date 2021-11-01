@@ -2,28 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41c6bcc6-2d69-48a0-a864-942c25f8fb48" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Components/CSS/bootstrap.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Components/Chart/BarChart.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Components/StyleTest.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Components/Styles.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Components/VNIndexChart.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Components/VnIndexChart.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Components/chart code.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Note/GitCommand.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Components/Realtime-backup.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Components/StockCodeView.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Components/testChartView.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/BuySell.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/BuySell.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/BuySell.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/BuySell.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/FormDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/FormDialog.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/Functions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Functions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/HistoryTransactions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/HistoryTransactions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/ProcessStock.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Note/ProcessStock.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/Realtime.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Realtime.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/Realtime.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Realtime.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/StyleTest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/StyleTest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/VNIndexChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/VNIndexChart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/vps.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Note/vps.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +30,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
+        <option value="HTML File" />
         <option value="JavaScript File" />
       </list>
     </option>
@@ -52,10 +49,11 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Components/CSS" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Components" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -63,13 +61,17 @@
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
     <property name="settings.editor.selected.configurable" value="settings.javascript.prettier" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/Components/CSS" />
       <recent name="$PROJECT_DIR$/src/Components" />
+      <recent name="$PROJECT_DIR$/src/Components/CSS" />
       <recent name="$PROJECT_DIR$/src" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/Note" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -83,7 +85,78 @@
       <workItem from="1611824354150" duration="32189000" />
       <workItem from="1611993055006" duration="356000" />
       <workItem from="1611993441426" duration="61000" />
-      <workItem from="1611993520469" duration="63694000" />
+      <workItem from="1611993520469" duration="75538000" />
+      <workItem from="1612859428633" duration="257000" />
+      <workItem from="1612859733116" duration="1178000" />
+      <workItem from="1612861237029" duration="13770000" />
+      <workItem from="1613385923978" duration="466000" />
+      <workItem from="1613387310555" duration="216000" />
+      <workItem from="1613387978439" duration="178000" />
+      <workItem from="1613391496329" duration="80000" />
+      <workItem from="1613391691250" duration="445000" />
+      <workItem from="1613392340721" duration="157000" />
+      <workItem from="1613444284758" duration="11972000" />
+      <workItem from="1613554000936" duration="67000" />
+      <workItem from="1613554258366" duration="309000" />
+      <workItem from="1613556121761" duration="90000" />
+      <workItem from="1613556646861" duration="96000" />
+      <workItem from="1613557826272" duration="317000" />
+      <workItem from="1613560454217" duration="198000" />
+      <workItem from="1613612998762" duration="1006000" />
+      <workItem from="1613615157398" duration="130000" />
+      <workItem from="1613616338721" duration="336000" />
+      <workItem from="1613618256726" duration="27594000" />
+      <workItem from="1614077465921" duration="127000" />
+      <workItem from="1614077906685" duration="398000" />
+      <workItem from="1614079221023" duration="10534000" />
+      <workItem from="1614683766805" duration="428000" />
+      <workItem from="1614685094467" duration="483000" />
+      <workItem from="1614685954456" duration="24000" />
+      <workItem from="1614686123291" duration="147000" />
+      <workItem from="1614686517096" duration="247000" />
+      <workItem from="1614824137724" duration="205000" />
+      <workItem from="1614825070047" duration="687000" />
+      <workItem from="1614928914032" duration="521000" />
+      <workItem from="1614934612378" duration="227000" />
+      <workItem from="1614935049470" duration="435000" />
+      <workItem from="1614935818197" duration="706000" />
+      <workItem from="1615453672765" duration="261000" />
+      <workItem from="1615454933232" duration="238000" />
+      <workItem from="1615455772178" duration="301000" />
+      <workItem from="1616498783454" duration="910000" />
+      <workItem from="1616983953460" duration="315000" />
+      <workItem from="1616984724935" duration="292000" />
+      <workItem from="1616990340435" duration="527000" />
+      <workItem from="1618199062234" duration="244000" />
+      <workItem from="1624336996271" duration="87000" />
+      <workItem from="1624337216453" duration="542000" />
+      <workItem from="1626245283764" duration="265000" />
+      <workItem from="1626247738337" duration="337000" />
+      <workItem from="1626257084386" duration="126000" />
+      <workItem from="1626257863044" duration="133000" />
+      <workItem from="1626312701523" duration="251000" />
+      <workItem from="1626320110569" duration="109000" />
+      <workItem from="1626321010218" duration="136000" />
+      <workItem from="1626321908440" duration="448000" />
+      <workItem from="1626330787594" duration="161000" />
+      <workItem from="1626331131514" duration="301000" />
+      <workItem from="1626332604003" duration="232000" />
+      <workItem from="1626337075279" duration="15000" />
+      <workItem from="1626338146668" duration="384000" />
+      <workItem from="1626339344026" duration="266000" />
+      <workItem from="1626422139941" duration="172000" />
+      <workItem from="1626422597146" duration="155000" />
+      <workItem from="1626424173972" duration="289000" />
+      <workItem from="1626426713959" duration="215000" />
+      <workItem from="1626427168491" duration="58000" />
+      <workItem from="1626427416447" duration="3364000" />
+      <workItem from="1627440258248" duration="90000" />
+      <workItem from="1627443396158" duration="159000" />
+      <workItem from="1628129108808" duration="169000" />
+      <workItem from="1628475954065" duration="243000" />
+      <workItem from="1630289435487" duration="1951000" />
+      <workItem from="1631265330338" duration="662000" />
+      <workItem from="1635317145954" duration="2415000" />
     </task>
     <servers />
   </component>
@@ -102,38 +175,36 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="true" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/Components/chart code.js</url>
           <line>95</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/Components/VNIndexChart.js</url>
           <line>7</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/Components/VNIndexChart.js</url>
           <line>8</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/Components/VNIndexChart.js</url>
-          <line>192</line>
-          <properties lambdaOrdinal="-1" />
+          <line>211</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/Components/Realtime.js</url>
-          <line>186</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="7" />
+          <url>file://$PROJECT_DIR$/src/Components/Realtime-backup.js</url>
+          <line>280</line>
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -201,7 +201,7 @@ initGlobalIndexSocket = function () {
   if (socket != null && socket != "undefined") {
     socket.on("INDEX_CRUDEOILWTI", function (zdata) {
       var dt = JSON.parse(zdata);
-      fnUpdateIndexPanel(dt);
+      fnUpdateIndexPcanel(dt);
     });
     socket.on("INDEX_GOLD", function (zdata) {
       var dt = JSON.parse(zdata);

@@ -7,18 +7,20 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { StockRef } from "./firebase";
 import { getCurrentDate } from "./Functions";
+import { ExpectedInterest } from "./Functions";
 
 export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
+    // console.log("props", props);
   };
   const handleCancel = () => {
     setOpen(false);
   };
 
-  function UpdateStockByID(id, stockSoldPrice, gain, gainpercent) {
+  function UpdateStockByID(id, stockSoldPrice, gain, gainpercent, volume) {
     let StockQueries = StockRef.doc(id);
     // console.log(getCurrentDate()[0]);
     StockQueries.get()
@@ -33,6 +35,7 @@ export default function FormDialog(props) {
             YearSold: getCurrentDate()[2],
             IsSold: true,
             Gain: gain,
+            Amount: volume,
             Percent: gainpercent,
           });
         } else {
@@ -48,7 +51,11 @@ export default function FormDialog(props) {
   const handleClose = () => {
     setOpen(false);
     let Soldstock = parseFloat(document.getElementById("StockID").value);
-    // console.log(Soldstock);
+    let StockAmount = parseFloat(
+      document.getElementById("StockAmountID").value
+    );
+    // console.log(Soldstock, StockAmount);
+    console.log(Soldstock);
     // If value entered was valid
     if (!isNaN(Soldstock)) {
       // first : get ID of stock data
@@ -71,7 +78,8 @@ export default function FormDialog(props) {
               props.stockitem.BoughtPrice,
               Soldstock,
               props.stockitem.Amount
-            )[1]
+            )[1],
+            StockAmount
           );
           // console.log(doc.id);
         });
@@ -79,52 +87,27 @@ export default function FormDialog(props) {
     }
   };
 
-  function ExpectedInterest(buyprice, sellprice, Amount) {
-    let expectedprofit =
-      (parseFloat(sellprice) * 1000 - parseFloat(buyprice) * 1000) * Amount -
-      (parseFloat(buyprice) + parseFloat(sellprice)) * Amount * 2 -
-      parseFloat(sellprice) * Amount;
-
-    let expectedpercent =
-      (expectedprofit / (parseFloat(buyprice) * 10 * Amount)).toFixed(2) + "%";
-    return [expectedprofit, expectedpercent];
-  }
   return (
     <div>
-      <Button
-        variant="outlined"
-        style={{ fontSize: "12px" }}
-        size="small"
-        onClick={handleClickOpen}
-      >
-        Sell
-      </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        // onEntering={handleEnter}
-        aria-labelledby="form-dialog-title"
-        disableBackdropClick={true}
-      >
-        <DialogTitle id="form-dialog-title">Sell Price</DialogTitle>
+      {/*prettier-ignore*/}
+      <Button variant="outlined" style={{ fontSize: "12px" }} size="small" onClick={handleClickOpen} > Sell  </Button>
+      {/*prettier-ignore*/}
+      <Dialog open={open} onClose={handleClose}  aria-labelledby="form-dialog-title"  disableBackdropClick={true}  >
+        <DialogTitle id="form-dialog-title">
+          Sell {props.stockitem.MaCK}
+        </DialogTitle>
         <DialogContent>
-          <TextField
-            id={"StockID"}
-            autoFocus
-            margin="dense"
-            // id="sellprice"
-            label="Sell Price"
-            type="email"
-            fullWidth
-          />
+          {/*prettier-ignore*/}
+          <TextField id={"StockID"} autoFocus margin="dense" label="Sell Price" type="email" fullWidth />
+          {/*prettier-ignore*/}
+          <TextField id={"StockAmountID"} margin="dense" label="Volume" defaultValue={props.stockitem.Amount} fullWidth />
+          {/*<TextField disabled id="standard-disabled" label="Disabled" defaultValue="Hello World" />*/}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancel} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleClose} color="primary">
-            Submit
-          </Button>
+          {/*prettier-ignore*/}
+          <Button onClick={handleCancel} color="primary"> Cancel  </Button>
+          {/*prettier-ignore*/}
+          <Button onClick={handleClose} color="primary"> Submit </Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -79,43 +79,9 @@ function HistoryTransactions() {
 
   return (
     <div>
-      <ul className="nav nav-tabs" role="tablist">
-        <li role="presentation" className="active">
-          <a
-            href="#listening"
-            aria-controls="profile"
-            role="tab"
-            data-toggle="tab"
-          >
-            Listening
-          </a>
-        </li>
-        <li role="presentation">
-          <a href="#emiting" aria-controls="home" role="tab" data-toggle="tab">
-            Emiting
-          </a>
-        </li>
-        <li role="presentation">
-          <a
-            href="#emitHistory"
-            aria-controls="history"
-            role="tab"
-            data-toggle="tab"
-          >
-            Emit History
-          </a>
-        </li>
-        <li role="presentation">
-          <a
-            href="#emitAckRes"
-            aria-controls="ackRes"
-            role="tab"
-            data-toggle="tab"
-          >
-            Emiting AckRes
-          </a>
-        </li>
-      </ul>
+      <div className="Back_Main">
+        <a href="../">Main</a>
+      </div>
 
       {/*prettier-ignore*/}
       <div style={{ color: "blue", display: "flex",  }}>

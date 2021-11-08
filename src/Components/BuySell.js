@@ -381,6 +381,9 @@ function BuySell() {
             currency: "USD",
           })}
         </div>
+        <div className="History_Chart">
+          <a href="../HistoryTransactions">Chart</a>
+        </div>
       </div>
     </div>
   );

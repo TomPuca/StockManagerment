@@ -2,24 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41c6bcc6-2d69-48a0-a864-942c25f8fb48" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Components/Realtime-backup.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Components/StockCodeView.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Components/testChartView.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/BuySell.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/BuySell.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/BuySell.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/BuySell.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/FormDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/FormDialog.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Functions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Functions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/ProcessStock.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Note/ProcessStock.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Realtime.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Realtime.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Realtime.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Realtime.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/StyleTest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/StyleTest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/VNIndexChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/VNIndexChart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/vps.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Note/vps.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/HistoryTransactions.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/HistoryTransactions.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/HistoryTransactions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/HistoryTransactions.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +143,7 @@
       <workItem from="1628475954065" duration="243000" />
       <workItem from="1630289435487" duration="1951000" />
       <workItem from="1631265330338" duration="662000" />
-      <workItem from="1635317145954" duration="2415000" />
+      <workItem from="1635317145954" duration="7441000" />
     </task>
     <servers />
   </component>

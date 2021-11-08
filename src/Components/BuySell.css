@@ -61,6 +61,12 @@
   /* justify-content: center; */
 }
 
+.History_Chart {
+  font-weight: bold;
+  display: flex;
+  margin-top: 10px;
+}
+
 .totalitemleft {
   /* width: 300px; */
   /* height: 150px; */

@@ -1,3 +1,10 @@
 .Transactions {
     font-weight: bold;
 }
+
+.Back_Main {
+    font-weight: bold;
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

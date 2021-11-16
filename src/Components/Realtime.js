@@ -1,21 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Realtime.css";
 import { useStateValue } from "../StateProvider";
-import { getCurrentDate, strimstring, useInterval } from "./Functions";
+import { strimstring, useInterval } from "./Functions";
+// import { getCurrentDate, strimstring, useInterval } from "./Functions";
 import VnIndexChart from "./VNIndexChart";
 
 //index link: https://bgapidatafeed.vps.com.vn/getlistindexdetail/10
 
 function Realtime() {
-  let socketLink = "https://bgdatafeed.vps.com.vn/";
+  // let socketLink = "https://bgdatafeed.vps.com.vn/";
   const [newstockvalue, setnewstockvalue] = useState("Begin");
   const [StockItems, setStockItems] = useState([]);
   const [VNIndex, setVNIndex] = useState([]);
   // const [WebSocketInitState, setWebSocketInitState] = useState(false);
   // prettier-ignore
-  const [{ socket   , currentstockprice }, dispatch] = useStateValue();
+  // const [{ socket   , currentstockprice }, dispatch] = useStateValue();
+  const [{ socket    }, dispatch] = useStateValue();
   // prettier-ignore
-  const [Stocklist, setStocklist] = useState(["IDJ","FRT","TCM","HPG","CTG","BID"]);
+  const [Stocklist, setStocklist] = useState(["IDJ","FRT","CEO","DIG","CTG","BID"]);
   const [InitStockItems, setInitStockItems] = useState(false);
   const [IsConnected, setIsConnected] = useState(false);
 
@@ -96,7 +98,11 @@ function Realtime() {
 
       // console.log(zdata.data);
       // console.log(isStockItems.current);
-      if (isStockItems.current) {
+      if (
+        isStockItems.current && //Check if still in Main Page then update match value
+        document.getElementById("MainCheck")
+      ) {
+        // console.log(document.querySelector("#MainCheck"));
         updatestock(zdata.data);
         // console.log(zdata.data);
       }
@@ -109,7 +115,11 @@ function Realtime() {
     //Nếu khớp lệnh trả về thông tin khớp, chỉ trả về thông tin mã khớp
     socket.on("stock", function (zdata) {
       // console.log(socket);
-      if (isStockItems.current) {
+      if (
+        isStockItems.current && //Check if still in Main Page then update match value
+        document.getElementById("MainCheck")
+      ) {
+        // console.log(document.getElementById("MainCheck"));
         updatestockmatch(zdata.data);
       }
     });
@@ -276,6 +286,7 @@ function Realtime() {
       }
       //{"id":3220,"sym":"TCB","lastPrice":25.3,"lastVol":100,"cl":"i","change":"0.50","changePc":"2.02","totalVol":108810,"time":"10:49:56","hp":25.3,"ch":"i","lp":24.9,"lc":"i","ap":25.1,"ca":"i"}
       else if (item.id === 3220) {
+        //Check if still in Main Page then update match value
         updatestockmatch(item);
       }
     }
@@ -349,7 +360,7 @@ function Realtime() {
     }
 
     //change tittle
-    if (item.sym === "IDJ") {
+    if (item.sym === "CEO") {
       document.title =
         item.sym +
         "|" +
@@ -543,7 +554,7 @@ function Realtime() {
     <div>
       {/* kiem tra co du lieu moi xuat ko bi loi */}
       {/*prettier-ignore*/}
-      <div className="VNIndexContain">
+      <div className="VNIndexContain" id ="MainCheck">
         <div>{<VnIndexChart />}</div>
         <div className="VNIndexContent" style={{ color: VNIndex.idx < VNIndex.idxopen ? "red" :  VNIndex.idx > VNIndex.idxopen ? "blue" : "black", }} >
           {/*prettier-ignore*/}

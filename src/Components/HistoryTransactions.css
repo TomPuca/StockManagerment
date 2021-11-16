@@ -1,3 +1,5 @@
+
+
 .Transactions {
     font-weight: bold;
 }
@@ -7,4 +9,32 @@
     display: flex;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+.tab {
+    display: inline-block;
+    margin-left: 40px;
+}
+
+.Month_all{
+    display: inline-flex;
+    flex-direction: column;
+
+}
+
+.Month {
+    /*width: 420px;*/
+    display: inline-flex;
+    /*text-align: right;*/
+}
+
+.Month_text {
+    width: 100px;
+    text-align: left;
+    /*border-right: 1px solid lightgray;*/
+}
+
+.Month_value {
+    text-align: right;
+    width: 120px;
+    /*border-right: 1px solid lightgray;*/
 }

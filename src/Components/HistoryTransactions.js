@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./HistoryTransactions.css";
 import TransactionItem from "./TransactionItem";
-import db, { StockRef } from "./firebase";
+import db from "./firebase";
 import FormDialog from "./FormDialog";
 import Chart from "./Chart/BarChart";
+import { Link } from "react-router-dom";
 // import "./CSS/bootstrap.min.css";
 
 function HistoryTransactions() {
@@ -79,12 +80,14 @@ function HistoryTransactions() {
 
   return (
     <div>
-      <div className="Back_Main">
-        <a href="../">Main</a>
-      </div>
+      <Link to="/">
+        <div>
+          <span className="Header-cartCount">Main</span>
+        </div>
+      </Link>
 
       {/*prettier-ignore*/}
-      <div style={{ color: "blue", display: "flex",  }}>
+      <div style={{ color: "blue", display: "flex",width: "700px"  }}>
         <div className="Transactions">Transactions: </div>
         {/*prettier-ignore*/}
         <div>{GainTotal.toLocaleString("en-US", {style: "decimal",currency: "USD",})}</div>
@@ -108,6 +111,112 @@ function HistoryTransactions() {
           Total={GainTotal}
         />
       </div>
+
+      <div className="Month_all">
+        <div className="Month">
+          <div className="Month_text">January :</div>
+          <div className="Month_value">
+            {GainTotalPerMonth(1).toLocaleString("en-US", {
+              style: "decimal",
+              currency: "USD",
+            })}
+          </div>
+          <span className="tab"> </span>
+          <div className="Month_text">February :</div>
+          <div className="Month_value">
+            {GainTotalPerMonth(2).toLocaleString("en-US", {
+              style: "decimal",
+              currency: "USD",
+            })}
+          </div>
+        </div>
+        <div className="Month">
+          <div className="Month_text">March :</div>
+          <div className="Month_value">
+            {GainTotalPerMonth(3).toLocaleString("en-US", {
+              style: "decimal",
+              currency: "USD",
+            })}
+          </div>
+          <span className="tab"> </span>
+          <div className="Month_text">April :</div>
+          <div className="Month_value">
+            {GainTotalPerMonth(4).toLocaleString("en-US", {
+              style: "decimal",
+              currency: "USD",
+            })}
+          </div>
+        </div>
+        <div className="Month">
+          <div className="Month_text">May :</div>
+          <div className="Month_value">
+            {GainTotalPerMonth(5).toLocaleString("en-US", {
+              style: "decimal",
+              currency: "USD",
+            })}
+          </div>
+          <span className="tab"> </span>
+          <div className="Month_text">June :</div>
+          <div className="Month_value">
+            {GainTotalPerMonth(6).toLocaleString("en-US", {
+              style: "decimal",
+              currency: "USD",
+            })}
+          </div>
+        </div>
+        <div className="Month">
+          <div className="Month_text">July :</div>
+          <div className="Month_value">
+            {GainTotalPerMonth(7).toLocaleString("en-US", {
+              style: "decimal",
+              currency: "USD",
+            })}
+          </div>
+          <span className="tab"> </span>
+          <div className="Month_text">August :</div>
+          <div className="Month_value">
+            {GainTotalPerMonth(8).toLocaleString("en-US", {
+              style: "decimal",
+              currency: "USD",
+            })}
+          </div>
+        </div>
+        <div className="Month">
+          <div className="Month_text">September :</div>
+          <div className="Month_value">
+            {GainTotalPerMonth(9).toLocaleString("en-US", {
+              style: "decimal",
+              currency: "USD",
+            })}
+          </div>
+          <span className="tab"> </span>
+          <div className="Month_text">October :</div>
+          <div className="Month_value">
+            {GainTotalPerMonth(10).toLocaleString("en-US", {
+              style: "decimal",
+              currency: "USD",
+            })}
+          </div>
+        </div>
+        <div className="Month">
+          <div className="Month_text">November :</div>
+          <div className="Month_value">
+            {GainTotalPerMonth(11).toLocaleString("en-US", {
+              style: "decimal",
+              currency: "USD",
+            })}
+          </div>
+          <span className="tab"> </span>
+          <div className="Month_text">December :</div>
+          <div className="Month_value">
+            {GainTotalPerMonth(12).toLocaleString("en-US", {
+              style: "decimal",
+              currency: "USD",
+            })}
+          </div>
+        </div>
+      </div>
+
       {ShowBuyStock(stocks)}
     </div>
   );

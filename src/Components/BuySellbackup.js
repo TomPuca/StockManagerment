@@ -44,26 +44,12 @@ function BuySell() {
   //   soldtemp: 0,
   //   ratiotemp: 0,
   // };
-  const [ratiopercent, setratiopercent] = useState("0");
-  const [ratiotemp, setRatiotemp] = useState({
-    buytemp: 0,
-    soldtemp: 0,
-    // ratiotemp: 0,
-  });
+  // const [ratiotemp, setRatiotemp] = useState([]);
+  //   buytemp: 0,
+  //   soldtemp: 0,
+  //   ratiotemp: 0,
+  // });
 
-  useEffect(() => {
-    // console.log(ratiotemp);
-    setratiopercent(
-      ExpectedInterest(
-        ratiotemp.buytemp,
-        ratiotemp.soldtemp,
-        1
-      )[1].toLocaleString("en-US", {
-        style: "decimal",
-        currency: "USD",
-      })
-    );
-  }, [ratiotemp]);
   // console.log(stockrecentbuy);
   // console.log("current price :", currentstockprice);
   useEffect(() => {
@@ -81,10 +67,10 @@ function BuySell() {
   useEffect(() => {
     // prettier-ignore
     let data = stocks
-        ?.filter((item) => item.IsSold === false)
-        .map(({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,}) =>
-            ({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,})
-        );
+      ?.filter((item) => item.IsSold === false)
+      .map(({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,}) =>
+      ({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,})
+      );
     // objs.sort(function(a, b) {
     // return a.last_nom.localeCompare(b.last_nom)
     // });
@@ -96,10 +82,10 @@ function BuySell() {
     // console.log("CK chua ban", data);
     // prettier-ignore
     data = stocks
-        ?.filter((item) => item.IsSold === true).map(
-            ({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,}) =>
-                ({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,})
-        );
+      ?.filter((item) => item.IsSold === true).map(
+        ({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,}) =>
+        ({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,})
+      );
     setSellStocks(data);
     //get buy/sell total
 
@@ -412,67 +398,62 @@ function BuySell() {
           })}
         </div>
         <Link to="/HistoryTransactions">
-          <div style={{ marginTop: 10 }}>
+          <div>
             <span className="Header-cartCount">Chart</span>
           </div>
         </Link>
-        {/*prettier-ignore*/}
-        <div style={{  marginTop: 10,}}>
-          <TextField
-            id="BuyPriceTemp"
-            label="Buy Price"
-            style={{ marginTop: 5, width: 130 }}
-            placeholder="0"
-            // margin="normal"
-            size="small"
-            // InputLabelProps={{
-            //   shrink: true,
-            // }}
-            variant="outlined"
-            // value={stockrecentbuy.BoughtPrice}
-            onChange={(e) => {
-              let tempvalue = { ...ratiotemp };
-              tempvalue.buytemp = parseFloat(e.target.value);
-
-              // console.log(tempvalue);
-              setRatiotemp(tempvalue);
-            }}
-          />
-          <TextField
-            id="SoldPriceTemp"
-            label="Sold Price"
-            style={{ marginTop: 5, width: 130 }}
-            placeholder="0"
-            // margin="normal"
-            size="small"
-            // InputLabelProps={{
-            //   shrink: true,
-            // }}
-            variant="outlined"
-            // value={stockrecentbuy.BoughtPrice}
-            onChange={(e) => {
-              let tempvalue = { ...ratiotemp };
-              tempvalue.soldtemp = parseFloat(e.target.value);
-
-              // console.log(tempvalue);
-              setRatiotemp(tempvalue);
-            }}
-          />
-          <TextField
-            disabled
-            id="RatioTemp"
-            label=""
-            style={{ marginTop: 5, width: 90 }}
-            placeholder={ratiopercent}
-            // margin="normal"
-            size="small"
-            // InputLabelProps={{
-            //   shrink: true,
-            // }}
-            variant="outlined"
-            // value={stockrecentbuy.BoughtPrice}
-            onChange={(e) => {}}
-          />
+        <div>
+          {/*<TextField*/}
+          {/*  id="BuyPriceTemp"*/}
+          {/*  label="Buy Price"*/}
+          {/*  style={{ marginTop: 5, width: 130 }}*/}
+          {/*  placeholder="0"*/}
+          {/*  // margin="normal"*/}
+          {/*  size="small"*/}
+          {/*  // InputLabelProps={{*/}
+          {/*  //   shrink: true,*/}
+          {/*  // }}*/}
+          {/*  variant="outlined"*/}
+          {/*  // value={stockrecentbuy.BoughtPrice}*/}
+          {/*  onChange={(e) => {*/}
+          {/*    // let tempvalue = { ...tempstock };*/}
+          {/*    // tempvalue.buytemp = parseFloat(e.target.value);*/}
+          {/*    // settempstock(tempvalue);*/}
+          {/*    // console.log(tempstock);*/}
+          {/*  }}*/}
+          {/*/>*/}
+          {/*<TextField*/}
+          {/*  id="SoldPriceTemp"*/}
+          {/*  label="Sold Price"*/}
+          {/*  style={{ marginTop: 5, width: 130 }}*/}
+          {/*  placeholder="0"*/}
+          {/*  // margin="normal"*/}
+          {/*  size="small"*/}
+          {/*  // InputLabelProps={{*/}
+          {/*  //   shrink: true,*/}
+          {/*  // }}*/}
+          {/*  variant="outlined"*/}
+          {/*  // value={stockrecentbuy.BoughtPrice}*/}
+          {/*  onChange={(e) => {}}*/}
+          {/*/>*/}
+          {/*<TextField*/}
+          {/*  id="RatioTemp"*/}
+          {/*  label=""*/}
+          {/*  style={{ marginTop: 5, width: 50 }}*/}
+          {/*  placeholder=""*/}
+          {/*  // margin="normal"*/}
+          {/*  size="small"*/}
+          {/*  // InputLabelProps={{*/}
+          {/*  //   shrink: true,*/}
+          {/*  // }}*/}
+          {/*  variant="outlined"*/}
+          {/*  // value={stockrecentbuy.BoughtPrice}*/}
+          {/*  onChange={(e) => {*/}
+          {/*    // stockrecentbuy.BoughtPrice = parseFloat(e.target.value);*/}
+          {/*    // console.log(stockrecentbuy);*/}
+          {/*    // console.log(document.getElementById("BuyPrice").value);*/}
+          {/*  }}*/}
+          {/*/>*/}
         </div>
       </div>
     </div>

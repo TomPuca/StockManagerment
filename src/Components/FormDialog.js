@@ -72,12 +72,12 @@ export default function FormDialog(props) {
             ExpectedInterest(
               props.stockitem.BoughtPrice,
               Soldstock,
-              props.stockitem.Amount
+              StockAmount
             )[0],
             ExpectedInterest(
               props.stockitem.BoughtPrice,
               Soldstock,
-              props.stockitem.Amount
+              StockAmount
             )[1],
             StockAmount
           );

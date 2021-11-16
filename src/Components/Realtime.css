@@ -111,7 +111,7 @@
 }
 
 .txt-gia-tran{
-  color: #ff25ff;
+  color: #e800e8!important;
 }
 .txt-gia-san{
   color: #1eeeee;
@@ -136,6 +136,7 @@
 }
 
 .txt-gia-cao{
+  /*color: #03ff00!important*/
   color: blue;
 }
 

@@ -10,8 +10,8 @@ export const initialState = {
 };
 
 // Selector
-export const getBasketTotal = (basket) =>
-  basket?.reduce((Gain, item) => item.price + Gain, 0);
+// export const getBasketTotal = (basket) =>
+//   basket?.reduce((Gain, item) => item.price + Gain, 0);
 
 const reducer = (state, action) => {
   // console.log(action);

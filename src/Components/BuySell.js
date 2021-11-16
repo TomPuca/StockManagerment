@@ -330,7 +330,7 @@ function BuySell() {
             <div>
               <TextField
                 id="BuyPrice"
-                label="Buy Price"
+                label="Purchase Price"
                 style={{ marginTop: 5 }}
                 placeholder="0"
                 // margin="normal"
@@ -420,7 +420,7 @@ function BuySell() {
         <div style={{  marginTop: 10,}}>
           <TextField
             id="BuyPriceTemp"
-            label="Buy Price"
+            label="Purchase Price"
             style={{ marginTop: 5, width: 130 }}
             placeholder="0"
             // margin="normal"
@@ -440,7 +440,7 @@ function BuySell() {
           />
           <TextField
             id="SoldPriceTemp"
-            label="Sold Price"
+            label="Sale Price"
             style={{ marginTop: 5, width: 130 }}
             placeholder="0"
             // margin="normal"

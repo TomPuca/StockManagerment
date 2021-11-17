@@ -186,6 +186,7 @@ function Realtime() {
     //
     // console.log("Board", item);
     //Khop lenh ma 3210
+
     if (isStockItems.current === true) {
       if (item.id === 3210) {
         let tempID;

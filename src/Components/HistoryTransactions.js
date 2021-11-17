@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./HistoryTransactions.css";
 import TransactionItem from "./TransactionItem";
 import db from "./firebase";
-import FormDialog from "./FormDialog";
+import SellDialog from "./SellDialog";
 import Chart from "./Chart/BarChart";
 import { Link } from "react-router-dom";
 // import "./CSS/bootstrap.min.css";

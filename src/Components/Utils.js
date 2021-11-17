@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Utils.css";
 import db, { StockRef } from "./firebase";
-import FormDialog from "./FormDialog";
+import SellDialog from "./SellDialog";
 import Button from "@material-ui/core/Button";
 import { getCurrentDate } from "./DateMonthYear";
 // import writeJsonFile from "../node_modulewrite-json-file";
@@ -179,7 +179,7 @@ function Utils() {
     <div className="historyhomeframe">
       <h1>Sell Sotck ID : </h1>
       {/*{UpdateGain()}*/}
-      <FormDialog StockCodeID={"1"} />
+      <SellDialog StockCodeID={"1"} />
       {/*prettier-ignore*/}
       <Button  variant="outlined" style={{ marginTop: 5, fontSize: "12px" }} size="small" onClick={AddStockToCollection}>
         Update Gain For All

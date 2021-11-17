@@ -5,11 +5,11 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { StockRef } from "./firebase";
+import db, { StockRef } from "./firebase";
 import { getCurrentDate } from "./Functions";
 import { ExpectedInterest } from "./Functions";
 
-export default function FormDialog(props) {
+export default function SellDialog(props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -55,35 +55,87 @@ export default function FormDialog(props) {
       document.getElementById("StockAmountID").value
     );
     // console.log(Soldstock, StockAmount);
-    console.log(Soldstock);
+    console.log(StockAmount);
     // If value entered was valid
     if (!isNaN(Soldstock)) {
       // first : get ID of stock data
-      let StockQueries = StockRef.where("MaCK", "==", props.stockitem.MaCK)
-        .where("IsSold", "==", false)
-        .where("Amount", "==", props.stockitem.Amount)
-        .where("BoughtPrice", "==", props.stockitem.BoughtPrice);
-      //   console.log(StockQueries.get);
-      StockQueries.onSnapshot((snapshot) => {
-        snapshot.docs.map((doc) => {
-          UpdateStockByID(
-            doc.id,
-            Soldstock,
-            ExpectedInterest(
-              props.stockitem.BoughtPrice,
+      if (StockAmount === parseFloat(props.stockitem.Amount)) {
+        console.log(StockAmount + ";" + props.stockitem.Amount);
+        let StockQueries = StockRef.where("MaCK", "==", props.stockitem.MaCK)
+          .where("IsSold", "==", false)
+          .where("Amount", "==", props.stockitem.Amount)
+          .where("BoughtPrice", "==", props.stockitem.BoughtPrice);
+        //   console.log(StockQueries.get);
+        StockQueries.onSnapshot((snapshot) => {
+          snapshot.docs.map((doc) => {
+            UpdateStockByID(
+              doc.id,
               Soldstock,
+              ExpectedInterest(
+                props.stockitem.BoughtPrice,
+                Soldstock,
+                StockAmount
+              )[0],
+              ExpectedInterest(
+                props.stockitem.BoughtPrice,
+                Soldstock,
+                StockAmount
+              )[1],
               StockAmount
-            )[0],
-            ExpectedInterest(
-              props.stockitem.BoughtPrice,
-              Soldstock,
-              StockAmount
-            )[1],
-            StockAmount
-          );
-          // console.log(doc.id);
+            );
+            // console.log(doc.id);
+          });
         });
-      });
+      }
+      if (StockAmount < parseFloat(props.stockitem.Amount)) {
+        console.log(StockAmount + ";" + props.stockitem.Amount);
+        //Add sale amount to db
+        let StockQueries = StockRef.where("MaCK", "==", props.stockitem.MaCK)
+          .where("IsSold", "==", false)
+          .where("Amount", "==", props.stockitem.Amount)
+          .where("BoughtPrice", "==", props.stockitem.BoughtPrice);
+        //   console.log(StockQueries.get);
+        StockQueries.onSnapshot((snapshot) => {
+          snapshot.docs.map((doc) => {
+            UpdateStockByID(
+              doc.id,
+              Soldstock,
+              ExpectedInterest(
+                props.stockitem.BoughtPrice,
+                Soldstock,
+                StockAmount
+              )[0],
+              ExpectedInterest(
+                props.stockitem.BoughtPrice,
+                Soldstock,
+                StockAmount
+              )[1],
+              StockAmount
+            );
+            // console.log(doc.id);
+          });
+        });
+        //add new stock buy
+        db.collection("Stocks").add({
+          MaCK: props.stockitem.MaCK,
+          SoldPrice: 0,
+          BoughtPrice: props.stockitem.BoughtPrice,
+          IsSold: false,
+          Amount: parseFloat(props.stockitem.Amount) - StockAmount,
+          Gain: 0,
+          Percent: 0,
+          DayBought: props.stockitem.DayBought,
+          MonthBought: props.stockitem.MonthBought,
+          YearBought: props.stockitem.YearBought,
+          DaySold: 0,
+          MonthSold: 0,
+          YearSold: 0,
+        });
+      }
+      if (StockAmount > parseFloat(props.stockitem.Amount)) {
+        console.log(StockAmount + ";" + props.stockitem.Amount);
+        console.log("Khối lượng bán nhiều hơn mua !!! Kiểm tra lại !!!");
+      }
     }
   };
 

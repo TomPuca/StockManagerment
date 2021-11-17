@@ -10,7 +10,7 @@ import TextField from "@material-ui/core/TextField";
 import { useStateValue } from "../StateProvider";
 import { getCurrentDate } from "./Functions";
 // import { ExpectedInterest } from "./TransactionItem";
-import FormDialog from "./FormDialog";
+import SellDialog from "./SellDialog";
 // import HistoryTransactions from "./HistoryTransactions";
 import { Link } from "react-router-dom";
 
@@ -264,7 +264,7 @@ function BuySell() {
           {ExpectedInterest(item.BoughtPrice, item.SoldPrice, item.Amount)[0]}
         </div> */}
         <div className="sellbutton">
-          {item.IsSold ? "" : <FormDialog stockitem={item} />}
+          {item.IsSold ? "" : <SellDialog stockitem={item} />}
         </div>
       </div>
       // console.log(random(5)),

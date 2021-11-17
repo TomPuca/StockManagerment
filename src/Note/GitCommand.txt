@@ -12,3 +12,6 @@ git add .
 git commit -m "begin upload"
 npm run deploy
 git push origin master
+
+npm outdated
+rfce

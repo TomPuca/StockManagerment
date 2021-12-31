@@ -1,23 +1,22 @@
 {
   "files": {
-    "main.css": "/StockManagement/static/css/main.14bf13a9.chunk.css",
-    "main.js": "/StockManagement/static/js/main.74f3301e.chunk.js",
-    "main.js.map": "/StockManagement/static/js/main.74f3301e.chunk.js.map",
-    "runtime-main.js": "/StockManagement/static/js/runtime-main.b4047aac.js",
-    "runtime-main.js.map": "/StockManagement/static/js/runtime-main.b4047aac.js.map",
-    "static/js/2.0858cc8a.chunk.js": "/StockManagement/static/js/2.0858cc8a.chunk.js",
-    "static/js/2.0858cc8a.chunk.js.map": "/StockManagement/static/js/2.0858cc8a.chunk.js.map",
-    "static/js/3.dbe310c8.chunk.js": "/StockManagement/static/js/3.dbe310c8.chunk.js",
-    "static/js/3.dbe310c8.chunk.js.map": "/StockManagement/static/js/3.dbe310c8.chunk.js.map",
+    "main.css": "/StockManagement/static/css/main.9130d9cc.chunk.css",
+    "main.js": "/StockManagement/static/js/main.53ebee6f.chunk.js",
+    "main.js.map": "/StockManagement/static/js/main.53ebee6f.chunk.js.map",
+    "runtime-main.js": "/StockManagement/static/js/runtime-main.26990cb6.js",
+    "runtime-main.js.map": "/StockManagement/static/js/runtime-main.26990cb6.js.map",
+    "static/js/2.91888cf4.chunk.js": "/StockManagement/static/js/2.91888cf4.chunk.js",
+    "static/js/2.91888cf4.chunk.js.map": "/StockManagement/static/js/2.91888cf4.chunk.js.map",
+    "static/js/3.971ef0c3.chunk.js": "/StockManagement/static/js/3.971ef0c3.chunk.js",
+    "static/js/3.971ef0c3.chunk.js.map": "/StockManagement/static/js/3.971ef0c3.chunk.js.map",
     "index.html": "/StockManagement/index.html",
-    "static/css/main.14bf13a9.chunk.css.map": "/StockManagement/static/css/main.14bf13a9.chunk.css.map",
-    "static/js/2.0858cc8a.chunk.js.LICENSE.txt": "/StockManagement/static/js/2.0858cc8a.chunk.js.LICENSE.txt",
-    "static/media/logo.6ce24c58.svg": "/StockManagement/static/media/logo.6ce24c58.svg"
+    "static/css/main.9130d9cc.chunk.css.map": "/StockManagement/static/css/main.9130d9cc.chunk.css.map",
+    "static/js/2.91888cf4.chunk.js.LICENSE.txt": "/StockManagement/static/js/2.91888cf4.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.b4047aac.js",
-    "static/js/2.0858cc8a.chunk.js",
-    "static/css/main.14bf13a9.chunk.css",
-    "static/js/main.74f3301e.chunk.js"
+    "static/js/runtime-main.26990cb6.js",
+    "static/js/2.91888cf4.chunk.js",
+    "static/css/main.9130d9cc.chunk.css",
+    "static/js/main.53ebee6f.chunk.js"
   ]
 }

@@ -15,3 +15,5 @@ git push origin master
 
 npm outdated
 rfce
+
+brew upgrade yarn

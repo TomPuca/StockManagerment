@@ -1,4 +1,10 @@
 
+.YearButton {
+    background-color: transparent;
+    border: 1px solid lightgrey;
+    border-radius: 5px ;
+    margin-left: 4px;
+}
 
 .Transactions {
     font-weight: bold;

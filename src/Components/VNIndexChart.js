@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./VnIndexChart.css";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";

@@ -5,9 +5,9 @@ function TransactionItem(props) {
   return (
     <div className="item_border">
       <div className="date_frame">
-        <div className="date_frame_day">{props.stockitem.DayBought}</div>
-        <div className="date_frame_month">{props.stockitem.MonthBought}</div>
-        <div className="date_frame_year">{props.stockitem.YearBought}</div>
+        <div className="date_frame_day">{props.stockitem.DaySold}</div>
+        <div className="date_frame_month">{props.stockitem.MonthSold}</div>
+        <div className="date_frame_year">{props.stockitem.YearSold}</div>
       </div>
       <div className="common_frame">
         <div className="common_frame_name">Symbol</div>

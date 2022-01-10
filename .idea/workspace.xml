@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="41c6bcc6-2d69-48a0-a864-942c25f8fb48" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/BuySell.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/BuySell.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/BuySellbackup.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/BuySellbackup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/FormDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/SellDialog.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/HistoryTransactions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/HistoryTransactions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Realtime.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Realtime.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Utils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Note/GitCommand.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Note/GitCommand.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
-    </list>
+    <list default="true" id="41c6bcc6-2d69-48a0-a864-942c25f8fb48" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,9 +10,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
         <option value="HTML File" />
         <option value="JavaScript File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -54,7 +41,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
-    <property name="settings.editor.selected.configurable" value="settings.javascript.prettier" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -65,6 +52,7 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/Components" />
       <recent name="$PROJECT_DIR$/src/Note" />
     </key>
   </component>
@@ -150,7 +138,21 @@
       <workItem from="1628475954065" duration="243000" />
       <workItem from="1630289435487" duration="1951000" />
       <workItem from="1631265330338" duration="662000" />
-      <workItem from="1635317145954" duration="57439000" />
+      <workItem from="1635317145954" duration="69367000" />
+      <workItem from="1637574002296" duration="147000" />
+      <workItem from="1637574161668" duration="39000" />
+      <workItem from="1637574211596" duration="40000" />
+      <workItem from="1637574375032" duration="36000" />
+      <workItem from="1637574421607" duration="92000" />
+      <workItem from="1637574527373" duration="160000" />
+      <workItem from="1637574715590" duration="574000" />
+      <workItem from="1637575405420" duration="662000" />
+      <workItem from="1638153793437" duration="8436000" />
+      <workItem from="1640156248643" duration="2848000" />
+      <workItem from="1640574392482" duration="332000" />
+      <workItem from="1640583386903" duration="28733000" />
+      <workItem from="1641780257740" duration="287000" />
+      <workItem from="1641802656024" duration="224000" />
     </task>
     <servers />
   </component>

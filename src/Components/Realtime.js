@@ -4,6 +4,9 @@ import { useStateValue } from "../StateProvider";
 import { strimstring, useInterval } from "./Functions";
 // import { getCurrentDate, strimstring, useInterval } from "./Functions";
 import VnIndexChart from "./VNIndexChart";
+import ReactSession from "./Utils/ReactSession";
+
+import ListComponent from "./ListComponent";
 
 //index link: https://bgapidatafeed.vps.com.vn/getlistindexdetail/10
 
@@ -12,18 +15,22 @@ function Realtime() {
   const [newstockvalue, setnewstockvalue] = useState("Begin");
   const [StockItems, setStockItems] = useState([]);
   const [VNIndex, setVNIndex] = useState([]);
+  const [matchStockValue, setmatchStockValue] = useState([]);
+  // const matchStockValue = [];
   // const [WebSocketInitState, setWebSocketInitState] = useState(false);
   // prettier-ignore
   // const [{ socket   , currentstockprice }, dispatch] = useStateValue();
   const [{ socket    }, dispatch] = useStateValue();
   // prettier-ignore
-  const [Stocklist, setStocklist] = useState(["IDJ","FRT","CEO","DIG","CTG","BID"]);
+  const [Stocklist, setStocklist] = useState(["CEO","VPH","CTI","DIG","LDG"]);
   const [InitStockItems, setInitStockItems] = useState(false);
   const [IsConnected, setIsConnected] = useState(false);
 
   const isStockItems = useRef(false);
   const isFirstRef = useRef(true);
   const isNewStockItems = useRef(false);
+
+  // const temparray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]; // some list of items
 
   // let socket;
   // initWebsocket();
@@ -50,8 +57,22 @@ function Realtime() {
         },
       })
     );
-    showlog();
+    // showlog();
   }, [StockItems]);
+  useEffect(() => {
+    // {people.filter(person => person.age < 60).map(filteredPerson => (
+    //     <li>
+    //       {filteredPerson.name}
+    //     </li>
+    // ))}
+    // console.log("log");
+    // const temparray = matchStockValue.filter((item) => item.stockid === "CEO");
+    // matchStockValue
+    //   .filter((item) => item.stockid === "CEO")
+    //   .map((filteritem) => console.log(filteritem.stockid));
+    // console.log(matchStockValue);
+  }, [matchStockValue]);
+
   useEffect(() => {
     if (isNewStockItems.current) {
       initstockitems();
@@ -60,6 +81,7 @@ function Realtime() {
     // đăng ký lại room
     let msg = '{"action":"join","list":"' + Stocklist.join(",") + '"}';
     // console.log(msg);
+    console.log(ReactSession.get("Stock_List"));
     socket.emit("regs", msg);
     console.log("CONNECTED");
     setIsConnected(true);
@@ -128,8 +150,10 @@ function Realtime() {
       setIsConnected(false);
       const connectioncircleID = document.querySelector("#connectioncircle");
       // console.log(connectioncircleID);
-      connectioncircleID.style.backgroundColor = "gray";
-      // $('#status-connect').text('Disconnect').css('color', '#DA5664');
+      if (connectioncircleID !== "null") {
+        connectioncircleID.style.backgroundColor = "gray";
+        // $('#status-connect').text('Disconnect').css('color', '#DA5664');
+      }
     });
   }
 
@@ -170,10 +194,21 @@ function Realtime() {
     setInitStockItems(true);
     // showlog();
   }
-  function showlog() {
-    const temp = StockItems;
-    console.log("tempstock", temp);
-  }
+  // function showlog() {
+  //   const temp = StockItems;
+  //   console.log("tempstock", temp);
+  // }
+
+  // const ShowMatchInfor = (items) =>
+  //   items &&
+  //   items.map((item, index) => {
+  //     console.log("matchdata");
+  //     return (
+  //       <ListItem button key={index}>
+  //         <ListItemText primary={item} />
+  //       </ListItem>
+  //     );
+  //   });
 
   //Cap nhat thong tin ve bang gia, neu ben ban thi la S, mua la B
   function updatestock(item) {
@@ -186,109 +221,112 @@ function Realtime() {
     //
     // console.log("Board", item);
     //Khop lenh ma 3210
-
-    if (isStockItems.current === true) {
-      if (item.id === 3210) {
-        let tempID;
-        // console.log(item.side);
-        if (item.side === "B") {
-          //buy 1
-          tempID = document.querySelector("#" + item.sym + "-g1-vol");
-          //prettier-ignore
-          if (tempID.innerHTML !== strimstring(item.g1.split("|")[1])) {
-            ChangeBackground("#" + item.sym + "-g1-vol")
-            tempID.innerHTML = strimstring(item.g1.split("|")[1]);
+    let tempID;
+    tempID = document.querySelector("#" + item.sym);
+    // console.log(tempID);
+    if (tempID) {
+      if (isStockItems.current === true) {
+        if (item.id === 3210) {
+          // console.log(item.side);
+          if (item.side === "B") {
+            //buy 1
+            tempID = document.querySelector("#" + item.sym + "-g1-vol");
+            //prettier-ignore
+            if (tempID.innerHTML !== strimstring(item.g1.split("|")[1])) {
+              ChangeBackground("#" + item.sym + "-g1-vol")
+              tempID.innerHTML = strimstring(item.g1.split("|")[1]);
+            }
+            tempID = document.querySelector("#" + item.sym + "-g1-price");
+            //prettier-ignore
+            if (tempID.innerHTML !== item.g1.split("|")[0]) {
+              ChangeBackground("#" + item.sym + "-g1-price")
+              tempID.innerHTML = item.g1.split("|")[0];
+            }
+            //prettier-ignore
+            ChangeClolorBuySell (("#" + item.sym + "-g1"), ColorPrice(item.g1.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+            //buy 2
+            tempID = document.querySelector("#" + item.sym + "-g2-vol");
+            //prettier-ignore
+            if (tempID.innerHTML !== strimstring(item.g2.split("|")[1])) {
+              ChangeBackground("#" + item.sym + "-g2-vol")
+              tempID.innerHTML = strimstring(item.g2.split("|")[1]);
+            }
+            tempID = document.querySelector("#" + item.sym + "-g2-price");
+            //prettier-ignore
+            if (tempID.innerHTML !== item.g2.split("|")[0]) {
+              ChangeBackground("#" + item.sym + "-g2-price")
+              tempID.innerHTML = item.g2.split("|")[0];
+            }
+            //prettier-ignore
+            ChangeClolorBuySell (("#" + item.sym + "-g2"), ColorPrice(item.g2.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+            //buy 3
+            tempID = document.querySelector("#" + item.sym + "-g3-vol");
+            //prettier-ignore
+            if (tempID.innerHTML !== strimstring(item.g3.split("|")[1])) {
+              ChangeBackground("#" + item.sym + "-g3-vol")
+              tempID.innerHTML = strimstring(item.g3.split("|")[1]);
+            }
+            tempID = document.querySelector("#" + item.sym + "-g3-price");
+            //prettier-ignore
+            if (tempID.innerHTML !== item.g3.split("|")[0]) {
+              ChangeBackground("#" + item.sym + "-g3-price")
+              tempID.innerHTML = item.g3.split("|")[0];
+            }
+            //prettier-ignore
+            ChangeClolorBuySell (("#" + item.sym + "-g3"), ColorPrice(item.g3.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+          } else {
+            //buy 4
+            tempID = document.querySelector("#" + item.sym + "-g4-vol");
+            // prettier - ignore;
+            if (tempID.innerHTML !== strimstring(item.g1.split("|")[1])) {
+              ChangeBackground("#" + item.sym + "-g4-vol");
+              tempID.innerHTML = strimstring(item.g1.split("|")[1]);
+            }
+            tempID = document.querySelector("#" + item.sym + "-g4-price");
+            //prettier-ignore
+            if (tempID.innerHTML !== item.g1.split("|")[0]) {
+              ChangeBackground("#" + item.sym + "-g4-price")
+              tempID.innerHTML = item.g1.split("|")[0];
+            }
+            //prettier-ignore
+            ChangeClolorBuySell (("#" + item.sym + "-g4"), ColorPrice(item.g1.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+            //buy 5
+            tempID = document.querySelector("#" + item.sym + "-g5-vol");
+            // prettier - ignore;
+            if (tempID.innerHTML !== strimstring(item.g2.split("|")[1])) {
+              ChangeBackground("#" + item.sym + "-g5-vol");
+              tempID.innerHTML = strimstring(item.g2.split("|")[1]);
+            }
+            tempID = document.querySelector("#" + item.sym + "-g5-price");
+            //prettier-ignore
+            if (tempID.innerHTML !== item.g2.split("|")[0]) {
+              ChangeBackground("#" + item.sym + "-g5-price")
+              tempID.innerHTML = item.g2.split("|")[0];
+            }
+            //prettier-ignore
+            ChangeClolorBuySell (("#" + item.sym + "-g5"), ColorPrice(item.g2.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+            //buy 6
+            tempID = document.querySelector("#" + item.sym + "-g6-vol");
+            // prettier - ignore;
+            if (tempID.innerHTML !== strimstring(item.g3.split("|")[1])) {
+              ChangeBackground("#" + item.sym + "-g6-vol");
+              tempID.innerHTML = strimstring(item.g3.split("|")[1]);
+            }
+            tempID = document.querySelector("#" + item.sym + "-g6-price");
+            //prettier-ignore
+            if (tempID.innerHTML !== item.g3.split("|")[0]) {
+              ChangeBackground("#" + item.sym + "-g6-price")
+              tempID.innerHTML = item.g3.split("|")[0];
+            }
+            //prettier-ignore
+            ChangeClolorBuySell (("#" + item.sym + "-g6"), ColorPrice(item.g3.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
           }
-          tempID = document.querySelector("#" + item.sym + "-g1-price");
-          //prettier-ignore
-          if (tempID.innerHTML !== item.g1.split("|")[0]) {
-            ChangeBackground("#" + item.sym + "-g1-price")
-            tempID.innerHTML = item.g1.split("|")[0];
-          }
-          //prettier-ignore
-          ChangeClolorBuySell (("#" + item.sym + "-g1"), ColorPrice(item.g1.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
-          //buy 2
-          tempID = document.querySelector("#" + item.sym + "-g2-vol");
-          //prettier-ignore
-          if (tempID.innerHTML !== strimstring(item.g2.split("|")[1])) {
-            ChangeBackground("#" + item.sym + "-g2-vol")
-            tempID.innerHTML = strimstring(item.g2.split("|")[1]);
-          }
-          tempID = document.querySelector("#" + item.sym + "-g2-price");
-          //prettier-ignore
-          if (tempID.innerHTML !== item.g2.split("|")[0]) {
-            ChangeBackground("#" + item.sym + "-g2-price")
-            tempID.innerHTML = item.g2.split("|")[0];
-          }
-          //prettier-ignore
-          ChangeClolorBuySell (("#" + item.sym + "-g2"), ColorPrice(item.g2.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
-          //buy 3
-          tempID = document.querySelector("#" + item.sym + "-g3-vol");
-          //prettier-ignore
-          if (tempID.innerHTML !== strimstring(item.g3.split("|")[1])) {
-            ChangeBackground("#" + item.sym + "-g3-vol")
-            tempID.innerHTML = strimstring(item.g3.split("|")[1]);
-          }
-          tempID = document.querySelector("#" + item.sym + "-g3-price");
-          //prettier-ignore
-          if (tempID.innerHTML !== item.g3.split("|")[0]) {
-            ChangeBackground("#" + item.sym + "-g3-price")
-            tempID.innerHTML = item.g3.split("|")[0];
-          }
-          //prettier-ignore
-          ChangeClolorBuySell (("#" + item.sym + "-g3"), ColorPrice(item.g3.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
-        } else {
-          //buy 4
-          tempID = document.querySelector("#" + item.sym + "-g4-vol");
-          // prettier - ignore;
-          if (tempID.innerHTML !== strimstring(item.g1.split("|")[1])) {
-            ChangeBackground("#" + item.sym + "-g4-vol");
-            tempID.innerHTML = strimstring(item.g1.split("|")[1]);
-          }
-          tempID = document.querySelector("#" + item.sym + "-g4-price");
-          //prettier-ignore
-          if (tempID.innerHTML !== item.g1.split("|")[0]) {
-            ChangeBackground("#" + item.sym + "-g4-price")
-            tempID.innerHTML = item.g1.split("|")[0];
-          }
-          //prettier-ignore
-          ChangeClolorBuySell (("#" + item.sym + "-g4"), ColorPrice(item.g1.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
-          //buy 5
-          tempID = document.querySelector("#" + item.sym + "-g5-vol");
-          // prettier - ignore;
-          if (tempID.innerHTML !== strimstring(item.g2.split("|")[1])) {
-            ChangeBackground("#" + item.sym + "-g5-vol");
-            tempID.innerHTML = strimstring(item.g2.split("|")[1]);
-          }
-          tempID = document.querySelector("#" + item.sym + "-g5-price");
-          //prettier-ignore
-          if (tempID.innerHTML !== item.g2.split("|")[0]) {
-            ChangeBackground("#" + item.sym + "-g5-price")
-            tempID.innerHTML = item.g2.split("|")[0];
-          }
-          //prettier-ignore
-          ChangeClolorBuySell (("#" + item.sym + "-g5"), ColorPrice(item.g2.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
-          //buy 6
-          tempID = document.querySelector("#" + item.sym + "-g6-vol");
-          // prettier - ignore;
-          if (tempID.innerHTML !== strimstring(item.g3.split("|")[1])) {
-            ChangeBackground("#" + item.sym + "-g6-vol");
-            tempID.innerHTML = strimstring(item.g3.split("|")[1]);
-          }
-          tempID = document.querySelector("#" + item.sym + "-g6-price");
-          //prettier-ignore
-          if (tempID.innerHTML !== item.g3.split("|")[0]) {
-            ChangeBackground("#" + item.sym + "-g6-price")
-            tempID.innerHTML = item.g3.split("|")[0];
-          }
-          //prettier-ignore
-          ChangeClolorBuySell (("#" + item.sym + "-g6"), ColorPrice(item.g3.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
         }
-      }
-      //{"id":3220,"sym":"TCB","lastPrice":25.3,"lastVol":100,"cl":"i","change":"0.50","changePc":"2.02","totalVol":108810,"time":"10:49:56","hp":25.3,"ch":"i","lp":24.9,"lc":"i","ap":25.1,"ca":"i"}
-      else if (item.id === 3220) {
-        //Check if still in Main Page then update match value
-        updatestockmatch(item);
+        //{"id":3220,"sym":"TCB","lastPrice":25.3,"lastVol":100,"cl":"i","change":"0.50","changePc":"2.02","totalVol":108810,"time":"10:49:56","hp":25.3,"ch":"i","lp":24.9,"lc":"i","ap":25.1,"ca":"i"}
+        else if (item.id === 3220) {
+          //Check if still in Main Page then update match value
+          updatestockmatch(item);
+        }
       }
     }
   }
@@ -301,9 +339,23 @@ function Realtime() {
     let minutes = date.getMinutes();
     let seconds = date.getSeconds();
     let newStockItems = StockItems;
-    let indexnum = Stocklist.indexOf(item.sym);
+    // let indexnum = Stocklist.indexOf(item.sym);
     let tempID;
+    if (item.time) {
+      //Set match value into array
+      // setArr((prevArr) => ([...prevArr, prevArr.length + 1]));    let tempmatchStockValue = { ...matchStockValue };
+      setmatchStockValue((prevArr) => [
+        ...prevArr,
+        {
+          stockid: item.sym,
+          timematch: item.time.substring(0, 5),
+          volumematch: item.lastVol,
+          pricematch: item.lastPrice,
+        },
+      ]);
+    }
     // prettier-ignore
+    //Update string data in the bottom of website
     setnewstockvalue(hours + ":" + minutes + ":" + seconds + ": " + JSON.stringify(item) );
     //update thông tin giá các mã đã mua
     dispatch({
@@ -438,7 +490,7 @@ function Realtime() {
         </div>
         <div className="stockCard__Buy">
           <div className="BuyAmount">
-            <div>Amount</div> <div>Price</div>
+            <div>Volume</div> <div>Bid</div>
           </div>
           {/*prettier-ignore*/}
           <div className={"BuyAmount " + ColorText(item.g1.split("|")[0], item)} id = {item.sym + "-g1"}>
@@ -462,7 +514,7 @@ function Realtime() {
         </div>
         <div className="stockCard__Sell">
           <div className="BuyAmount">
-            <div>Amount</div> <div>Price</div>
+            <div>Volume</div> <div>Ask</div>
           </div>
           {/*prettier-ignore*/}
           <div className={"SellAmount " + ColorText(item.g4.split("|")[0], item)} id = {item.sym + "-g4"}>
@@ -482,6 +534,20 @@ function Realtime() {
           {/*prettier-ignore*/}
           <div className={"BuyAmount "+ ColorText(item.highPrice, item) + " backgroundwhite"} id = {item.sym + "-MaxAll"} style={{  borderTopWidth: 1, borderTopColor: "#A9A9A9",borderTopStyle: "solid",}}>
             <div>Max</div> <div id = {item.sym + "-Max"}>{item.highPrice}</div>
+          </div>
+        </div>
+        <div>
+          <div className="stockCard__Sell">
+            <div>Match</div>
+            <div className="no-scrollbars">
+              {/*{matchStockValue.filter((item) => item.stockid === "CEO")}*/}
+              <ListComponent
+                // stockitem={temparray}
+                stockitem={matchStockValue.filter(
+                  (matchStockitem) => matchStockitem.stockid === item.sym
+                )}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -524,6 +590,9 @@ function Realtime() {
     e.preventDefault();
     // prettier-ignore
     let tempstock = document.getElementById("stockcodeinput").value.toUpperCase();
+    // let tempstock = document
+    //   .getElementById("stockcodeinput")
+    //   .value.toUpperCase();
     if (tempstock !== "") {
       let index = Stocklist.findIndex(
         (StocklistItem) => StocklistItem === tempstock

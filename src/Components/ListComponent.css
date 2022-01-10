@@ -1,0 +1,31 @@
+.MatchRow {
+    display: flex;
+}
+
+.MatchRowTime {
+    width: 45px;
+}
+
+.MatchRowPrice {
+    width: 40px;
+    text-align:left ;
+}
+
+.MatchRowVolume {
+    width: 40px;
+    text-align:right ;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+
+.no-scrollbars{
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+}
+
+.no-scrollbars::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+}

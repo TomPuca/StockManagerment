@@ -2,26 +2,37 @@ import React, { useEffect, useState } from "react";
 import "./HistoryTransactions.css";
 import TransactionItem from "./TransactionItem";
 import db from "./firebase";
-import SellDialog from "./SellDialog";
 import Chart from "./Chart/BarChart";
 import { Link } from "react-router-dom";
 // import "./CSS/bootstrap.min.css";
 
 function HistoryTransactions() {
   const [stocks, setStocks] = useState([]);
+  const [year, setYear] = useState("Stocks");
   // const tempdata = [];
   // const [DataState, setDataState] = useState(false);
   // const stocks = [];
   useEffect(() => {
     //  Get data from Firebase
-    db.collection("Stocks")
-      .orderBy("Percent", "desc")
+    db.collection(year)
+      .orderBy("MonthSold", "desc")
+      .orderBy("DaySold", "desc")
       .onSnapshot((snapshot) => {
         setStocks(snapshot.docs.map((doc) => doc.data()));
       });
+    // console.log(year);
+
     //  Load Data from Backup File
     // LoadDataFromFile();
-  }, []);
+  }, [year]);
+
+  //Create json datafile from Stocks to public folder
+  // useEffect(() => {
+  //   //  Get data from Firebase
+  //   console.log(JSON.stringify(stocks));
+  //   //  Load Data from Backup File
+  //   // LoadDataFromFile();
+  // }, [stocks]);
 
   async function LoadDataFromFile() {
     console.log("Start Add Stock from loaded file");
@@ -70,6 +81,10 @@ function HistoryTransactions() {
     }
   }, 0);
 
+  let soldTotal = stocks.reduce(function (prev, cur) {
+    return prev + cur.BoughtPrice * cur.Amount * 1000;
+  }, 0);
+
   const ShowBuyStock = (items) =>
     items &&
     items.map((item, index) => (
@@ -80,17 +95,30 @@ function HistoryTransactions() {
 
   return (
     <div>
-      <Link to="/">
+      <div style={{ color: "blue", display: "flex" }}>
+        <Link to="/">
+          <div>
+            <span className="Header-cartCount">Main</span>
+          </div>
+        </Link>
         <div>
-          <span className="Header-cartCount">Main</span>
+          <button className="YearButton" onClick={() => setYear("Stocks")}>
+            Current
+          </button>
         </div>
-      </Link>
-
+        <div>
+          <button className="YearButton" onClick={() => setYear("Stocks2021")}>
+            2021
+          </button>
+        </div>
+      </div>
       {/*prettier-ignore*/}
       <div style={{ color: "blue", display: "flex",width: "700px"  }}>
-        <div className="Transactions">Transactions: </div>
+        <div className="Transactions">Profit: </div>
         {/*prettier-ignore*/}
-        <div>{GainTotal.toLocaleString("en-US", {style: "decimal",currency: "USD",})}</div>
+        <div style={{marginLeft:"10px",marginRight : "10px"}}>{GainTotal.toLocaleString("en-US", {style: "decimal",currency: "USD",})}</div>
+        <div style={{marginLeft:"10px",marginRight : "10px"}}>{soldTotal.toLocaleString("en-US", {style: "decimal",currency: "USD",})}</div>
+        <div style={{marginLeft:"10px",marginRight : "10px"}}>{((GainTotal * 100) / soldTotal).toFixed(2) + "%"}</div>
       </div>
       <div>
         <Chart

@@ -1,7 +1,9 @@
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-import firebase from "firebase";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
 
-var firebaseConfig = {
+let firebaseConfig = {
   apiKey: "AIzaSyDl0oKQRCOHexa-EloSX_pJFN-lkSqibtc",
   authDomain: "stockrealtime-5c049.firebaseapp.com",
   databaseURL: "https://stockrealtime-5c049.firebaseio.com",
@@ -11,9 +13,11 @@ var firebaseConfig = {
   appId: "1:144010414262:web:322dbb3aa4889756587e17",
   measurementId: "G-J2YJH55K7K",
 };
+
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
-const db = firebaseApp.firestore();
+const db = firebase.firestore();
+
 // const StockRef = db.collection("Stocks");
 
 export const StockRef = db.collection("Stocks");

@@ -68,7 +68,8 @@ function BuySell() {
   // console.log("current price :", currentstockprice);
   useEffect(() => {
     db.collection("Stocks")
-      .orderBy("MaCK")
+      .orderBy("MonthSold", "desc")
+      .orderBy("DaySold", "desc")
       .onSnapshot((snapshot) => {
         setStocks(snapshot.docs.map((doc) => doc.data()));
       });
@@ -110,14 +111,16 @@ function BuySell() {
   //   return prev + cur.Gain;
   // }, 0);
 
-  var soldTotal = sellstocks.reduce(function (prev, cur) {
-    // console.log(cur.MaCK, cur.Gain);
-    // console.log(
-    //   cur.MaCK,
-    //   ExpectedInterest(cur.BoughtPrice, cur.SoldPrice, cur.Amount)[0]
-    // );
-    // return (   prev + ExpectedInterest(cur.BoughtPrice, cur.SoldPrice, cur.Amount)[0]  );
+  var GainTotal = sellstocks.reduce(function (prev, cur) {
     return prev + cur.Gain;
+  }, 0);
+
+  var soldTotal = sellstocks.reduce(function (prev, cur) {
+    return prev + cur.BoughtPrice * cur.Amount * 1000;
+  }, 0);
+
+  let BuyTotal = buystocks.reduce(function (prev, cur) {
+    return prev + cur.BoughtPrice * cur.Amount * 1000;
   }, 0);
 
   var expectTotal = buystocks.reduce(function (prev, cur) {
@@ -133,9 +136,6 @@ function BuySell() {
     );
   }, 0);
 
-  let BuyTotal = buystocks.reduce(function (prev, cur) {
-    return prev + cur.BoughtPrice * cur.Amount * 1000;
-  }, 0);
   // console.log(BuyTotal);
   // console.log(soldTotal);
   // let data = stocks
@@ -181,20 +181,21 @@ function BuySell() {
     // setChecked((prev) => !prev);
   }
 
-  const soldstockclick = (e, mack, khoiluong, giamua) => {
-    e.preventDefault();
-    // db.collection("Stocks").onSnapshot((snapshot) => {
-    //   setStocks(snapshot.docs.map((doc) => doc.data()));
-    // }
-    const cityRef = db.collection("Stocks").where();
-    const doc = cityRef.get();
-    if (!doc.exists) {
-      console.log("No such document!");
-    } else {
-      console.log("Document data:", doc.data());
-    }
-    // console.log(db);
-  };
+  // const soldstockclick = (e, mack, khoiluong, giamua) => {
+  //   e.preventDefault();
+  //   // db.collection("Stocks").onSnapshot((snapshot) => {
+  //   //   setStocks(snapshot.docs.map((doc) => doc.data()));
+  //   // }
+  //   const cityRef = db.collection("Stocks").where();
+  //   const doc = cityRef.get();
+  //   if (!doc.exists) {
+  //     console.log("No such document!");
+  //   } else {
+  //     console.log("Document data:", doc.data());
+  //   }
+  //   // console.log(db);
+  // };
+
   function ExpectedInterest(buyprice, sellprice, Amount) {
     let expectedprofit =
       (parseFloat(sellprice) * 1000 - parseFloat(buyprice) * 1000) * Amount -
@@ -313,7 +314,7 @@ function BuySell() {
             <div>
               <TextField
                 id="StockAmount"
-                label="Stock Amount"
+                label="Volume"
                 style={{ marginTop: 5 }}
                 placeholder="0"
                 // margin="normal"
@@ -373,7 +374,7 @@ function BuySell() {
         </form>
       </div>
       <div className="buysell__title">
-        <h2>Bought Stocks</h2>
+        <h2>Purchased Stocks</h2>
         {ShowBuyStock(buystocks)}
       </div>
       <div className="total">
@@ -405,12 +406,27 @@ function BuySell() {
         </div>
 
         {showbought ? ShowBuyStock(sellstocks) : null}
-        <div className="total">
-          {soldTotal.toLocaleString("en-US", {
-            style: "decimal",
-            currency: "USD",
-          })}
+        <div style={{ display: "flex" }}>
+          {/*<div className="total" style={{ width: "150px" }}>*/}
+          <div className="totalitemleft">
+            {GainTotal.toLocaleString("en-US", {
+              style: "decimal",
+              currency: "USD",
+            })}
+          </div>
+          {/*<div className="total" style={{ width: "150px" }}>*/}
+          <div className="totalitemright">
+            {soldTotal.toLocaleString("en-US", {
+              style: "decimal",
+              currency: "USD",
+            })}
+          </div>
+          {/*<div className="total">*/}
+          <div className="totalpercent">
+            {((GainTotal * 100) / soldTotal).toFixed(2) + "%"}
+          </div>
         </div>
+
         <Link to="/HistoryTransactions">
           <div style={{ marginTop: 10 }}>
             <span className="Header-cartCount">Chart</span>

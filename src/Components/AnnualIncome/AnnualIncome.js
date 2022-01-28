@@ -11,6 +11,8 @@ import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import { strimstring } from "../Functions";
 import ListComponent from "../ListComponent";
 import Chart from "../Chart/BarChart";
+import TransactionItem from "../TransactionItem";
+import ListItemIncome from "./ListItemIncome";
 
 function AnnualIncome() {
   const [year, setYear] = useState("Income");
@@ -33,19 +35,23 @@ function AnnualIncome() {
     return parseInt(GainTotal);
   }
 
+  const ShowIncome = (items) =>
+    items &&
+    items.map((item, index) => (
+      <div key={index}>
+        <ListItemIncome IncomeItem={item} />
+      </div>
+    ));
+
   // Do at load page
   useEffect(() => {
     //  Get data from Firebase
     db.collection(year)
-      // .orderBy("Day", "asce")
-      // .orderBy("Month", "asce")
+      .orderBy("Month", "asc")
+      // .orderBy("Day", "asc")
       .onSnapshot((snapshot) => {
         setTotalIncomes(snapshot.docs.map((doc) => doc.data()));
       });
-    // console.log(year);
-
-    //  Load Data from Backup File
-    // LoadDataFromFile();
   }, [year]);
 
   const datehandleChange = (newValue) => {
@@ -61,7 +67,7 @@ function AnnualIncome() {
       Month: dateincome.getMonth() + 1,
       Year: dateincome.getFullYear(),
     });
-    console.log(dateincome.getMonth());
+    // console.log(dateincome.getMonth());
   };
 
   function IncomePerMonth() {
@@ -270,7 +276,11 @@ function AnnualIncome() {
         />
       </div>
       {/*  List Income per month*/}
-      <div className="realtime">{IncomePerMonth()}</div>
+      <div style={{ marginLeft: "10px", marginBottom: "10px" }}>
+        {IncomePerMonth()}
+      </div>
+      {/*    List all Income*/}
+      {ShowIncome(TotalIncomes)}
     </div>
   );
 }

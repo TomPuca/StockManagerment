@@ -13,7 +13,7 @@ function BarChart(props) {
       datasets: [
         {
           type: "line",
-          label: "Total Gain",
+          label: props.MainLabel,
           borderColor: "rgb(54, 162, 235)",
           borderWidth: 1,
           fill: false,
@@ -22,7 +22,7 @@ function BarChart(props) {
             props.Total, props.Total, props.Total, props.Total, props.Total, props.Total, props.Total, props.Total, props.Total, props.Total, props.Total, props.Total, ],
         },
         {
-          label: "Gain",
+          label: props.SubLabel,
           backgroundColor: [
             "rgba(255, 99, 132, 0.2)",
             "rgba(255, 159, 64, 0.2)",
@@ -67,7 +67,7 @@ function BarChart(props) {
         options={{
           title: {
             display: true,
-            text: "Gain per month",
+            text: props.MainLabel,
             fontSize: 20,
           },
           legend: {

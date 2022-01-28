@@ -6,6 +6,7 @@ import HistoryTransactions from "./Components/HistoryTransactions";
 import VnIndexChart from "./Components/VNIndexChart";
 import StockCodeView from "./Components/StockCodeView";
 import ReactSession from "./Components/Utils/ReactSession";
+import AnnualIncome from "./Components/AnnualIncome/AnnualIncome";
 
 // import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -25,6 +26,7 @@ function App() {
             <Route path="/VnIndexChart">{<VnIndexChart />}</Route>
             <Route path="/HistoryTransactions">{<HistoryTransactions />}</Route>
             <Route path="/CodeView">{<StockCodeView />}</Route>
+            <Route path="/AnnualIncome">{<AnnualIncome />}</Route>
             <Route path="/">
               <Realtime />
               <BuySell />

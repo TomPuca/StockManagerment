@@ -85,6 +85,8 @@
 .VNIndexContent {
   /*display: flex;*/
   padding-left: 5px;
+  width: 108px;
+  border-right: 1px solid #eff2f5;
 }
 .VnIndex {
   padding-right: 10px;
@@ -101,7 +103,9 @@
   background-color: transparent;
   border: 1px solid lightgrey;
   border-radius: 5px ;
-  margin-left: 4px;
+  margin-left: 10px;
+  margin-top: 6px;
+
 }
 .stockcodeinput {
   background-color: transparent;
@@ -109,6 +113,7 @@
   border-radius: 5px ;
   margin-top: 5px;
   margin-left: 10px;
+  width: 70px;
 }
 
 .txt-gia-tran{

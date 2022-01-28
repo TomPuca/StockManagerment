@@ -371,33 +371,33 @@ function Realtime() {
 
     // let tempstock = { ...StockItems[indexnum] };
     tempID = document.querySelector("#" + item.sym + "-ot");
-    if (tempID.innerHTML !== item.change) {
+    if (tempID && tempID.innerHTML !== item.change) {
       tempID.innerHTML = item.change;
       ChangeBackground("#" + item.sym + "-ot");
     }
     tempID = document.querySelector("#" + item.sym + "-lastPrice");
-    if (parseFloat(tempID.innerHTML) !== parseFloat(item.lastPrice)) {
+    if (tempID && parseFloat(tempID.innerHTML) !== parseFloat(item.lastPrice)) {
       tempID.innerHTML = item.lastPrice;
       ChangeBackground("#" + item.sym + "-lastPrice");
     }
     tempID = document.querySelector("#" + item.sym + "-lastVolume");
-    if (tempID.innerHTML !== strimstring(item.lastVol.toString())) {
+    if (tempID && tempID.innerHTML !== strimstring(item.lastVol.toString())) {
       tempID.innerHTML = strimstring(item.lastVol.toString());
       ChangeBackground("#" + item.sym + "-lastVolume");
     }
     tempID = document.querySelector("#" + item.sym + "-changePc");
-    if (tempID.innerHTML !== item.changePc + "%") {
+    if (tempID && tempID.innerHTML !== item.changePc + "%") {
       tempID.innerHTML = item.changePc + "%";
       ChangeBackground("#" + item.sym + "-changePc");
     }
     tempID = document.querySelector("#" + item.sym + "-lot");
-    if (tempID.innerHTML !== strimstring(item.totalVol.toString())) {
+    if (tempID && tempID.innerHTML !== strimstring(item.totalVol.toString())) {
       // console.log(tempID.innerHTML, ":", item.totalVol);
       tempID.innerHTML = strimstring(item.totalVol.toString());
       ChangeBackground("#" + item.sym + "-lot");
     }
     tempID = document.querySelector("#" + item.sym + "-Max");
-    if (tempID.innerHTML !== item.hp) {
+    if (tempID && tempID.innerHTML !== item.hp) {
       tempID.innerHTML = item.hp;
       ChangeBackground("#" + item.sym + "-Max");
       //prettier-ignore
@@ -405,7 +405,7 @@ function Realtime() {
     }
     // tempstock.highPrice = item.hp;
     tempID = document.querySelector("#" + item.sym + "-Min");
-    if (tempID.innerHTML !== item.hp) {
+    if (tempID && tempID.innerHTML !== item.hp) {
       tempID.innerHTML = item.lp;
       ChangeBackground("#" + item.sym + "-Min");
       //prettier-ignore
@@ -414,12 +414,14 @@ function Realtime() {
 
     //change tittle
     if (item.sym === "CEO") {
-      document.title =
-        item.sym +
-        "|" +
-        document.querySelector("#" + item.sym + "-lastPrice").innerHTML +
-        "|" +
-        document.querySelector("#" + item.sym + "-changePc").innerHTML;
+      if (document.title) {
+        document.title =
+          item.sym +
+          "|" +
+          document.querySelector("#" + item.sym + "-lastPrice").innerHTML +
+          "|" +
+          document.querySelector("#" + item.sym + "-changePc").innerHTML;
+      }
     }
     //change color depend on Price
     //prettier-ignore
@@ -640,23 +642,30 @@ function Realtime() {
             <a className="connection-circle notconnected" id="connectioncircle"></a>
           </div>
         </div>
+        {/*<form >*/}
+          <div>
+            <div>
+              <input
+                  className="stockcodeinput"
+                  // defaultValue={Stocklist.join(",")}
+                  id="stockcodeinput"
+                  onChange={(e) => {
+                    e.target.value = e.target.value.toUpperCase();
+                  }}
+              />
+            </div>
+            <div>
+              {/*prettier-ignore*/}
+              <button className="addstocktolist" onClick={addstocktolistclick}>Add Stock</button>
+            </div>
+            <div>
+              {/*prettier-ignore*/}
+              <button className="addstocktolist" onClick={delstocktolistclick}>Del Stock</button>
+            </div>
+          </div>
+        {/*</form>*/}
       </div>
-      <form>
-        <div>
-          <input
-            className="stockcodeinput"
-            // defaultValue={Stocklist.join(",")}
-            id="stockcodeinput"
-            onChange={(e) => {
-              e.target.value = e.target.value.toUpperCase();
-            }}
-          />
-          {/*prettier-ignore*/}
-          <button className="addstocktolist" onClick={addstocktolistclick}>Add Stock</button>
-          {/*prettier-ignore*/}
-          <button className="addstocktolist" onClick={delstocktolistclick}>Del Stock</button>
-        </div>
-      </form>
+
       <div className="realtime">{StockRows(StockItems)}</div>
       <div className="jsonValue">{newstockvalue}</div>
       {/*prettier-ignore*/}

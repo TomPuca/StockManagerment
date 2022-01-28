@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="41c6bcc6-2d69-48a0-a864-942c25f8fb48" name="Default Changelist" comment="" />
+    <list default="true" id="41c6bcc6-2d69-48a0-a864-942c25f8fb48" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Components/AnnualIncome/AnnualIncome.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Components/AnnualIncome/AnnualIncome.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Chart/BarChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Chart/BarChart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/HistoryTransactions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/HistoryTransactions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Realtime.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Realtime.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Realtime.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Realtime.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Note/GitCommand.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Note/GitCommand.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,7 +53,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="editing.templates" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -152,7 +164,8 @@
       <workItem from="1640574392482" duration="332000" />
       <workItem from="1640583386903" duration="28733000" />
       <workItem from="1641780257740" duration="287000" />
-      <workItem from="1641802656024" duration="224000" />
+      <workItem from="1641802656024" duration="3098000" />
+      <workItem from="1642573799057" duration="9515000" />
     </task>
     <servers />
   </component>

@@ -48,7 +48,7 @@ function AnnualIncome() {
     //  Get data from Firebase
     db.collection(year)
       .orderBy("Month", "asc")
-      // .orderBy("Day", "asc")
+      .orderBy("Day", "asc")
       .onSnapshot((snapshot) => {
         setTotalIncomes(snapshot.docs.map((doc) => doc.data()));
       });

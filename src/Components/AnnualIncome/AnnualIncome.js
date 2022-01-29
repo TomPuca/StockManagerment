@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./AnnualIncome.css";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
@@ -18,6 +18,7 @@ function AnnualIncome() {
   const [year, setYear] = useState("Income");
   const [dateincome, setDateIncome] = React.useState(new Date());
   const [TotalIncomes, setTotalIncomes] = useState([]);
+  const [IsAddIncome, setIsAddIncome] = useState(false);
   // let TotalIncome = 10000000;
 
   let TotalIncome = TotalIncomes.reduce(function (prev, cur) {
@@ -67,6 +68,11 @@ function AnnualIncome() {
       Month: dateincome.getMonth() + 1,
       Year: dateincome.getFullYear(),
     });
+    setIsAddIncome(true);
+    const timeout = setTimeout(() => {
+      setIsAddIncome(false);
+      console.log(IsAddIncome);
+    }, 3000);
     // console.log(dateincome.getMonth());
   };
 
@@ -281,6 +287,10 @@ function AnnualIncome() {
       </div>
       {/*    List all Income*/}
       {ShowIncome(TotalIncomes)}
+      {/*prettier-ignore*/}
+      <div  className= {IsAddIncome ? "alert alert-success connection-alert connected-alert text-center fadeIn":  "fadeOut"}>
+            <strong>Added!</strong>
+        </div>
     </div>
   );
 }

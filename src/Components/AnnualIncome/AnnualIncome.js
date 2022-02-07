@@ -209,7 +209,8 @@ function AnnualIncome() {
       <div style={{ color: "blue", display: "flex", width: "700px" ,fontWeight : "bold", marginLeft:"10px" , marginTop : "10px" }}>
         <div>Total Income: </div>
         {/*prettier-ignore*/}
-        <div style={{marginLeft:"10px",marginRight : "10px"}}>{TotalIncome.toLocaleString("en-US", {style: "decimal",currency: "USD",})}</div>
+        <div style={{marginLeft:"10px",marginRight : "10px"}}>{TotalIncome.toLocaleString("en-US", {style: "decimal",currency: "USD",})} ({
+            parseInt(TotalIncome/12).toLocaleString("en-US", {style: "decimal",currency: "USD",})})</div>
       </div>
       {/*  Input Area*/}
       <div className="input-container">

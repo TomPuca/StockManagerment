@@ -42,14 +42,23 @@
 }
 
 .common_frame_gain {
-  width: 100px;
+  width: 120px;
   border-right: 1px solid lightgray;
   text-align: center;
   padding: 6px;
 }
 .common_frame_Gain {
-  width: 100px;
+  width: 80px;
   border-right: 1px solid lightgray;
   text-align: center;
   padding: 6px;
+}
+.common_frame_end {
+  width: 80px;
+}
+
+.chartjs-render-monitor {
+  width: 500px !important;
+  height: 250px !important;
+  /*transform: scale(0.9)*/
 }

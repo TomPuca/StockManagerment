@@ -4,3 +4,8 @@
     display: flex;
 }
 
+.chartjs-render-monitor {
+    width: 500px !important;
+    height: 250px !important;
+    /*transform: scale(0.9)*/
+}

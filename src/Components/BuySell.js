@@ -426,19 +426,7 @@ function BuySell() {
             {((GainTotal * 100) / soldTotal).toFixed(2) + "%"}
           </div>
         </div>
-        <div style={{ display: "flex" }}>
-          <Link to="/HistoryTransactions">
-            <div style={{ marginTop: 10, marginRight: 20 }}>
-              <span className="Header-cartCount">Chart</span>
-            </div>
-          </Link>
 
-          <Link to="/AnnualIncome">
-            <div style={{ marginTop: 10 }}>
-              <span className="Header-cartCount">Annual Income</span>
-            </div>
-          </Link>
-        </div>
         {/*prettier-ignore*/}
         <div style={{  marginTop: 10,}}>
           <TextField

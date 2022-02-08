@@ -7,6 +7,7 @@ import VnIndexChart from "./VNIndexChart";
 import ReactSession from "./Utils/ReactSession";
 
 import ListComponent from "./ListComponent";
+import { Link } from "react-router-dom";
 
 //index link: https://bgapidatafeed.vps.com.vn/getlistindexdetail/10
 
@@ -664,8 +665,22 @@ function Realtime() {
             </div>
           </div>
         {/*</form>*/}
-      </div>
 
+      </div>
+      {/*Link*/}
+      <div style={{ display: "flex", marginLeft: 10, marginBottom: 5 }}>
+        <Link to="/HistoryTransactions">
+          <div style={{ marginTop: 10, marginRight: 20 }}>
+            <span className="Header-cartCount">Chart</span>
+          </div>
+        </Link>
+
+        <Link to="/AnnualIncome">
+          <div style={{ marginTop: 10 }}>
+            <span className="Header-cartCount">Annual Income</span>
+          </div>
+        </Link>
+      </div>
       <div className="realtime">{StockRows(StockItems)}</div>
       <div className="jsonValue">{newstockvalue}</div>
       {/*prettier-ignore*/}

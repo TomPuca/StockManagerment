@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/StockManagement/static/css/main.8ce92a81.chunk.css",
-    "main.js": "/StockManagement/static/js/main.4c0e97fc.chunk.js",
-    "main.js.map": "/StockManagement/static/js/main.4c0e97fc.chunk.js.map",
+    "main.js": "/StockManagement/static/js/main.d41906bc.chunk.js",
+    "main.js.map": "/StockManagement/static/js/main.d41906bc.chunk.js.map",
     "runtime-main.js": "/StockManagement/static/js/runtime-main.64353ad9.js",
     "runtime-main.js.map": "/StockManagement/static/js/runtime-main.64353ad9.js.map",
-    "static/js/2.cd187dbe.chunk.js": "/StockManagement/static/js/2.cd187dbe.chunk.js",
-    "static/js/2.cd187dbe.chunk.js.map": "/StockManagement/static/js/2.cd187dbe.chunk.js.map",
+    "static/js/2.b2ce5437.chunk.js": "/StockManagement/static/js/2.b2ce5437.chunk.js",
+    "static/js/2.b2ce5437.chunk.js.map": "/StockManagement/static/js/2.b2ce5437.chunk.js.map",
     "static/js/3.b14f8d7f.chunk.js": "/StockManagement/static/js/3.b14f8d7f.chunk.js",
     "static/js/3.b14f8d7f.chunk.js.map": "/StockManagement/static/js/3.b14f8d7f.chunk.js.map",
     "index.html": "/StockManagement/index.html",
     "static/css/main.8ce92a81.chunk.css.map": "/StockManagement/static/css/main.8ce92a81.chunk.css.map",
-    "static/js/2.cd187dbe.chunk.js.LICENSE.txt": "/StockManagement/static/js/2.cd187dbe.chunk.js.LICENSE.txt"
+    "static/js/2.b2ce5437.chunk.js.LICENSE.txt": "/StockManagement/static/js/2.b2ce5437.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.64353ad9.js",
-    "static/js/2.cd187dbe.chunk.js",
+    "static/js/2.b2ce5437.chunk.js",
     "static/css/main.8ce92a81.chunk.css",
-    "static/js/main.4c0e97fc.chunk.js"
+    "static/js/main.d41906bc.chunk.js"
   ]
 }

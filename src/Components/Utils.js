@@ -43,6 +43,7 @@ function Utils() {
       });
     });
   }
+
   async function UpdateGainByID(id) {
     // console.log("Props ID:", id);
     let StockQueries = StockRef.doc(id);

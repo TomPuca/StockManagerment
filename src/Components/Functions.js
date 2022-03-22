@@ -53,3 +53,10 @@ export function ExpectedInterest(buyprice, sellprice, Amount) {
     (expectedprofit / (parseFloat(buyprice) * 10 * Amount)).toFixed(2) + "%";
   return [expectedprofit, expectedpercent];
 }
+
+export function VNCurrency(Currency) {
+  return parseInt(Currency).toLocaleString("en-US", {
+    style: "decimal",
+    currency: "USD",
+  });
+}

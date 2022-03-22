@@ -8,11 +8,9 @@ import Stack from "@mui/material/Stack";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
-import { strimstring } from "../Functions";
-import ListComponent from "../ListComponent";
 import Chart from "../Chart/BarChart";
-import TransactionItem from "../TransactionItem";
 import ListItemIncome from "./ListItemIncome";
+import { VNCurrency } from "../Functions";
 
 function AnnualIncome() {
   const [year, setYear] = useState("Income");
@@ -82,103 +80,67 @@ function AnnualIncome() {
         <div className="Month">
           <div className="Month_text">January :</div>
           <div className="Month_value">
-            {IncomeTotalPerMonth(1).toLocaleString("en-US", {
-              style: "decimal",
-              currency: "USD",
-            })}
+            {VNCurrency(IncomeTotalPerMonth(1))}
           </div>
           <span className="tab"> </span>
           <div className="Month_text">February :</div>
           <div className="Month_value">
-            {IncomeTotalPerMonth(2).toLocaleString("en-US", {
-              style: "decimal",
-              currency: "USD",
-            })}
+            {VNCurrency(IncomeTotalPerMonth(2))}
           </div>
         </div>
         <div className="Month">
           <div className="Month_text">March :</div>
           <div className="Month_value">
-            {IncomeTotalPerMonth(3).toLocaleString("en-US", {
-              style: "decimal",
-              currency: "USD",
-            })}
+            {VNCurrency(IncomeTotalPerMonth(3))}
           </div>
           <span className="tab"> </span>
           <div className="Month_text">April :</div>
           <div className="Month_value">
-            {IncomeTotalPerMonth(4).toLocaleString("en-US", {
-              style: "decimal",
-              currency: "USD",
-            })}
+            {VNCurrency(IncomeTotalPerMonth(4))}
           </div>
         </div>
         <div className="Month">
           <div className="Month_text">May :</div>
           <div className="Month_value">
-            {IncomeTotalPerMonth(5).toLocaleString("en-US", {
-              style: "decimal",
-              currency: "USD",
-            })}
+            {VNCurrency(IncomeTotalPerMonth(5))}
           </div>
           <span className="tab"> </span>
           <div className="Month_text">June :</div>
           <div className="Month_value">
-            {IncomeTotalPerMonth(6).toLocaleString("en-US", {
-              style: "decimal",
-              currency: "USD",
-            })}
+            {VNCurrency(IncomeTotalPerMonth(6))}
           </div>
         </div>
         <div className="Month">
           <div className="Month_text">July :</div>
           <div className="Month_value">
-            {IncomeTotalPerMonth(7).toLocaleString("en-US", {
-              style: "decimal",
-              currency: "USD",
-            })}
+            {VNCurrency(IncomeTotalPerMonth(7))}
           </div>
           <span className="tab"> </span>
           <div className="Month_text">August :</div>
           <div className="Month_value">
-            {IncomeTotalPerMonth(8).toLocaleString("en-US", {
-              style: "decimal",
-              currency: "USD",
-            })}
+            {VNCurrency(IncomeTotalPerMonth(8))}
           </div>
         </div>
         <div className="Month">
           <div className="Month_text">September :</div>
           <div className="Month_value">
-            {IncomeTotalPerMonth(9).toLocaleString("en-US", {
-              style: "decimal",
-              currency: "USD",
-            })}
+            {VNCurrency(IncomeTotalPerMonth(9))}
           </div>
           <span className="tab"> </span>
           <div className="Month_text">October :</div>
           <div className="Month_value">
-            {IncomeTotalPerMonth(10).toLocaleString("en-US", {
-              style: "decimal",
-              currency: "USD",
-            })}
+            {VNCurrency(IncomeTotalPerMonth(10))}
           </div>
         </div>
         <div className="Month">
           <div className="Month_text">November :</div>
           <div className="Month_value">
-            {IncomeTotalPerMonth(11).toLocaleString("en-US", {
-              style: "decimal",
-              currency: "USD",
-            })}
+            {VNCurrency(IncomeTotalPerMonth(11))}
           </div>
           <span className="tab"> </span>
           <div className="Month_text">December :</div>
           <div className="Month_value">
-            {IncomeTotalPerMonth(12).toLocaleString("en-US", {
-              style: "decimal",
-              currency: "USD",
-            })}
+            {VNCurrency(IncomeTotalPerMonth(12))}
           </div>
         </div>
       </div>
@@ -209,8 +171,9 @@ function AnnualIncome() {
       <div style={{ color: "blue", display: "flex", width: "700px" ,fontWeight : "bold", marginLeft:"10px" , marginTop : "10px" }}>
         <div>Total Income: </div>
         {/*prettier-ignore*/}
-        <div style={{marginLeft:"10px",marginRight : "10px"}}>{TotalIncome.toLocaleString("en-US", {style: "decimal",currency: "USD",})} ({
-            parseInt(TotalIncome/12).toLocaleString("en-US", {style: "decimal",currency: "USD",})})</div>
+        <div style={{marginLeft:"10px",marginRight : "10px"}}>{VNCurrency(TotalIncome)} ({VNCurrency(TotalIncome/12)})</div>
+      {/*    {
+            parseInt(TotalIncome/12).toLocaleString("en-US", {style: "decimal",currency: "USD",})}*/}
       </div>
       {/*  Input Area*/}
       <div className="input-container">

@@ -5,6 +5,7 @@ import { strimstring, useInterval } from "./Functions";
 // import { getCurrentDate, strimstring, useInterval } from "./Functions";
 import VnIndexChart from "./VNIndexChart";
 import ReactSession from "./Utils/ReactSession";
+import db from "./firebase";
 
 import ListComponent from "./ListComponent";
 import { Link } from "react-router-dom";
@@ -26,6 +27,7 @@ function Realtime() {
   const [Stocklist, setStocklist] = useState(["CEO","VPH","CTI","DIG","LDG"]);
   const [InitStockItems, setInitStockItems] = useState(false);
   const [IsConnected, setIsConnected] = useState(false);
+  const [BuyStocksTemp, setBuyStocksTemp] = useState([]);
 
   const isStockItems = useRef(false);
   const isFirstRef = useRef(true);
@@ -45,9 +47,46 @@ function Realtime() {
       isFirstRef.current = false;
       isStockItems.current = true;
       socketConnect();
+
+      //firebase get buy stock to add stock list
+      db.collection("Stocks")
+        .orderBy("IsSold")
+        .startAt(false)
+        .endAt(false)
+        .onSnapshot((snapshot) => {
+          // console.log("Test");
+          // console.log(snapshot.docs.map((doc) => doc.data()));
+          setBuyStocksTemp(snapshot.docs.map((doc) => doc.data()));
+        });
+
       return;
     }
   }, []);
+
+  useEffect(() => {
+    BuyStocksTemp.map((item) => {
+      // let tempstock = document
+      //   .getElementById("stockcodeinput")
+      //   .value.toUpperCase();
+      if (item.MaCK !== "") {
+        let index = Stocklist.findIndex(
+          (StocklistItem) => StocklistItem === item.MaCK
+        );
+        // console.log(tempindex);
+        if (index >= 0) {
+          console.log("khong can thay doi");
+        } else {
+          console.log("updatelist", item.MaCK);
+          let newStocklist = Stocklist;
+          setStocklist([...newStocklist, item.MaCK]);
+        }
+      }
+      isNewStockItems.current = true;
+      console.log("Ma CK da mua");
+      console.log(item.MaCK);
+    });
+  }, [BuyStocksTemp]);
+
   useEffect(() => {
     StockItems.map((item) =>
       dispatch({
@@ -415,7 +454,7 @@ function Realtime() {
 
     //change tittle
     if (item.sym === "CEO") {
-      if (document.title) {
+      if (document.querySelector("#" + item.sym + "-lastPrice").innerHTML) {
         document.title =
           item.sym +
           "|" +

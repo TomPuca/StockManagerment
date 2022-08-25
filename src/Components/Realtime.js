@@ -24,7 +24,7 @@ function Realtime() {
   // const [{ socket   , currentstockprice }, dispatch] = useStateValue();
   const [{ socket    }, dispatch] = useStateValue();
   // prettier-ignore
-  const [Stocklist, setStocklist] = useState(["CEO","VPH","CTI","DIG","LDG"]);
+  const [Stocklist, setStocklist] = useState(["C4G","TSC","CEO","VPH","CTI","DIG","LDG"]);
   const [InitStockItems, setInitStockItems] = useState(false);
   const [IsConnected, setIsConnected] = useState(false);
   const [BuyStocksTemp, setBuyStocksTemp] = useState([]);
@@ -34,6 +34,29 @@ function Realtime() {
   const isNewStockItems = useRef(false);
 
   // const temparray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]; // some list of items
+
+  useEffect(() => {
+    if (isNewStockItems.current) {
+      initstockitems();
+      isNewStockItems.current = false;
+    }
+    // đăng ký lại room
+    let msg = '{"action":"join","list":"' + Stocklist.join(",") + '"}';
+    // console.log(msg);
+    console.log(ReactSession.get("Stock_List"));
+    socket.emit("regs", msg);
+    console.log("CONNECTED");
+    setIsConnected(true);
+    const connectioncircleID = document.querySelector("#connectioncircle");
+    // console.log(connectioncircleID);
+    connectioncircleID.style.backgroundColor = "blue";
+    // connectioncircleID.classList.replace("notconnected", "connected");
+    const timeout = setTimeout(() => {
+      setIsConnected(false);
+    }, 3000);
+
+    // showlog();
+  }, [Stocklist]);
 
   // let socket;
   // initWebsocket();
@@ -68,6 +91,7 @@ function Realtime() {
       // let tempstock = document
       //   .getElementById("stockcodeinput")
       //   .value.toUpperCase();
+      // console.log(Stocklist.current);
       if (item.MaCK !== "") {
         let index = Stocklist.findIndex(
           (StocklistItem) => StocklistItem === item.MaCK
@@ -78,7 +102,7 @@ function Realtime() {
         } else {
           console.log("updatelist", item.MaCK);
           let newStocklist = Stocklist;
-          setStocklist([...newStocklist, item.MaCK]);
+          setStocklist([item.MaCK, ...newStocklist]);
         }
       }
       isNewStockItems.current = true;
@@ -112,29 +136,6 @@ function Realtime() {
     //   .map((filteritem) => console.log(filteritem.stockid));
     // console.log(matchStockValue);
   }, [matchStockValue]);
-
-  useEffect(() => {
-    if (isNewStockItems.current) {
-      initstockitems();
-      isNewStockItems.current = false;
-    }
-    // đăng ký lại room
-    let msg = '{"action":"join","list":"' + Stocklist.join(",") + '"}';
-    // console.log(msg);
-    console.log(ReactSession.get("Stock_List"));
-    socket.emit("regs", msg);
-    console.log("CONNECTED");
-    setIsConnected(true);
-    const connectioncircleID = document.querySelector("#connectioncircle");
-    // console.log(connectioncircleID);
-    connectioncircleID.style.backgroundColor = "blue";
-    // connectioncircleID.classList.replace("notconnected", "connected");
-    const timeout = setTimeout(() => {
-      setIsConnected(false);
-    }, 3000);
-
-    // showlog();
-  }, [Stocklist]);
 
   async function getdata() {
     console.log("before", Stocklist);
@@ -645,7 +646,7 @@ function Realtime() {
       } else {
         console.log("updatelist", tempstock);
         let newStocklist = Stocklist;
-        setStocklist([...newStocklist, tempstock]);
+        setStocklist([tempstock, ...newStocklist]);
       }
     }
     isNewStockItems.current = true;

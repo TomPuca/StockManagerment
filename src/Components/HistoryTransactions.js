@@ -137,6 +137,7 @@ function HistoryTransactions() {
             GainTotalPerMonth(12),
           ]}
           Total={GainTotal}
+          // Total={GainTotal}
           MainLabel="Gain"
           SubLabel="Gain Per Month"
         />

@@ -240,7 +240,8 @@ function AnnualIncome() {
             IncomeTotalPerMonth(11),
             IncomeTotalPerMonth(12),
           ]}
-          Total={TotalIncome}
+          // Total={TotalIncome}
+          Total={TotalIncome / 12}
           MainLabel="Total Income"
           SubLabel="Income Per Month"
         />

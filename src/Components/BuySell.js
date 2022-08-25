@@ -14,6 +14,9 @@ import SellDialog from "./SellDialog";
 // import HistoryTransactions from "./HistoryTransactions";
 import { Link } from "react-router-dom";
 
+import { withStyles } from "@material-ui/core/styles";
+import Tooltip from "@material-ui/core/Tooltip";
+
 //import db from "../firebase.js";
 //twitter 2:36:00
 
@@ -50,6 +53,15 @@ function BuySell() {
     soldtemp: 0,
     // ratiotemp: 0,
   });
+
+  const LightTooltip = withStyles((theme) => ({
+    tooltip: {
+      backgroundColor: theme.palette.common.white,
+      color: "rgba(0, 0, 0, 0.87)",
+      boxShadow: theme.shadows[1],
+      fontSize: 11,
+    },
+  }))(Tooltip);
 
   useEffect(() => {
     // console.log(ratiotemp);
@@ -212,7 +224,12 @@ function BuySell() {
     items &&
     items.map((item, index) => (
       <div className="stocks" key={index}>
-        <div className="mack">{item.MaCK}</div>
+        <div>
+          {/*Tooltip bought date*/}
+          <LightTooltip title={item.DayBought + "/" + item.MonthBought}>
+            <div className="mack">{item.MaCK}</div>
+          </LightTooltip>
+        </div>
         <div className="buyprice">{item.BoughtPrice}</div>
         <div className="sell">
           {item.IsSold

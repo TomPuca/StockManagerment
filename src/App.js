@@ -1,6 +1,6 @@
 import "./App.css";
 import Realtime from "./Components/Realtime";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import BuySell from "./Components/BuySell";
 import HistoryTransactions from "./Components/HistoryTransactions";
 import VnIndexChart from "./Components/VNIndexChart";

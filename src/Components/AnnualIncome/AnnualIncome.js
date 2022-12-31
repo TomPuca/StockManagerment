@@ -44,6 +44,7 @@ function AnnualIncome() {
 
   // Do at load page
   useEffect(() => {
+    // print(year);
     //  Get data from Firebase
     db.collection(year)
       .orderBy("Month", "asc")
@@ -51,6 +52,7 @@ function AnnualIncome() {
       .onSnapshot((snapshot) => {
         setTotalIncomes(snapshot.docs.map((doc) => doc.data()));
       });
+    console.log(year);
   }, [year]);
 
   const datehandleChange = (newValue) => {
@@ -156,12 +158,12 @@ function AnnualIncome() {
           </div>
         </Link>
         <div>
-          <button className="YearButton" onClick={() => setYear("Stocks")}>
+          <button className="YearButton" onClick={() => setYear("Income")}>
             Current
           </button>
         </div>
         <div>
-          <button className="YearButton" onClick={() => setYear("Stocks2021")}>
+          <button className="YearButton" onClick={() => setYear("Income2021")}>
             2021
           </button>
         </div>

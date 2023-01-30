@@ -214,6 +214,10 @@ function AnnualIncome() {
                 e.target.value.length - 1
               );
             }
+            e.target.value = e.target.value.toLocaleString("en-US", {
+              style: "decimal",
+              currency: "USD",
+            });
           }}
         />
         <Button

@@ -10,7 +10,7 @@ git init
 git remote add origin https://github.com/TomPuca/StockManagement.git
 git add .
 git commit -m "begin upload"
-npm run deplo
+npm run deploy
 
 npm outdated
 rfce

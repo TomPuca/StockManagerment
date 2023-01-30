@@ -111,6 +111,11 @@ function HistoryTransactions() {
             2021
           </button>
         </div>
+        <div>
+          <button className="YearButton" onClick={() => setYear("Stocks2022")}>
+            2022
+          </button>
+        </div>
       </div>
       {/*prettier-ignore*/}
       <div style={{ color: "blue", display: "flex",width: "700px"  }}>

@@ -4,6 +4,7 @@
     <list default="true" id="41c6bcc6-2d69-48a0-a864-942c25f8fb48" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/AnnualIncome/AnnualIncome.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/AnnualIncome/AnnualIncome.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/HistoryTransactions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/HistoryTransactions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Note/GitCommand.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Note/GitCommand.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -172,7 +173,8 @@
       <workItem from="1662539794109" duration="840000" />
       <workItem from="1663318876573" duration="10000" />
       <workItem from="1672196770869" duration="15000" />
-      <workItem from="1672196815070" duration="780000" />
+      <workItem from="1672196815070" duration="2378000" />
+      <workItem from="1675045872056" duration="29000" />
     </task>
     <servers />
   </component>

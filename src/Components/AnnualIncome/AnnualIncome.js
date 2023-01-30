@@ -3,6 +3,7 @@ import "./AnnualIncome.css";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import CurrencyFormat from "react-currency-format";
 import db from "../firebase";
 import Stack from "@mui/material/Stack";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
@@ -62,8 +63,13 @@ function AnnualIncome() {
 
   const addstockclick = (e) => {
     e.preventDefault();
+    // console.log(
+    //   parseFloat(document.getElementById("IncomeID").value.replace(",", "."))
+    // );
     db.collection("Income").add({
-      Income: parseFloat(document.getElementById("IncomeID").value),
+      Income: parseFloat(
+        document.getElementById("IncomeID").value.replace(",", "")
+      ),
       Day: dateincome.getDate(),
       Month: dateincome.getMonth() + 1,
       Year: dateincome.getFullYear(),
@@ -192,33 +198,44 @@ function AnnualIncome() {
             </Stack>
           </LocalizationProvider>
         </div>
-        <TextField
+        {/*<TextField*/}
+        {/*  id="IncomeID"*/}
+        {/*  label="Income"*/}
+        {/*  style={{ marginTop: 10, marginLeft: 10 }}*/}
+        {/*  placeholder="0"*/}
+        {/*  // margin="normal"*/}
+        {/*  size="small"*/}
+        {/*  // InputLabelProps={{*/}
+        {/*  //   shrink: true,*/}
+        {/*  // }}*/}
+        {/*  variant="outlined"*/}
+        {/*  // value={stockrecentbuy.BoughtPrice}*/}
+        {/*  onChange={(e) => {*/}
+        {/*    const re = /^[0-9,,\b]+$/;*/}
+        {/*    if (e.target.value === "" || re.test(e.target.value)) {*/}
+        {/*      // e.target.value = e.target.value.substr(0,e.target.value.length-1)*/}
+        {/*    } else {*/}
+        {/*      e.target.value = e.target.value.substr(*/}
+        {/*        0,*/}
+        {/*        e.target.value.length - 1*/}
+        {/*      );*/}
+        {/*    }*/}
+
+        {/*    console.log("1: " + e.target.value.toString());*/}
+        {/*    e.target.value = VNCurrency(e.target.value.toString());*/}
+        {/*  }}*/}
+        {/*/>*/}
+        <CurrencyFormat
           id="IncomeID"
           label="Income"
-          style={{ marginTop: 10, marginLeft: 10 }}
-          placeholder="0"
-          // margin="normal"
-          size="small"
-          // InputLabelProps={{
-          //   shrink: true,
-          // }}
+          customInput={TextField}
+          thousandSeparator
+          prefix=""
+          style={{ marginTop: 10, fontSize: "12px", marginLeft: 10 }}
+          // decimalScale={0}
           variant="outlined"
-          // value={stockrecentbuy.BoughtPrice}
-          onChange={(e) => {
-            const re = /^[0-9,.\b]+$/;
-            if (e.target.value === "" || re.test(e.target.value)) {
-              // e.target.value = e.target.value.substr(0,e.target.value.length-1)
-            } else {
-              e.target.value = e.target.value.substr(
-                0,
-                e.target.value.length - 1
-              );
-            }
-            e.target.value = e.target.value.toLocaleString("en-US", {
-              style: "decimal",
-              currency: "USD",
-            });
-          }}
+          size="small"
+          // onChange={handleNewAmount}
         />
         <Button
           variant="outlined"

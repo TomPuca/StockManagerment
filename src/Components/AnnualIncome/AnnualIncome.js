@@ -68,7 +68,7 @@ function AnnualIncome() {
     // );
     db.collection("Income").add({
       Income: parseFloat(
-        document.getElementById("IncomeID").value.replace(",", "")
+        document.getElementById("IncomeID").value.replaceAll(",", "")
       ),
       Day: dateincome.getDate(),
       Month: dateincome.getMonth() + 1,

@@ -110,8 +110,8 @@ function BuySell() {
     // prettier-ignore
     data = stocks
         ?.filter((item) => item.IsSold === true).map(
-            ({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,}) =>
-                ({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,})
+            ({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,DaySold,MonthSold,}) =>
+                ({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,DaySold,MonthSold,})
         );
     setSellStocks(data);
     //get buy/sell total
@@ -220,15 +220,21 @@ function BuySell() {
   }
   // console.log(stocks);
 
-  const ShowBuyStock = (items) =>
+  const ShowBuyStock = (items, buysell) =>
     items &&
     items.map((item, index) => (
       <div className="stocks" key={index}>
         <div>
           {/*Tooltip bought date*/}
-          <LightTooltip title={item.DayBought + "/" + item.MonthBought}>
-            <div className="mack">{item.MaCK}</div>
-          </LightTooltip>
+          {buysell ? (
+            <LightTooltip title={item.DayBought + "/" + item.MonthBought}>
+              <div className="mack">{item.MaCK}</div>
+            </LightTooltip>
+          ) : (
+            <LightTooltip title={item.DaySold + "/" + item.MonthSold}>
+              <div className="mack">{item.MaCK}</div>
+            </LightTooltip>
+          )}
         </div>
         <div className="buyprice">{item.BoughtPrice}</div>
         <div className="sell">
@@ -295,9 +301,16 @@ function BuySell() {
         {/* <div>
           {ExpectedInterest(item.BoughtPrice, item.SoldPrice, item.Amount)[0]}
         </div> */}
-        <div className="sellbutton">
-          {item.IsSold ? "" : <SellDialog stockitem={item} />}
-        </div>
+
+        {item.IsSold ? (
+          <div className="datesold" style={{ textAlign: "right !importance" }}>
+            {item.DaySold + "/" + item.MonthSold}
+          </div>
+        ) : (
+          <div className="sellbutton">
+            <SellDialog stockitem={item} />
+          </div>
+        )}
       </div>
       // console.log(random(5)),
     ));
@@ -392,7 +405,7 @@ function BuySell() {
       </div>
       <div className="buysell__title">
         <h2>Purchased Stocks</h2>
-        {ShowBuyStock(buystocks)}
+        {ShowBuyStock(buystocks, true)}
       </div>
       <div className="total">
         <div className="totalitemleft">
@@ -422,7 +435,7 @@ function BuySell() {
           {/* <div className="minusstock1" onClick={showboughtClick}></div> */}
         </div>
 
-        {showbought ? ShowBuyStock(sellstocks) : null}
+        {showbought ? ShowBuyStock(sellstocks, false) : null}
         <div style={{ display: "flex" }}>
           {/*<div className="total" style={{ width: "150px" }}>*/}
           <div className="totalitemleft">
@@ -482,7 +495,7 @@ function BuySell() {
               let tempvalue = { ...ratiotemp };
               tempvalue.soldtemp = parseFloat(e.target.value);
 
-              // console.log(tempvalue);
+              console.log(tempvalue);
               setRatiotemp(tempvalue);
             }}
           />
@@ -491,7 +504,9 @@ function BuySell() {
             id="RatioTemp"
             label=""
             style={{ marginTop: 5, width: 90 }}
+            // placeholder={{ratiopercent}!=='NaN' ? {ratiopercent} : 0}
             placeholder={ratiopercent}
+            // placeholder={ratiopercent != NaN ? "1" : "0"}
             // margin="normal"
             size="small"
             // InputLabelProps={{

@@ -24,7 +24,7 @@ function Realtime() {
   // const [{ socket   , currentstockprice }, dispatch] = useStateValue();
   const [{ socket    }, dispatch] = useStateValue();
   // prettier-ignore
-  const [Stocklist, setStocklist] = useState(["C4G","TSC","CEO","VPH","CTI","DIG","LDG"]);
+  const [Stocklist, setStocklist] = useState(["FRT","CEO","DIG","LDG"]);
   const [InitStockItems, setInitStockItems] = useState(false);
   const [IsConnected, setIsConnected] = useState(false);
   const [BuyStocksTemp, setBuyStocksTemp] = useState([]);

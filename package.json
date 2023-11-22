@@ -24,6 +24,7 @@
     "firebase": "^9.6.1",
     "highcharts": "^9.0.0",
     "highcharts-react-official": "^3.0.0",
+    "npm-check": "^6.0.1",
     "react": "^17.0.2",
     "react-chartjs-2": "^2.11.1",
     "react-currency-format": "^1.1.0",

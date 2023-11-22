@@ -24,7 +24,9 @@ function Realtime() {
   // const [{ socket   , currentstockprice }, dispatch] = useStateValue();
   const [{ socket    }, dispatch] = useStateValue();
   // prettier-ignore
+  // const [Stocklist, setStocklist] = useState(JSON.parse(localStorage.getItem("stockid")));
   const [Stocklist, setStocklist] = useState(["FRT","CEO","DIG","LDG"]);
+  // const [Stocklist, setStocklist] = useState([]);
   const [InitStockItems, setInitStockItems] = useState(false);
   const [IsConnected, setIsConnected] = useState(false);
   const [BuyStocksTemp, setBuyStocksTemp] = useState([]);
@@ -38,12 +40,14 @@ function Realtime() {
   useEffect(() => {
     if (isNewStockItems.current) {
       initstockitems();
+      //update stockid data
+      localStorage.setItem("stockid", JSON.stringify(Stocklist));
       isNewStockItems.current = false;
     }
     // đăng ký lại room
     let msg = '{"action":"join","list":"' + Stocklist.join(",") + '"}';
     // console.log(msg);
-    console.log(ReactSession.get("Stock_List"));
+    // console.log(ReactSession.get("Stock_List"));
     socket.emit("regs", msg);
     console.log("CONNECTED");
     setIsConnected(true);
@@ -65,12 +69,20 @@ function Realtime() {
     //for the first render
     if (isFirstRef.current) {
       console.log("First Render");
+      //Get stock list in brower
+      const data = JSON.parse(localStorage.getItem("stockid"));
+      // console.log("StockID: " + data);
+      //if has data, update to new list
+      if (data) {
+        setStocklist(data);
+        isNewStockItems.current = true;
+        console.log("StockID: " + data);
+      }
       initstockitems();
       getVNindex();
       isFirstRef.current = false;
       isStockItems.current = true;
       socketConnect();
-
       //firebase get buy stock to add stock list
       db.collection("Stocks")
         .orderBy("IsSold")

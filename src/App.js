@@ -5,7 +5,7 @@ import BuySell from "./Components/BuySell";
 import HistoryTransactions from "./Components/HistoryTransactions";
 import VnIndexChart from "./Components/VNIndexChart";
 import StockCodeView from "./Components/StockCodeView";
-import ReactSession from "./Components/Utils/ReactSession";
+// import ReactSession from "./Components/Utils/ReactSession";
 import AnnualIncome from "./Components/AnnualIncome/AnnualIncome";
 
 // import "bootstrap/dist/css/bootstrap.min.css";
@@ -15,8 +15,8 @@ import AnnualIncome from "./Components/AnnualIncome/AnnualIncome";
 //var socketLink = 'https://bgdatafeed.vps.com.vn/';
 
 function App() {
-  ReactSession.setStoreType("localStorage");
-  ReactSession.set("Stock_List", ["DIG", "VPH", "CTI", "CEO", "LDG", "IDG"]);
+  // ReactSession.setStoreType("localStorage");
+  // ReactSession.set("Stock_List", ["DIG", "VPH", "CTI", "CEO", "LDG", "IDG"]);
   return (
     <div className="App">
       <Router>

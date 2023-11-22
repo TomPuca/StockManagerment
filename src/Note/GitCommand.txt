@@ -1,3 +1,9 @@
+// Check unuse package in project
+npm install -g npm-check
+npm-check
+npm uninstall <package_name>
+
+
 //remove git
 sudo rm -R .git
 

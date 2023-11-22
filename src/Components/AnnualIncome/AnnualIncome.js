@@ -39,7 +39,9 @@ function AnnualIncome() {
     items &&
     items.map((item, index) => (
       <div key={index}>
-        <ListItemIncome IncomeItem={item} />
+        <div>
+          <ListItemIncome IncomeItem={item} />
+        </div>
       </div>
     ));
 
@@ -274,7 +276,7 @@ function AnnualIncome() {
         {IncomePerMonth()}
       </div>
       {/*    List all Income*/}
-      {ShowIncome(TotalIncomes)}
+      <div className="anualIncomeCard">{ShowIncome(TotalIncomes)}</div>
       {/*prettier-ignore*/}
       <div  className= {IsAddIncome ? "alert alert-success connection-alert connected-alert text-center fadeIn":  "fadeOut"}>
             <strong>Added!</strong>

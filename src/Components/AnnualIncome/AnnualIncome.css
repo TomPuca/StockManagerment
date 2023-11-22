@@ -9,3 +9,10 @@
     height: 250px !important;
     /*transform: scale(0.9)*/
 }
+
+.anualIncomeCard {
+    /*display: flex;*/
+    columns:  2;
+    width: 450px;
+    /*column-gap: 40px;*/
+}

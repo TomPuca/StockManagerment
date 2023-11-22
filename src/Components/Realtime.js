@@ -135,19 +135,19 @@ function Realtime() {
     );
     // showlog();
   }, [StockItems]);
-  useEffect(() => {
-    // {people.filter(person => person.age < 60).map(filteredPerson => (
-    //     <li>
-    //       {filteredPerson.name}
-    //     </li>
-    // ))}
-    // console.log("log");
-    // const temparray = matchStockValue.filter((item) => item.stockid === "CEO");
-    // matchStockValue
-    //   .filter((item) => item.stockid === "CEO")
-    //   .map((filteritem) => console.log(filteritem.stockid));
-    // console.log(matchStockValue);
-  }, [matchStockValue]);
+  // useEffect(() => {
+  //   // {people.filter(person => person.age < 60).map(filteredPerson => (
+  //   //     <li>
+  //   //       {filteredPerson.name}
+  //   //     </li>
+  //   // ))}
+  //   // console.log("log");
+  //   // const temparray = matchStockValue.filter((item) => item.stockid === "CEO");
+  //   // matchStockValue
+  //   //   .filter((item) => item.stockid === "CEO")
+  //   //   .map((filteritem) => console.log(filteritem.stockid));
+  //   // console.log(matchStockValue);
+  // }, [matchStockValue]);
 
   async function getdata() {
     console.log("before", Stocklist);

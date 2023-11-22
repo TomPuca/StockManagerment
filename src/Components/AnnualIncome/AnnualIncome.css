@@ -13,6 +13,6 @@
 .anualIncomeCard {
     /*display: flex;*/
     columns:  2;
-    width: 450px;
+    width: 480px;
     /*column-gap: 40px;*/
 }

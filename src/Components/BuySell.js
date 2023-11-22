@@ -216,7 +216,15 @@ function BuySell() {
 
     let expectedpercent =
       (expectedprofit / (parseFloat(buyprice) * 10 * Amount)).toFixed(2) + "%";
-    return [expectedprofit, expectedpercent];
+
+    if (expectedpercent == "NaN%") {
+      // return [expectedprofit, expectedpercent];
+      // console.log("na" + expectedpercent);
+      return [expectedprofit, "0%"];
+    } else {
+      return [expectedprofit, expectedpercent];
+      // return [0, 0];
+    }
   }
   // console.log(stocks);
 

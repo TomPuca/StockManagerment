@@ -55,9 +55,9 @@ function Realtime() {
     // console.log(connectioncircleID);
     connectioncircleID.style.backgroundColor = "blue";
     // connectioncircleID.classList.replace("notconnected", "connected");
-    // const timeout = setTimeout(() => {
-    //   setIsConnected(false);
-    // }, 3000);
+    const timeout = setTimeout(() => {
+      setIsConnected(false);
+    }, 3000);
 
     // showlog();
   }, [Stocklist]);
@@ -634,10 +634,10 @@ function Realtime() {
     // connectioncircleID.style.backgroundColor = "lightgray";
     // prettier-ignore
     connectioncircleID.classList.replace("backgroundwhite" , "backgroundgray");
-    // const timeout = setTimeout(() => {
-    //   // prettier-ignore
-    //   connectioncircleID.classList.replace("backgroundgray","backgroundwhite");
-    // }, 3000);
+    const timeout = setTimeout(() => {
+      // prettier-ignore
+      connectioncircleID.classList.replace("backgroundgray","backgroundwhite");
+    }, 3000);
   }
   //Cap nhat thong tin ve khop lenh
 

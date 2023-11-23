@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AnnualIncome.css";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
@@ -77,10 +77,10 @@ function AnnualIncome() {
       Year: dateincome.getFullYear(),
     });
     setIsAddIncome(true);
-    const timeout = setTimeout(() => {
-      setIsAddIncome(false);
-      console.log(IsAddIncome);
-    }, 3000);
+    // const timeout = setTimeout(() => {
+    //   setIsAddIncome(false);
+    //   console.log(IsAddIncome);
+    // }, 3000);
     // console.log(dateincome.getMonth());
   };
 

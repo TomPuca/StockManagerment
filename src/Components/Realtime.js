@@ -4,7 +4,7 @@ import { useStateValue } from "../StateProvider";
 import { strimstring, useInterval } from "./Functions";
 // import { getCurrentDate, strimstring, useInterval } from "./Functions";
 import VnIndexChart from "./VNIndexChart";
-import ReactSession from "./Utils/ReactSession";
+// import ReactSession from "./Utils/ReactSession";
 import db from "./firebase";
 
 import ListComponent from "./ListComponent";
@@ -55,9 +55,9 @@ function Realtime() {
     // console.log(connectioncircleID);
     connectioncircleID.style.backgroundColor = "blue";
     // connectioncircleID.classList.replace("notconnected", "connected");
-    const timeout = setTimeout(() => {
-      setIsConnected(false);
-    }, 3000);
+    // const timeout = setTimeout(() => {
+    //   setIsConnected(false);
+    // }, 3000);
 
     // showlog();
   }, [Stocklist]);
@@ -76,7 +76,7 @@ function Realtime() {
       if (data) {
         setStocklist(data);
         isNewStockItems.current = true;
-        console.log("StockID: " + data);
+        // console.log("StockID: " + data);
       }
       initstockitems();
       getVNindex();
@@ -391,7 +391,7 @@ function Realtime() {
     let hours = date.getHours();
     let minutes = date.getMinutes();
     let seconds = date.getSeconds();
-    let newStockItems = StockItems;
+    // let newStockItems = StockItems;
     // let indexnum = Stocklist.indexOf(item.sym);
     let tempID;
     if (item.time) {
@@ -475,10 +475,10 @@ function Realtime() {
           "|" +
           document.querySelector("#" + item.sym + "-changePc").innerHTML;
       }
+      //change color depend on Price
+      //prettier-ignore
+      ChangeClolorBuySell (("#" + item.sym ), ColorPrice(item.lastPrice,document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
     }
-    //change color depend on Price
-    //prettier-ignore
-    ChangeClolorBuySell (("#" + item.sym ), ColorPrice(item.lastPrice,document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
 
     // tempstock.lowPrice = item.lp;
     //
@@ -634,44 +634,60 @@ function Realtime() {
     // connectioncircleID.style.backgroundColor = "lightgray";
     // prettier-ignore
     connectioncircleID.classList.replace("backgroundwhite" , "backgroundgray");
-    const timeout = setTimeout(() => {
-      // prettier-ignore
-      connectioncircleID.classList.replace("backgroundgray","backgroundwhite");
-    }, 3000);
+    // const timeout = setTimeout(() => {
+    //   // prettier-ignore
+    //   connectioncircleID.classList.replace("backgroundgray","backgroundwhite");
+    // }, 3000);
   }
   //Cap nhat thong tin ve khop lenh
 
   const addstocktolistclick = async (e) => {
     e.preventDefault();
     // prettier-ignore
-    let tempstock = document.getElementById("stockcodeinput").value.toUpperCase();
-    // let tempstock = document
-    //   .getElementById("stockcodeinput")
-    //   .value.toUpperCase();
-    if (tempstock !== "") {
-      let index = Stocklist.findIndex(
-        (StocklistItem) => StocklistItem === tempstock
-      );
-      // console.log(tempindex);
-      if (index >= 0) {
-        console.log("khong can thay doi");
-      } else {
-        console.log("updatelist", tempstock);
-        let newStocklist = Stocklist;
-        setStocklist([tempstock, ...newStocklist]);
-      }
+    const array = [...Stocklist]; // make a separate copy of the array
+    // console.log(document.getElementById("stockcodeinput").value.toUpperCase());
+    let tempstock = document
+      .getElementById("stockcodeinput")
+      .value.toUpperCase();
+    const index = array.indexOf(tempstock);
+    if (index === -1) {
+      let newStocklist = Stocklist;
+      setStocklist([tempstock, ...newStocklist]);
+      isNewStockItems.current = true;
     }
-    isNewStockItems.current = true;
+
+    // let tempstock = document.getElementById("stockcodeinput").value.toUpperCase();
+    // // let tempstock = document
+    // //   .getElementById("stockcodeinput")
+    // //   .value.toUpperCase();
+    // if (tempstock !== "") {
+    //   let index = Stocklist.findIndex(
+    //     (StocklistItem) => StocklistItem === tempstock
+    //   );
+    //   // console.log(tempindex);
+    //   if (index >= 0) {
+    //     console.log("khong can thay doi");
+    //   } else {
+    //     console.log("updatelist", tempstock);
+    //     let newStocklist = Stocklist;
+    //     setStocklist([tempstock, ...newStocklist]);
+    //   }
+    // }
+    // isNewStockItems.current = true;
   };
   const delstocktolistclick = (e) => {
     e.preventDefault();
     // prettier-ignore
-    if (document.getElementById("stockcodeinput").value.toUpperCase() !== "") {
-      dispatch({
-        type: "DEL_STOCK_TO_LIST",
-        item: document.getElementById("stockcodeinput").value.toUpperCase(),
-      });
-      // console.log(tempstock);
+    const array = [...Stocklist]; // make a separate copy of the array
+    // console.log(document.getElementById("stockcodeinput").value.toUpperCase());
+    const index = array.indexOf(
+      document.getElementById("stockcodeinput").value.toUpperCase()
+    );
+    if (index !== -1) {
+      array.splice(index, 1);
+      console.log(array);
+      setStocklist(array);
+      isNewStockItems.current = true;
     }
   };
 

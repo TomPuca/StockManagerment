@@ -12,7 +12,7 @@ import { getCurrentDate } from "./Functions";
 // import { ExpectedInterest } from "./TransactionItem";
 import SellDialog from "./SellDialog";
 // import HistoryTransactions from "./HistoryTransactions";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 import { withStyles } from "@material-ui/core/styles";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -217,7 +217,7 @@ function BuySell() {
     let expectedpercent =
       (expectedprofit / (parseFloat(buyprice) * 10 * Amount)).toFixed(2) + "%";
 
-    if (expectedpercent == "NaN%") {
+    if (expectedpercent === "NaN%") {
       // return [expectedprofit, expectedpercent];
       // console.log("na" + expectedpercent);
       return [expectedprofit, "0%"];

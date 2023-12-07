@@ -464,9 +464,13 @@ function Realtime() {
       //prettier-ignore
       ChangeClolorBuySell(("#" + item.sym + "-MinAll"),ColorPrice(item.lp,document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
     }
-
     //change tittle
     if (item.sym === "CEO") {
+      //item.lastPrice,document.querySelector("#" +item.sym + "-r").innerHTML
+      // const favicon = document.querySelector("link[rel~='icon']");
+      // console.log(favicon);
+      // favicon.href = "%PUBLIC_URL%/Stockdown.png";
+      // console.log(favicon);
       if (document.querySelector("#" + item.sym + "-lastPrice").innerHTML) {
         document.title =
           item.sym +
@@ -478,6 +482,24 @@ function Realtime() {
       //change color depend on Price
       //prettier-ignore
       ChangeClolorBuySell (("#" + item.sym ), ColorPrice(item.lastPrice,document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+      //change icon
+      const link = document.querySelector("link[rel~='icon']");
+      if (!link) {
+        link = document.createElement("link");
+        link.rel = "icon";
+        document.head.appendChild(link);
+      }
+      if (
+        parseFloat(item.lastPrice) <
+        parseFloat(document.querySelector("#" + item.sym + "-r").innerHTML)
+      ) {
+        link.href =
+          "https://cdn0.iconfinder.com/data/icons/Hand_Drawn_Web_Icon_Set/128/arrow_down.png";
+        // "https://cdn1.iconfinder.com/data/icons/cryptocurrency-trading-2/512/Down_trend_Graph_Trader_cryptocurrency_bitcoin_trend_stock-1024.png";
+      } else {
+        link.href =
+          "https://cdn4.iconfinder.com/data/icons/business-and-finance-colorful-free-hand-drawn-set/100/growth-1024.png";
+      }
     }
 
     // tempstock.lowPrice = item.lp;

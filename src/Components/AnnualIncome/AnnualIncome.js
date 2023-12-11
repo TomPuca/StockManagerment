@@ -17,10 +17,15 @@ function AnnualIncome() {
   const [year, setYear] = useState("Income");
   const [dateincome, setDateIncome] = React.useState(new Date());
   const [TotalIncomes, setTotalIncomes] = useState([]);
+  const [BeforeTotalIncomes, setBeforeTotalIncomes] = useState([]);
   const [IsAddIncome, setIsAddIncome] = useState(false);
   // let TotalIncome = 10000000;
 
   let TotalIncome = TotalIncomes.reduce(function (prev, cur) {
+    return prev + cur.Income;
+  }, 0);
+
+  let BeforeTotalIncome = BeforeTotalIncomes.reduce(function (prev, cur) {
     return prev + cur.Income;
   }, 0);
 
@@ -55,8 +60,33 @@ function AnnualIncome() {
       .onSnapshot((snapshot) => {
         setTotalIncomes(snapshot.docs.map((doc) => doc.data()));
       });
-    console.log(year);
+    // console.log(year);
+    const now = new Date();
+    const currentYear = now.getFullYear() - 1;
+    // console.log(currentYear);
+    // console.log("Income" + currentYear);
+    db.collection("Income" + currentYear)
+      .orderBy("Month", "asc")
+      .orderBy("Day", "asc")
+      .onSnapshot((snapshot) => {
+        setBeforeTotalIncomes(snapshot.docs.map((doc) => doc.data()));
+      });
+    // console.log(BeforeTotalIncomes);
   }, [year]);
+
+  useEffect(() => {
+    const now = new Date();
+    const currentYear = now.getFullYear() - 1;
+    // console.log(currentYear);
+    // console.log("Income" + currentYear);
+    db.collection("Income" + currentYear)
+      .orderBy("Month", "asc")
+      .orderBy("Day", "asc")
+      .onSnapshot((snapshot) => {
+        setBeforeTotalIncomes(snapshot.docs.map((doc) => doc.data()));
+      });
+    console.log(BeforeTotalIncomes);
+  }, []);
 
   const datehandleChange = (newValue) => {
     setDateIncome(newValue);
@@ -182,6 +212,7 @@ function AnnualIncome() {
         <div>Total Income: </div>
         {/*prettier-ignore*/}
         <div style={{marginLeft:"10px",marginRight : "10px"}}>{VNCurrency(TotalIncome)} ({VNCurrency(TotalIncome/12)})</div>
+        <div style={{marginLeft:"10px",marginRight : "10px"}}>({VNCurrency(TotalIncome - BeforeTotalIncome ) })</div>
       {/*    {
             parseInt(TotalIncome/12).toLocaleString("en-US", {style: "decimal",currency: "USD",})}*/}
       </div>

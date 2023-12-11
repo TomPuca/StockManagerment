@@ -397,6 +397,7 @@ function Realtime() {
     if (item.time) {
       //Set match value into array
       // setArr((prevArr) => ([...prevArr, prevArr.length + 1]));    let tempmatchStockValue = { ...matchStockValue };
+
       setmatchStockValue((prevArr) => [
         ...prevArr,
         {
@@ -496,6 +497,12 @@ function Realtime() {
         link.href =
           "https://cdn0.iconfinder.com/data/icons/Hand_Drawn_Web_Icon_Set/128/arrow_down.png";
         // "https://cdn1.iconfinder.com/data/icons/cryptocurrency-trading-2/512/Down_trend_Graph_Trader_cryptocurrency_bitcoin_trend_stock-1024.png";
+      } else if (
+        parseFloat(item.lastPrice) ===
+        parseFloat(document.querySelector("#" + item.sym + "-r").innerHTML)
+      ) {
+        link.href =
+          "https://cdn1.iconfinder.com/data/icons/smallicons-controls/32/614357-.svg-1024.png";
       } else {
         link.href =
           "https://cdn4.iconfinder.com/data/icons/business-and-finance-colorful-free-hand-drawn-set/100/growth-1024.png";
@@ -618,6 +625,7 @@ function Realtime() {
             <div>Match</div>
             <div className="no-scrollbars">
               {/*{matchStockValue.filter((item) => item.stockid === "CEO")}*/}
+              {/*{matchStockValue.length}*/}
               <ListComponent
                 // stockitem={temparray}
                 stockitem={matchStockValue.filter(

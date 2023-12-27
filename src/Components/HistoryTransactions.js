@@ -107,13 +107,18 @@ function HistoryTransactions() {
           </button>
         </div>
         <div>
-          <button className="YearButton" onClick={() => setYear("Stocks2021")}>
-            2021
+          <button className="YearButton" onClick={() => setYear("Stocks2023")}>
+            2023
           </button>
         </div>
         <div>
           <button className="YearButton" onClick={() => setYear("Stocks2022")}>
             2022
+          </button>
+        </div>
+        <div>
+          <button className="YearButton" onClick={() => setYear("Stocks2021")}>
+            2021
           </button>
         </div>
       </div>

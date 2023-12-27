@@ -201,6 +201,11 @@ function AnnualIncome() {
           </button>
         </div>
         <div>
+          <button className="YearButton" onClick={() => setYear("Income2023")}>
+            2023
+          </button>
+        </div>
+        <div>
           <button className="YearButton" onClick={() => setYear("Income2022")}>
             2022
           </button>

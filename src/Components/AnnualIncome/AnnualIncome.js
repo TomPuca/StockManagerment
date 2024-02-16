@@ -50,42 +50,47 @@ function AnnualIncome() {
       </div>
     ));
 
-  // Do at load page
+  // Do at load page and each time year change
   useEffect(() => {
-    // print(year);
     //  Get data from Firebase
-    db.collection(year)
+    let now = new Date();
+    let BeforeYear = now.getFullYear() - 1;
+    if (year === "Income") {
+      db.collection("Income" + now.getFullYear())
+        .orderBy("Month", "asc")
+        .orderBy("Day", "asc")
+        .onSnapshot((snapshot) => {
+          setTotalIncomes(snapshot.docs.map((doc) => doc.data()));
+        });
+    } else {
+      db.collection(year)
+        .orderBy("Month", "asc")
+        .orderBy("Day", "asc")
+        .onSnapshot((snapshot) => {
+          setTotalIncomes(snapshot.docs.map((doc) => doc.data()));
+        });
+      BeforeYear = parseInt(year.substr(6, 4)) - 1;
+    }
+    db.collection("Income" + BeforeYear)
       .orderBy("Month", "asc")
       .orderBy("Day", "asc")
       .onSnapshot((snapshot) => {
-        setTotalIncomes(snapshot.docs.map((doc) => doc.data()));
+        setBeforeTotalIncomes(snapshot.docs.map((doc) => doc.data()));
       });
-    // console.log(year);
+  }, [year]);
+
+  useEffect(() => {
     const now = new Date();
-    const currentYear = now.getFullYear() - 1;
-    // console.log(currentYear);
-    // console.log("Income" + currentYear);
-    db.collection("Income" + currentYear)
+    const BeforeYear = now.getFullYear() - 1;
+    // console.log(BeforeYear);
+    // console.log("Income" + BeforeYear);
+    db.collection("Income" + BeforeYear)
       .orderBy("Month", "asc")
       .orderBy("Day", "asc")
       .onSnapshot((snapshot) => {
         setBeforeTotalIncomes(snapshot.docs.map((doc) => doc.data()));
       });
     // console.log(BeforeTotalIncomes);
-  }, [year]);
-
-  useEffect(() => {
-    const now = new Date();
-    const currentYear = now.getFullYear() - 1;
-    // console.log(currentYear);
-    // console.log("Income" + currentYear);
-    db.collection("Income" + currentYear)
-      .orderBy("Month", "asc")
-      .orderBy("Day", "asc")
-      .onSnapshot((snapshot) => {
-        setBeforeTotalIncomes(snapshot.docs.map((doc) => doc.data()));
-      });
-    console.log(BeforeTotalIncomes);
   }, []);
 
   const datehandleChange = (newValue) => {
@@ -113,6 +118,17 @@ function AnnualIncome() {
     // }, 3000);
     // console.log(dateincome.getMonth());
   };
+
+  function YearButton(year) {
+    // console.log("Income" + year);
+    return (
+      <div>
+        <button className="YearButton" onClick={() => setYear("Income" + year)}>
+          {year}
+        </button>
+      </div>
+    );
+  }
 
   function IncomePerMonth() {
     return (
@@ -195,23 +211,10 @@ function AnnualIncome() {
             <span className="Header-cartCount">Main</span>
           </div>
         </Link>
-        <div>
-          <button className="YearButton" onClick={() => setYear("Income")}>
-            Current
-          </button>
-        </div>
-        <div>
-          <button className="YearButton" onClick={() => setYear("Income2023")}>
-            2023
-          </button>
-        </div>
-        <div>
-          <button className="YearButton" onClick={() => setYear("Income2022")}>
-            2022
-          </button>
-        </div>
+        {YearButton("2024")}
+        {YearButton("2023")}
+        {YearButton("2022")}
       </div>
-      {/*Total*/}
       {/*prettier-ignore*/}
       <div style={{ color: "blue", display: "flex", width: "700px" ,fontWeight : "bold", marginLeft:"10px" , marginTop : "10px" }}>
         <div>Total Income: </div>
@@ -236,33 +239,7 @@ function AnnualIncome() {
             </Stack>
           </LocalizationProvider>
         </div>
-        {/*<TextField*/}
-        {/*  id="IncomeID"*/}
-        {/*  label="Income"*/}
-        {/*  style={{ marginTop: 10, marginLeft: 10 }}*/}
-        {/*  placeholder="0"*/}
-        {/*  // margin="normal"*/}
-        {/*  size="small"*/}
-        {/*  // InputLabelProps={{*/}
-        {/*  //   shrink: true,*/}
-        {/*  // }}*/}
-        {/*  variant="outlined"*/}
-        {/*  // value={stockrecentbuy.BoughtPrice}*/}
-        {/*  onChange={(e) => {*/}
-        {/*    const re = /^[0-9,,\b]+$/;*/}
-        {/*    if (e.target.value === "" || re.test(e.target.value)) {*/}
-        {/*      // e.target.value = e.target.value.substr(0,e.target.value.length-1)*/}
-        {/*    } else {*/}
-        {/*      e.target.value = e.target.value.substr(*/}
-        {/*        0,*/}
-        {/*        e.target.value.length - 1*/}
-        {/*      );*/}
-        {/*    }*/}
 
-        {/*    console.log("1: " + e.target.value.toString());*/}
-        {/*    e.target.value = VNCurrency(e.target.value.toString());*/}
-        {/*  }}*/}
-        {/*/>*/}
         <CurrencyFormat
           id="IncomeID"
           label="Income"

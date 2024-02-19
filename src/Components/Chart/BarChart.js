@@ -70,8 +70,9 @@ function BarChart(props) {
             text: props.MainLabel,
             fontSize: 20,
           },
+          //No Display legend in the page
           legend: {
-            display: true,
+            display: false,
             position: "right",
           },
           scales: {

@@ -14,6 +14,11 @@ function HistoryTransactions() {
   // const stocks = [];
   useEffect(() => {
     //  Get data from Firebase
+    let now = new Date();
+    let NowYear = now.getFullYear() - 1;
+    if (year === "Income") {
+      year = setYear("Stocks" + NowYear);
+    }
     db.collection(year)
       .orderBy("MonthSold", "desc")
       .orderBy("DaySold", "desc")
@@ -93,6 +98,17 @@ function HistoryTransactions() {
       </div>
     ));
 
+  function YearButton(year) {
+    // console.log("Income" + year);
+    return (
+      <div>
+        <button className="YearButton" onClick={() => setYear("Stocks" + year)}>
+          {year}
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div style={{ color: "blue", display: "flex" }}>
@@ -101,26 +117,10 @@ function HistoryTransactions() {
             <span className="Header-cartCount">Main</span>
           </div>
         </Link>
-        <div>
-          <button className="YearButton" onClick={() => setYear("Stocks")}>
-            Current
-          </button>
-        </div>
-        <div>
-          <button className="YearButton" onClick={() => setYear("Stocks2023")}>
-            2023
-          </button>
-        </div>
-        <div>
-          <button className="YearButton" onClick={() => setYear("Stocks2022")}>
-            2022
-          </button>
-        </div>
-        <div>
-          <button className="YearButton" onClick={() => setYear("Stocks2021")}>
-            2021
-          </button>
-        </div>
+        {YearButton("2024")}
+        {YearButton("2023")}
+        {YearButton("2022")}
+        {YearButton("2021")}
       </div>
       {/*prettier-ignore*/}
       <div style={{ color: "blue", display: "flex",width: "700px"  }}>

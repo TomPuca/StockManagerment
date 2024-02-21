@@ -103,7 +103,7 @@ function AnnualIncome() {
     // console.log(
     //   parseFloat(document.getElementById("IncomeID").value.replace(",", "."))
     // );
-    db.collection("Income").add({
+    db.collection(year).add({
       Income: parseFloat(
         document.getElementById("IncomeID").value.replaceAll(",", "")
       ),

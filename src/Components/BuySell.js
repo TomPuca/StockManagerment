@@ -78,8 +78,10 @@ function BuySell() {
   }, [ratiotemp]);
   // console.log(stockrecentbuy);
   // console.log("current price :", currentstockprice);
+  let now = new Date();
+  let NowYear = now.getFullYear();
   useEffect(() => {
-    db.collection("Stocks")
+    db.collection("Stocks" + NowYear)
       .orderBy("MonthSold", "desc")
       .orderBy("DaySold", "desc")
       .onSnapshot((snapshot) => {
@@ -164,7 +166,9 @@ function BuySell() {
 
   const addstockclick = (e) => {
     e.preventDefault();
-    db.collection("Stocks").add({
+    let now = new Date();
+    let NowYear = now.getFullYear();
+    db.collection(NowYear).add({
       MaCK: document.getElementById("StockCodeID").value.toUpperCase(),
       SoldPrice: 0,
       BoughtPrice: parseFloat(document.getElementById("BuyPrice").value),

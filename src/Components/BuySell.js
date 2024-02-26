@@ -168,7 +168,7 @@ function BuySell() {
     e.preventDefault();
     let now = new Date();
     let NowYear = now.getFullYear();
-    db.collection(NowYear).add({
+    db.collection("Stocks" + NowYear).add({
       MaCK: document.getElementById("StockCodeID").value.toUpperCase(),
       SoldPrice: 0,
       BoughtPrice: parseFloat(document.getElementById("BuyPrice").value),

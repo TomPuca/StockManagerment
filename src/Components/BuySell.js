@@ -78,9 +78,9 @@ function BuySell() {
   }, [ratiotemp]);
   // console.log(stockrecentbuy);
   // console.log("current price :", currentstockprice);
-  let now = new Date();
-  let NowYear = now.getFullYear();
   useEffect(() => {
+    let now = new Date();
+    let NowYear = now.getFullYear();
     db.collection("Stocks" + NowYear)
       .orderBy("MonthSold", "desc")
       .orderBy("DaySold", "desc")

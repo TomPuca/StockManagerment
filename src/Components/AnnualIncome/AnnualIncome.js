@@ -84,6 +84,7 @@ function AnnualIncome() {
     const BeforeYear = now.getFullYear() - 1;
     // console.log(BeforeYear);
     // console.log("Income" + BeforeYear);
+    setYear("Income" + now.getFullYear());
     db.collection("Income" + BeforeYear)
       .orderBy("Month", "asc")
       .orderBy("Day", "asc")
@@ -103,6 +104,7 @@ function AnnualIncome() {
     // console.log(
     //   parseFloat(document.getElementById("IncomeID").value.replace(",", "."))
     // );
+    console.log(year);
     db.collection(year).add({
       Income: parseFloat(
         document.getElementById("IncomeID").value.replaceAll(",", "")

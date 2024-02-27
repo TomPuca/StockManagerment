@@ -99,12 +99,12 @@ function AnnualIncome() {
     // console.log(dateincome.getFullYear());
   };
 
-  const addstockclick = (e) => {
+  const addincomeclick = (e) => {
     e.preventDefault();
     // console.log(
     //   parseFloat(document.getElementById("IncomeID").value.replace(",", "."))
     // );
-    console.log(year);
+    // console.log(year);
     db.collection(year).add({
       Income: parseFloat(
         document.getElementById("IncomeID").value.replaceAll(",", "")
@@ -258,7 +258,7 @@ function AnnualIncome() {
           variant="outlined"
           style={{ marginTop: 10, fontSize: "12px", marginLeft: 10 }}
           size="small"
-          onClick={addstockclick}
+          onClick={addincomeclick}
         >
           Add Income
         </Button>

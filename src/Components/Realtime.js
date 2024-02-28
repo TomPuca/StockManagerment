@@ -774,8 +774,14 @@ function Realtime() {
         </Link>
 
         <Link to="/AnnualIncome">
-          <div style={{ marginTop: 10 }}>
+          <div style={{ marginTop: 10, marginRight: 20 }}>
             <span className="Header-cartCount">Annual Income</span>
+          </div>
+        </Link>
+
+        <Link to="/Version">
+          <div style={{ marginTop: 10 }}>
+            <span className="Header-cartCount">Ver</span>
           </div>
         </Link>
       </div>

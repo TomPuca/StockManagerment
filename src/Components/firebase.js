@@ -19,6 +19,8 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 // const StockRef = db.collection("Stocks");
+let now = new Date();
+let NowYear = now.getFullYear();
 
-export const StockRef = db.collection("Stocks");
+export const StockRef = db.collection("Stocks" + NowYear);
 export default db;

@@ -116,7 +116,9 @@ export default function SellDialog(props) {
           });
         });
         //add new stock buy
-        db.collection("Stocks").add({
+        let now = new Date();
+        let NowYear = now.getFullYear();
+        db.collection("Stocks" + NowYear).add({
           MaCK: props.stockitem.MaCK,
           SoldPrice: 0,
           BoughtPrice: props.stockitem.BoughtPrice,

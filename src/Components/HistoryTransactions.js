@@ -14,12 +14,16 @@ function HistoryTransactions() {
   // const stocks = [];
 
   useEffect(() => {
-    //  Get data from Firebase
     let now = new Date();
     let NowYear = now.getFullYear();
     if (year === "Stocks") {
       setYear("Stocks" + NowYear);
     }
+  }, []);
+
+  useEffect(() => {
+    //  Get data from Firebase
+
     db.collection(year)
       .orderBy("MonthSold", "desc")
       .orderBy("DaySold", "desc")

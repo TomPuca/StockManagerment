@@ -10,6 +10,15 @@ function Version() {
         </div>
       </Link>
       <div style={{ color: "blue", display: "flex", marginLeft: 10 }}>
+        <h1> Version: 1.0.2</h1>
+      </div>
+      <div style={{ display: "flex", marginLeft: 10 }}>
+        <h2>Date Change: 04/03/2024</h2>
+      </div>
+      <div style={{ display: "flex", marginLeft: 10 }}>
+        Change log: Fix Chart Stocks.
+      </div>
+      <div style={{ color: "blue", display: "flex", marginLeft: 10 }}>
         <h1> Version: 1.0.1</h1>
       </div>
       <div style={{ display: "flex", marginLeft: 10 }}>

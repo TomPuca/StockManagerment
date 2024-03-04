@@ -9,27 +9,28 @@ import { Link } from "react-router-dom";
 function HistoryTransactions() {
   const [stocks, setStocks] = useState([]);
   const [year, setYear] = useState("Stocks");
-  // const tempdata = [];
-  // const [DataState, setDataState] = useState(false);
-  // const stocks = [];
 
   useEffect(() => {
+    console.log(year);
+    //  Get data from Firebase
     let now = new Date();
     let NowYear = now.getFullYear();
     if (year === "Stocks") {
-      setYear("Stocks" + NowYear);
+      // setYear("Stocks" + NowYear);
+      db.collection("Stocks" + NowYear)
+        .orderBy("MonthSold", "desc")
+        .orderBy("DaySold", "desc")
+        .onSnapshot((snapshot) => {
+          setStocks(snapshot.docs.map((doc) => doc.data()));
+        });
+    } else {
+      db.collection(year)
+        .orderBy("MonthSold", "desc")
+        .orderBy("DaySold", "desc")
+        .onSnapshot((snapshot) => {
+          setStocks(snapshot.docs.map((doc) => doc.data()));
+        });
     }
-  }, []);
-
-  useEffect(() => {
-    //  Get data from Firebase
-
-    db.collection(year)
-      .orderBy("MonthSold", "desc")
-      .orderBy("DaySold", "desc")
-      .onSnapshot((snapshot) => {
-        setStocks(snapshot.docs.map((doc) => doc.data()));
-      });
     // console.log(year);
 
     //  Load Data from Backup File

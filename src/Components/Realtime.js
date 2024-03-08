@@ -25,7 +25,7 @@ function Realtime() {
   const [{ socket    }, dispatch] = useStateValue();
   // prettier-ignore
   // const [Stocklist, setStocklist] = useState(JSON.parse(localStorage.getItem("stockid")));
-  const [Stocklist, setStocklist] = useState(["FRT","CEO","DIG","LDG"]);
+  const [Stocklist, setStocklist] = useState(["FRT","CEO","DIG","BID","VCB"]);
   // const [Stocklist, setStocklist] = useState([]);
   const [InitStockItems, setInitStockItems] = useState(false);
   const [IsConnected, setIsConnected] = useState(false);

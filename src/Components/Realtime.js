@@ -474,8 +474,8 @@ function Realtime() {
       // console.log(favicon);
       if (document.querySelector("#" + item.sym + "-lastPrice").innerHTML) {
         document.title =
-          item.sym +
-          "|" +
+          // item.sym +
+          // "|" +
           document.querySelector("#" + item.sym + "-lastPrice").innerHTML +
           "|" +
           document.querySelector("#" + item.sym + "-changePc").innerHTML;

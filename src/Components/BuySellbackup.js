@@ -12,7 +12,10 @@ import { getCurrentDate } from "./Functions";
 // import { ExpectedInterest } from "./TransactionItem";
 import SellDialog from "./SellDialog";
 // import HistoryTransactions from "./HistoryTransactions";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+
+import { withStyles } from "@material-ui/core/styles";
+import Tooltip from "@material-ui/core/Tooltip";
 
 //import db from "../firebase.js";
 //twitter 2:36:00
@@ -44,17 +47,43 @@ function BuySell() {
   //   soldtemp: 0,
   //   ratiotemp: 0,
   // };
-  // const [ratiotemp, setRatiotemp] = useState([]);
-  //   buytemp: 0,
-  //   soldtemp: 0,
-  //   ratiotemp: 0,
-  // });
+  const [ratiopercent, setratiopercent] = useState("0");
+  const [ratiotemp, setRatiotemp] = useState({
+    buytemp: 0,
+    soldtemp: 0,
+    // ratiotemp: 0,
+  });
 
+  const LightTooltip = withStyles((theme) => ({
+    tooltip: {
+      backgroundColor: theme.palette.common.white,
+      color: "rgba(0, 0, 0, 0.87)",
+      boxShadow: theme.shadows[1],
+      fontSize: 11,
+    },
+  }))(Tooltip);
+
+  useEffect(() => {
+    // console.log(ratiotemp);
+    setratiopercent(
+      ExpectedInterest(
+        ratiotemp.buytemp,
+        ratiotemp.soldtemp,
+        1
+      )[1].toLocaleString("en-US", {
+        style: "decimal",
+        currency: "USD",
+      })
+    );
+  }, [ratiotemp]);
   // console.log(stockrecentbuy);
   // console.log("current price :", currentstockprice);
   useEffect(() => {
-    db.collection("Stocks")
-      .orderBy("MaCK")
+    let now = new Date();
+    let NowYear = now.getFullYear();
+    db.collection("Stocks" + NowYear)
+      .orderBy("MonthSold", "desc")
+      .orderBy("DaySold", "desc")
       .onSnapshot((snapshot) => {
         setStocks(snapshot.docs.map((doc) => doc.data()));
       });
@@ -67,10 +96,10 @@ function BuySell() {
   useEffect(() => {
     // prettier-ignore
     let data = stocks
-      ?.filter((item) => item.IsSold === false)
-      .map(({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,}) =>
-      ({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,})
-      );
+        ?.filter((item) => item.IsSold === false)
+        .map(({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,DayBought,MonthBought,YearBought,}) =>
+            ({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,DayBought,MonthBought,YearBought,})
+        );
     // objs.sort(function(a, b) {
     // return a.last_nom.localeCompare(b.last_nom)
     // });
@@ -82,10 +111,10 @@ function BuySell() {
     // console.log("CK chua ban", data);
     // prettier-ignore
     data = stocks
-      ?.filter((item) => item.IsSold === true).map(
-        ({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,}) =>
-        ({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,})
-      );
+        ?.filter((item) => item.IsSold === true).map(
+            ({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,DaySold,MonthSold,}) =>
+                ({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,DaySold,MonthSold,})
+        );
     setSellStocks(data);
     //get buy/sell total
 
@@ -96,14 +125,16 @@ function BuySell() {
   //   return prev + cur.Gain;
   // }, 0);
 
-  var soldTotal = sellstocks.reduce(function (prev, cur) {
-    // console.log(cur.MaCK, cur.Gain);
-    // console.log(
-    //   cur.MaCK,
-    //   ExpectedInterest(cur.BoughtPrice, cur.SoldPrice, cur.Amount)[0]
-    // );
-    // return (   prev + ExpectedInterest(cur.BoughtPrice, cur.SoldPrice, cur.Amount)[0]  );
+  var GainTotal = sellstocks.reduce(function (prev, cur) {
     return prev + cur.Gain;
+  }, 0);
+
+  var soldTotal = sellstocks.reduce(function (prev, cur) {
+    return prev + cur.BoughtPrice * cur.Amount * 1000;
+  }, 0);
+
+  let BuyTotal = buystocks.reduce(function (prev, cur) {
+    return prev + cur.BoughtPrice * cur.Amount * 1000;
   }, 0);
 
   var expectTotal = buystocks.reduce(function (prev, cur) {
@@ -119,9 +150,6 @@ function BuySell() {
     );
   }, 0);
 
-  let BuyTotal = buystocks.reduce(function (prev, cur) {
-    return prev + cur.BoughtPrice * cur.Amount * 1000;
-  }, 0);
   // console.log(BuyTotal);
   // console.log(soldTotal);
   // let data = stocks
@@ -138,7 +166,9 @@ function BuySell() {
 
   const addstockclick = (e) => {
     e.preventDefault();
-    db.collection("Stocks").add({
+    let now = new Date();
+    let NowYear = now.getFullYear();
+    db.collection("Stocks" + NowYear).add({
       MaCK: document.getElementById("StockCodeID").value.toUpperCase(),
       SoldPrice: 0,
       BoughtPrice: parseFloat(document.getElementById("BuyPrice").value),
@@ -167,20 +197,21 @@ function BuySell() {
     // setChecked((prev) => !prev);
   }
 
-  const soldstockclick = (e, mack, khoiluong, giamua) => {
-    e.preventDefault();
-    // db.collection("Stocks").onSnapshot((snapshot) => {
-    //   setStocks(snapshot.docs.map((doc) => doc.data()));
-    // }
-    const cityRef = db.collection("Stocks").where();
-    const doc = cityRef.get();
-    if (!doc.exists) {
-      console.log("No such document!");
-    } else {
-      console.log("Document data:", doc.data());
-    }
-    // console.log(db);
-  };
+  // const soldstockclick = (e, mack, khoiluong, giamua) => {
+  //   e.preventDefault();
+  //   // db.collection("Stocks").onSnapshot((snapshot) => {
+  //   //   setStocks(snapshot.docs.map((doc) => doc.data()));
+  //   // }
+  //   const cityRef = db.collection("Stocks").where();
+  //   const doc = cityRef.get();
+  //   if (!doc.exists) {
+  //     console.log("No such document!");
+  //   } else {
+  //     console.log("Document data:", doc.data());
+  //   }
+  //   // console.log(db);
+  // };
+
   function ExpectedInterest(buyprice, sellprice, Amount) {
     let expectedprofit =
       (parseFloat(sellprice) * 1000 - parseFloat(buyprice) * 1000) * Amount -
@@ -189,15 +220,34 @@ function BuySell() {
 
     let expectedpercent =
       (expectedprofit / (parseFloat(buyprice) * 10 * Amount)).toFixed(2) + "%";
-    return [expectedprofit, expectedpercent];
+
+    if (expectedpercent === "NaN%") {
+      // return [expectedprofit, expectedpercent];
+      // console.log("na" + expectedpercent);
+      return [expectedprofit, "0%"];
+    } else {
+      return [expectedprofit, expectedpercent];
+      // return [0, 0];
+    }
   }
   // console.log(stocks);
 
-  const ShowBuyStock = (items) =>
+  const ShowBuyStock = (items, buysell) =>
     items &&
     items.map((item, index) => (
       <div className="stocks" key={index}>
-        <div className="mack">{item.MaCK}</div>
+        <div>
+          {/*Tooltip bought date*/}
+          {buysell ? (
+            <LightTooltip title={item.DayBought + "/" + item.MonthBought}>
+              <div className="mack">{item.MaCK}</div>
+            </LightTooltip>
+          ) : (
+            <LightTooltip title={item.DaySold + "/" + item.MonthSold}>
+              <div className="mack">{item.MaCK}</div>
+            </LightTooltip>
+          )}
+        </div>
         <div className="buyprice">{item.BoughtPrice}</div>
         <div className="sell">
           {item.IsSold
@@ -263,9 +313,16 @@ function BuySell() {
         {/* <div>
           {ExpectedInterest(item.BoughtPrice, item.SoldPrice, item.Amount)[0]}
         </div> */}
-        <div className="sellbutton">
-          {item.IsSold ? "" : <SellDialog stockitem={item} />}
-        </div>
+
+        {item.IsSold ? (
+          <div className="datesold" style={{ textAlign: "right !importance" }}>
+            {item.DaySold + "/" + item.MonthSold}
+          </div>
+        ) : (
+          <div className="sellbutton">
+            <SellDialog stockitem={item} />
+          </div>
+        )}
       </div>
       // console.log(random(5)),
     ));
@@ -299,7 +356,7 @@ function BuySell() {
             <div>
               <TextField
                 id="StockAmount"
-                label="Stock Amount"
+                label="Volume"
                 style={{ marginTop: 5 }}
                 placeholder="0"
                 // margin="normal"
@@ -316,7 +373,7 @@ function BuySell() {
             <div>
               <TextField
                 id="BuyPrice"
-                label="Buy Price"
+                label="Purchase Price"
                 style={{ marginTop: 5 }}
                 placeholder="0"
                 // margin="normal"
@@ -359,8 +416,8 @@ function BuySell() {
         </form>
       </div>
       <div className="buysell__title">
-        <h2>Bought Stocks</h2>
-        {ShowBuyStock(buystocks)}
+        <h2>Purchased Stocks</h2>
+        {ShowBuyStock(buystocks, true)}
       </div>
       <div className="total">
         <div className="totalitemleft">
@@ -390,71 +447,88 @@ function BuySell() {
           {/* <div className="minusstock1" onClick={showboughtClick}></div> */}
         </div>
 
-        {showbought ? ShowBuyStock(sellstocks) : null}
-        <div className="total">
-          {soldTotal.toLocaleString("en-US", {
-            style: "decimal",
-            currency: "USD",
-          })}
-        </div>
-        <Link to="/HistoryTransactions">
-          <div>
-            <span className="Header-cartCount">Chart</span>
+        {showbought ? ShowBuyStock(sellstocks, false) : null}
+        <div style={{ display: "flex" }}>
+          {/*<div className="total" style={{ width: "150px" }}>*/}
+          <div className="totalitemleft">
+            {GainTotal.toLocaleString("en-US", {
+              style: "decimal",
+              currency: "USD",
+            })}
           </div>
-        </Link>
-        <div>
-          {/*<TextField*/}
-          {/*  id="BuyPriceTemp"*/}
-          {/*  label="Buy Price"*/}
-          {/*  style={{ marginTop: 5, width: 130 }}*/}
-          {/*  placeholder="0"*/}
-          {/*  // margin="normal"*/}
-          {/*  size="small"*/}
-          {/*  // InputLabelProps={{*/}
-          {/*  //   shrink: true,*/}
-          {/*  // }}*/}
-          {/*  variant="outlined"*/}
-          {/*  // value={stockrecentbuy.BoughtPrice}*/}
-          {/*  onChange={(e) => {*/}
-          {/*    // let tempvalue = { ...tempstock };*/}
-          {/*    // tempvalue.buytemp = parseFloat(e.target.value);*/}
-          {/*    // settempstock(tempvalue);*/}
-          {/*    // console.log(tempstock);*/}
-          {/*  }}*/}
-          {/*/>*/}
-          {/*<TextField*/}
-          {/*  id="SoldPriceTemp"*/}
-          {/*  label="Sold Price"*/}
-          {/*  style={{ marginTop: 5, width: 130 }}*/}
-          {/*  placeholder="0"*/}
-          {/*  // margin="normal"*/}
-          {/*  size="small"*/}
-          {/*  // InputLabelProps={{*/}
-          {/*  //   shrink: true,*/}
-          {/*  // }}*/}
-          {/*  variant="outlined"*/}
-          {/*  // value={stockrecentbuy.BoughtPrice}*/}
-          {/*  onChange={(e) => {}}*/}
-          {/*/>*/}
-          {/*<TextField*/}
-          {/*  id="RatioTemp"*/}
-          {/*  label=""*/}
-          {/*  style={{ marginTop: 5, width: 50 }}*/}
-          {/*  placeholder=""*/}
-          {/*  // margin="normal"*/}
-          {/*  size="small"*/}
-          {/*  // InputLabelProps={{*/}
-          {/*  //   shrink: true,*/}
-          {/*  // }}*/}
-          {/*  variant="outlined"*/}
-          {/*  // value={stockrecentbuy.BoughtPrice}*/}
-          {/*  onChange={(e) => {*/}
-          {/*    // stockrecentbuy.BoughtPrice = parseFloat(e.target.value);*/}
-          {/*    // console.log(stockrecentbuy);*/}
-          {/*    // console.log(document.getElementById("BuyPrice").value);*/}
-          {/*  }}*/}
-          {/*/>*/}
+          {/*<div className="total" style={{ width: "150px" }}>*/}
+          <div className="totalitemright">
+            {soldTotal.toLocaleString("en-US", {
+              style: "decimal",
+              currency: "USD",
+            })}
+          </div>
+          {/*<div className="total">*/}
+          <div className="totalpercent">
+            {((GainTotal * 100) / soldTotal).toFixed(2) + "%"}
+          </div>
         </div>
+
+        {/*prettier-ignore*/}
+        <div style={{  marginTop: 10,}}>
+            <TextField
+                id="BuyPriceTemp"
+                label="Purchase Price"
+                style={{ marginTop: 5, width: 130 }}
+                placeholder="0"
+                // margin="normal"
+                size="small"
+                // InputLabelProps={{
+                //   shrink: true,
+                // }}
+                variant="outlined"
+                // value={stockrecentbuy.BoughtPrice}
+                onChange={(e) => {
+                  let tempvalue = { ...ratiotemp };
+                  tempvalue.buytemp = parseFloat(e.target.value);
+
+                  // console.log(tempvalue);
+                  setRatiotemp(tempvalue);
+                }}
+            />
+            <TextField
+                id="SoldPriceTemp"
+                label="Sale Price"
+                style={{ marginTop: 5, width: 130 }}
+                placeholder="0"
+                // margin="normal"
+                size="small"
+                // InputLabelProps={{
+                //   shrink: true,
+                // }}
+                variant="outlined"
+                // value={stockrecentbuy.BoughtPrice}
+                onChange={(e) => {
+                  let tempvalue = { ...ratiotemp };
+                  tempvalue.soldtemp = parseFloat(e.target.value);
+
+                  console.log(tempvalue);
+                  setRatiotemp(tempvalue);
+                }}
+            />
+            <TextField
+                disabled
+                id="RatioTemp"
+                label=""
+                style={{ marginTop: 5, width: 90 }}
+                // placeholder={{ratiopercent}!=='NaN' ? {ratiopercent} : 0}
+                placeholder={ratiopercent}
+                // placeholder={ratiopercent != NaN ? "1" : "0"}
+                // margin="normal"
+                size="small"
+                // InputLabelProps={{
+                //   shrink: true,
+                // }}
+                variant="outlined"
+                // value={stockrecentbuy.BoughtPrice}
+                onChange={(e) => {}}
+            />
+          </div>
       </div>
     </div>
   );

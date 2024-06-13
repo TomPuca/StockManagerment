@@ -24,7 +24,7 @@ function BuySell() {
   const [stocks, setStocks] = useState([]);
   const [buystocks, setBuyStocks] = useState([]);
   const [sellstocks, setSellStocks] = useState([]);
-  const [showbought, setshowbought] = useState(false);
+  const [showbought, setShowBought] = useState(false);
   // const [ExpectProfit, setExpectProfit] = useState(0);
   // var ExpectProfit = 0;
   const [{ currentstockprice }] = useStateValue();
@@ -79,51 +79,26 @@ function BuySell() {
   // console.log(stockrecentbuy);
   // console.log("current price :", currentstockprice);
   useEffect(() => {
-    let now = new Date();
-    let NowYear = now.getFullYear();
-    db.collection("Stocks" + NowYear)
-      .orderBy("MonthSold", "desc")
-      .orderBy("DaySold", "desc")
-      .onSnapshot((snapshot) => {
-        setStocks(snapshot.docs.map((doc) => doc.data()));
-      });
+    const fetchData = async () => {
+      let now = new Date();
+      let NowYear = now.getFullYear();
+      db.collection("Stocks" + NowYear)
+        .orderBy("MonthSold", "desc")
+        .orderBy("DaySold", "desc")
+        .onSnapshot((snapshot) => {
+          setStocks(snapshot.docs.map((doc) => doc.data()));
+        });
+    };
 
-    // let data = [ { id: 1, name: 'Mike', city: 'philps', state:'New York'}, { id: 2, name: 'Steve', city: 'Square', state: 'Chicago'}, { id: 3, name: 'Jhon', city: 'market', state: 'New York'}, { id: 4, name: 'philps', city: 'booket', state: 'Texas'}, { id: 5, name: 'smith', city: 'brookfield', state: 'Florida'}, { id: 6, name: 'Broom', city: 'old street', state: 'Florida'}, ]
-    // data = data.filter((item) => item.state == 'New York').map(({id, name, city}) => ({id, name, city}));
-    // console.log(data);
+    fetchData();
   }, []);
 
   useEffect(() => {
-    // prettier-ignore
-    let data = stocks
-        ?.filter((item) => item.IsSold === false)
-        .map(({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,DayBought,MonthBought,YearBought,}) =>
-            ({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,DayBought,MonthBought,YearBought,})
-        );
-    // objs.sort(function(a, b) {
-    // return a.last_nom.localeCompare(b.last_nom)
-    // });
-    setBuyStocks(
-      data.sort(function (a, b) {
-        return a.MaCK.localeCompare(b.MaCK);
-      })
-    );
-    // console.log("CK chua ban", data);
-    // prettier-ignore
-    data = stocks
-        ?.filter((item) => item.IsSold === true).map(
-            ({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,DaySold,MonthSold,}) =>
-                ({MaCK,SoldPrice,BoughtPrice,Amount,Gain,Percent,IsSold,DaySold,MonthSold,})
-        );
-    setSellStocks(data);
-    //get buy/sell total
+    const data = stocks.filter((item) => !item.IsSold);
+    setBuyStocks(data.sort((a, b) => a.MaCK.localeCompare(b.MaCK)));
 
-    // console.log("CK da ban", data);
+    setSellStocks(stocks.filter((item) => item.IsSold));
   }, [stocks]);
-  //
-  // var soldTotal = sellstocks.reduce(function (prev, cur) {
-  //   return prev + cur.Gain;
-  // }, 0);
 
   var GainTotal = sellstocks.reduce(function (prev, cur) {
     return prev + cur.Gain;
@@ -150,20 +125,6 @@ function BuySell() {
     );
   }, 0);
 
-  // console.log(BuyTotal);
-  // console.log(soldTotal);
-  // let data = stocks
-  //   .filter((item) => item.IsSold === false)
-  //   .map(({ MaCK, SoldPrice, BoughtPrice, Amount }) => ({
-  //     MaCK,
-  //     SoldPrice,
-  //     BoughtPrice,
-  //     Amount,
-  //   }));
-  // console.log("CK chua ban", data);
-  //console.log(sellstocks);
-  // End load data
-
   const addstockclick = (e) => {
     e.preventDefault();
     let now = new Date();
@@ -183,34 +144,11 @@ function BuySell() {
       MonthSold: 0,
       YearSold: 0,
     });
-    // console.log(document.getElementById("StockCodeID").value);
-    // console.log(document.getElementById("StockAmount").value);
-    // console.log(document.getElementById("BuyPrice").value);
-    // console.log(stockrecentbuy);
-
-    // console.log("Add Stock Clicked !!!");
   };
 
   function showboughtClick() {
-    showbought ? setshowbought(false) : setshowbought(true);
-    // setshowbought
-    // setChecked((prev) => !prev);
+    setShowBought(!showbought);
   }
-
-  // const soldstockclick = (e, mack, khoiluong, giamua) => {
-  //   e.preventDefault();
-  //   // db.collection("Stocks").onSnapshot((snapshot) => {
-  //   //   setStocks(snapshot.docs.map((doc) => doc.data()));
-  //   // }
-  //   const cityRef = db.collection("Stocks").where();
-  //   const doc = cityRef.get();
-  //   if (!doc.exists) {
-  //     console.log("No such document!");
-  //   } else {
-  //     console.log("Document data:", doc.data());
-  //   }
-  //   // console.log(db);
-  // };
 
   function ExpectedInterest(buyprice, sellprice, Amount) {
     let expectedprofit =
@@ -221,14 +159,10 @@ function BuySell() {
     let expectedpercent =
       (expectedprofit / (parseFloat(buyprice) * 10 * Amount)).toFixed(2) + "%";
 
-    if (expectedpercent === "NaN%") {
-      // return [expectedprofit, expectedpercent];
-      // console.log("na" + expectedpercent);
-      return [expectedprofit, "0%"];
-    } else {
-      return [expectedprofit, expectedpercent];
-      // return [0, 0];
-    }
+    return [
+      expectedprofit,
+      expectedpercent === "NaN%" ? "0%" : expectedpercent,
+    ];
   }
   // console.log(stocks);
 
@@ -483,13 +417,9 @@ function BuySell() {
             // }}
             variant="outlined"
             // value={stockrecentbuy.BoughtPrice}
-            onChange={(e) => {
-              let tempvalue = { ...ratiotemp };
-              tempvalue.buytemp = parseFloat(e.target.value);
-
-              // console.log(tempvalue);
-              setRatiotemp(tempvalue);
-            }}
+            onChange={(e) =>
+                setRatiotemp({ ...ratiotemp, buytemp: parseFloat(e.target.value) })
+            }
           />
           <TextField
             id="SoldPriceTemp"
@@ -503,13 +433,9 @@ function BuySell() {
             // }}
             variant="outlined"
             // value={stockrecentbuy.BoughtPrice}
-            onChange={(e) => {
-              let tempvalue = { ...ratiotemp };
-              tempvalue.soldtemp = parseFloat(e.target.value);
-
-              console.log(tempvalue);
-              setRatiotemp(tempvalue);
-            }}
+            onChange={(e) =>
+                setRatiotemp({ ...ratiotemp, soldtemp: parseFloat(e.target.value) })
+            }
           />
           <TextField
             disabled

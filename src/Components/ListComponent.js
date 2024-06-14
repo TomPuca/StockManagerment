@@ -17,7 +17,7 @@ const ListComponent = memo(({ stockitem }) => {
                     className={item.stockside === "B" ? "MatchSideBuy" : "MatchSideSell"}
                     style={{ fontSize: 11 }}
                 >
-                    {item.stockside}
+                    {item.stockside=== "null" ? "" : item.stockside}
                 </div>
                 <div className="MatchRowPrice" style={{ fontSize: 11 }}>
                     {item.pricematch}
@@ -35,7 +35,7 @@ const ListComponent = memo(({ stockitem }) => {
     return (
         <FixedSizeList
             height={100}
-            width={120}
+            width={130}
             itemSize={15}
             itemCount={stockitem.length}
         >

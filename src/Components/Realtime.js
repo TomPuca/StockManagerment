@@ -501,7 +501,7 @@ function Realtime() {
           </div>
         </div>
         <div>
-          <div className="stockCard__Sell">
+          <div className="stockCard__Match">
             <div>Match</div>
             <div className="no-scrollbars">
               {/*{matchStockValue.filter((item) => item.stockid === "CEO")}*/}

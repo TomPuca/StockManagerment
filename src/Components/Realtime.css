@@ -50,6 +50,13 @@
   border-right: 1px solid #eff2f5;
 }
 
+.stockCard__Match {
+  border: 1px;
+  padding: 0px 15px;
+  width: 120px;
+  border-right: 1px solid #eff2f5;
+}
+
 .BuyAmount {
   justify-content: space-between;
   display: flex;

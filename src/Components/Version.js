@@ -34,7 +34,7 @@ function Version() {
         <h2>Date Change: 14/06/2024</h2>
       </div>
       <div style={{ display: "flex", marginLeft: 10 }}>
-        Change log: Turning Code using ChatGPT.
+        Change log: Code standardization using ChatGPT !!!
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 
 function Realtime() {
   // let socketLink = "https://bgdatafeed.vps.com.vn/";
-  const [newstockvalue, setnewstockvalue] = useState("Begin");
+  const [NewStockValue, setNewStockValue] = useState("Begin");
   const [StockItems, setStockItems] = useState([]);
   const [VNIndex, setVNIndex] = useState([]);
   const [matchStockValue, setmatchStockValue] = useState([]);
@@ -239,7 +239,7 @@ function Realtime() {
   async function initstockitems() {
     console.log("getdata");
     // prettier-ignore
-    const response = await fetch("https://bgapidatafeed.vps.com.vn/getliststockdata/" + Stocklist.join(","));
+    const response = await fetch(`https://bgapidatafeed.vps.com.vn/getliststockdata/${Stocklist.join(",")}`);
     const body = await response.json();
     if (body !== undefined) {
       setStockItems((current) => body);
@@ -247,22 +247,8 @@ function Realtime() {
     setInitStockItems(true);
     // showlog();
   }
-  // function showlog() {
-  //   const temp = StockItems;
-  //   console.log("tempstock", temp);
-  // }
 
-  // const ShowMatchInfor = (items) =>
-  //   items &&
-  //   items.map((item, index) => {
-  //     console.log("matchdata");
-  //     return (
-  //       <ListItem button key={index}>
-  //         <ListItemText primary={item} />
-  //       </ListItem>
-  //     );
-  //   });
-
+  //Cap nhat thong tin ve bang gia, neu ben ban thi la S, mua la B
   const updateElementContent = (selector, newContent) => {
     const element = document.querySelector(selector);
     if (element && element.innerHTML !== newContent) {
@@ -270,8 +256,8 @@ function Realtime() {
       element.innerHTML = newContent;
     }
   };
-
   //Cap nhat thong tin ve bang gia, neu ben ban thi la S, mua la B
+  //prettier-ignore
   function updatestock(item) {
     //Neu gia khop la san ha noi se co id la 3310 voi thong tin tong mua, ban ngoai bang
     // if (item.id === 3310) console.log("Board", item);
@@ -282,11 +268,8 @@ function Realtime() {
     //
     // console.log("Board", item);
     //Khop lenh ma 3210
-    let tempID;
-    tempID = document.querySelector("#" + item.sym);
-    // console.log(tempID);
     //prettier-ignore
-    if (tempID) {
+    if (document.querySelector("#" + item.sym)) {
       if (isStockItems.current === true) {
         if (item.id === 3210) {
           // console.log(item.side);
@@ -316,20 +299,6 @@ function Realtime() {
             updateElementContent("#" + item.sym + "-g6-vol", strimstring(item.g3.split("|")[1]));
             updateElementContent("#" + item.sym + "-g6-price", (item.g3.split("|")[0]));
             ChangeClolorBuySell (("#" + item.sym + "-g6"), ColorPrice(item.g3.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
-            // tempID = document.querySelector("#" + item.sym + "-g6-vol");
-            // // prettier - ignore;
-            // if (tempID.innerHTML !== strimstring(item.g3.split("|")[1])) {
-            //   ChangeBackground("#" + item.sym + "-g6-vol");
-            //   tempID.innerHTML = strimstring(item.g3.split("|")[1]);
-            // }
-            // tempID = document.querySelector("#" + item.sym + "-g6-price");
-            // //prettier-ignore
-            // if (tempID.innerHTML !== item.g3.split("|")[0]) {
-            //   ChangeBackground("#" + item.sym + "-g6-price")
-            //   tempID.innerHTML = item.g3.split("|")[0];
-            // }
-            // //prettier-ignore
-            // ChangeClolorBuySell (("#" + item.sym + "-g6"), ColorPrice(item.g3.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
           }
         }
         //{"id":3220,"sym":"TCB","lastPrice":25.3,"lastVol":100,"cl":"i","change":"0.50","changePc":"2.02","totalVol":108810,"time":"10:49:56","hp":25.3,"ch":"i","lp":24.9,"lc":"i","ap":25.1,"ca":"i"}
@@ -340,21 +309,39 @@ function Realtime() {
       }
     }
   }
+  // prettier-ignore
+  function updateWebpageTitle(item) {
+    const titleElement = document.querySelector(`#${item.sym}-lastPrice`);
+    if (titleElement) {
+      document.title = `${titleElement.innerHTML}|${document.querySelector(`#${item.sym}-changePc`).innerHTML}`;
+    }
+
+    const link = document.querySelector("link[rel~='icon']") || document.createElement("link");
+    link.rel = "icon";
+    document.head.appendChild(link);
+
+    const referencePrice = parseFloat(document.querySelector(`#${item.sym}-r`).innerHTML);
+    const lastPrice = parseFloat(item.lastPrice);
+
+    if (lastPrice < referencePrice) {
+      link.href = "https://cdn0.iconfinder.com/data/icons/Hand_Drawn_Web_Icon_Set/128/arrow_down.png";
+    } else if (lastPrice === referencePrice) {
+      link.href = "https://cdn1.iconfinder.com/data/icons/smallicons-controls/32/614357-.svg-1024.png";
+    } else {
+      link.href = "https://cdn4.iconfinder.com/data/icons/business-and-finance-colorful-free-hand-drawn-set/100/growth-1024.png";
+    }
+  }
   //Cap nhat thong tin ve bang gia, neu ben ban thi la S, mua la B
-  function updatestockmatch(item) {
-    //{"id":3220,"sym":"TCB","lastPrice":25.3,"lastVol":100,"cl":"i","change":"0.50","changePc":"2.02","totalVol":108810,"time":"10:49:56","hp":25.3,"ch":"i","lp":24.9,"lc":"i","ap":25.1,"ca":"i"}
-    // console.log(item);
+  // prettier-ignore
+  async function updatestockmatch(item) {
+    // Example item: {"id":3220,"sym":"TCB","lastPrice":25.3,"lastVol":100,"cl":"i","change":"0.50","changePc":"2.02","totalVol":108810,"time":"10:49:56","hp":25.3,"ch":"i","lp":24.9,"lc":"i","ap":25.1,"ca":"i"}
     let date = new Date();
     let hours = date.getHours();
     let minutes = date.getMinutes();
     let seconds = date.getSeconds();
-    // let newStockItems = StockItems;
-    // let indexnum = Stocklist.indexOf(item.sym);
     let tempID;
     if (item.time) {
       //Set match value into array
-      // setArr((prevArr) => ([...prevArr, prevArr.length + 1]));    let tempmatchStockValue = { ...matchStockValue };
-
       setmatchStockValue((prevArr) => [
         ...prevArr,
         {
@@ -365,9 +352,9 @@ function Realtime() {
         },
       ]);
     }
-    // prettier-ignore
-    //Update string data in the bottom of website
-    setnewstockvalue(hours + ":" + minutes + ":" + seconds + ": " + JSON.stringify(item) );
+    // Update string data in the bottom of the website
+    setNewStockValue(`${hours}:${minutes}:${seconds}: ${JSON.stringify(item)}`);
+    // Dispatch updated stock price
     //update thông tin giá các mã đã mua
     dispatch({
       type: "UPDATE_TO_CURRENTSTOCKPRICE",
@@ -378,40 +365,21 @@ function Realtime() {
     });
     //uddate thong tin ck
     // console.log(item);
-    //change the title of the webpage
+    // Change the title of the webpage if the stock symbol is CEO
+    if (item.sym === "CEO") {
+      updateWebpageTitle(item);
+    }
 
-    // let tempstock = { ...StockItems[indexnum] };
-    tempID = document.querySelector("#" + item.sym + "-ot");
-    if (tempID && tempID.innerHTML !== item.change) {
-      tempID.innerHTML = item.change;
-      ChangeBackground("#" + item.sym + "-ot");
-    }
-    tempID = document.querySelector("#" + item.sym + "-lastPrice");
-    if (tempID && parseFloat(tempID.innerHTML) !== parseFloat(item.lastPrice)) {
-      tempID.innerHTML = item.lastPrice;
-      ChangeBackground("#" + item.sym + "-lastPrice");
-    }
-    tempID = document.querySelector("#" + item.sym + "-lastVolume");
-    if (tempID && tempID.innerHTML !== strimstring(item.lastVol.toString())) {
-      tempID.innerHTML = strimstring(item.lastVol.toString());
-      ChangeBackground("#" + item.sym + "-lastVolume");
-    }
-    tempID = document.querySelector("#" + item.sym + "-changePc");
-    if (tempID && tempID.innerHTML !== item.changePc + "%") {
-      tempID.innerHTML = item.changePc + "%";
-      ChangeBackground("#" + item.sym + "-changePc");
-    }
-    tempID = document.querySelector("#" + item.sym + "-lot");
-    if (tempID && tempID.innerHTML !== strimstring(item.totalVol.toString())) {
-      // console.log(tempID.innerHTML, ":", item.totalVol);
-      tempID.innerHTML = strimstring(item.totalVol.toString());
-      ChangeBackground("#" + item.sym + "-lot");
-    }
+    // Update DOM elements
+    updateDomElement("#" + item.sym + "-ot", item.change);
+    updateDomElement("#" + item.sym + "-lastPrice", item.change);
+    updateDomElement("#" + item.sym + "-lastVolume", item.change);
+    updateDomElement("#" + item.sym + "-changePc", item.change);
+    updateDomElement("#" + item.sym + "-lot", item.change);
     tempID = document.querySelector("#" + item.sym + "-Max");
     if (tempID && tempID.innerHTML !== item.hp) {
       tempID.innerHTML = item.hp;
       ChangeBackground("#" + item.sym + "-Max");
-      //prettier-ignore
       ChangeClolorBuySell(("#" + item.sym + "-MaxAll"),ColorPrice(item.hp,document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
     }
     // tempstock.highPrice = item.hp;
@@ -419,63 +387,17 @@ function Realtime() {
     if (tempID && tempID.innerHTML !== item.hp) {
       tempID.innerHTML = item.lp;
       ChangeBackground("#" + item.sym + "-Min");
-      //prettier-ignore
       ChangeClolorBuySell(("#" + item.sym + "-MinAll"),ColorPrice(item.lp,document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
     }
-    //change tittle
-    if (item.sym === "CEO") {
-      //item.lastPrice,document.querySelector("#" +item.sym + "-r").innerHTML
-      // const favicon = document.querySelector("link[rel~='icon']");
-      // console.log(favicon);
-      // favicon.href = "%PUBLIC_URL%/Stockdown.png";
-      // console.log(favicon);
-      if (document.querySelector("#" + item.sym + "-lastPrice").innerHTML) {
-        document.title =
-          // item.sym +
-          // "|" +
-          document.querySelector("#" + item.sym + "-lastPrice").innerHTML +
-          "|" +
-          document.querySelector("#" + item.sym + "-changePc").innerHTML;
-      }
-      //change color depend on Price
-      //prettier-ignore
-      ChangeClolorBuySell (("#" + item.sym ), ColorPrice(item.lastPrice,document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
-      //change icon
-      const link = document.querySelector("link[rel~='icon']");
-      if (!link) {
-        link = document.createElement("link");
-        link.rel = "icon";
-        document.head.appendChild(link);
-      }
-      if (
-        parseFloat(item.lastPrice) <
-        parseFloat(document.querySelector("#" + item.sym + "-r").innerHTML)
-      ) {
-        link.href =
-          "https://cdn0.iconfinder.com/data/icons/Hand_Drawn_Web_Icon_Set/128/arrow_down.png";
-        // "https://cdn1.iconfinder.com/data/icons/cryptocurrency-trading-2/512/Down_trend_Graph_Trader_cryptocurrency_bitcoin_trend_stock-1024.png";
-      } else if (
-        parseFloat(item.lastPrice) ===
-        parseFloat(document.querySelector("#" + item.sym + "-r").innerHTML)
-      ) {
-        link.href =
-          "https://cdn1.iconfinder.com/data/icons/smallicons-controls/32/614357-.svg-1024.png";
-      } else {
-        link.href =
-          "https://cdn4.iconfinder.com/data/icons/business-and-finance-colorful-free-hand-drawn-set/100/growth-1024.png";
-      }
+  }
+  // prettier-ignore
+  function updateDomElement(selector, newValue, isNumeric = false) {
+    const element = document.querySelector(selector);
+    // console.log(selector)
+    if (element && element.innerHTML !== (isNumeric ? parseFloat(newValue) : newValue)) {
+      element.innerHTML = newValue;
+      ChangeBackground(selector);
     }
-
-    // tempstock.lowPrice = item.lp;
-    //
-    // newStockItems[indexnum] = tempstock;
-    // setStockItems([...newStockItems]);
-    // console.log(Stocklist);
-    // console.log(StockItems);
-
-    // console.log(indexnum);
-    // var dnow = new Date();
-    // console.log("stock", item.timeServer + "ToT" + dnow.getTime());
   }
 
   function ColorText(item1, item2) {
@@ -743,7 +665,7 @@ function Realtime() {
         </Link>
       </div>
       <div className="realtime">{StockRows(StockItems)}</div>
-      <div className="jsonValue">{newstockvalue}</div>
+      <div className="jsonValue">{NewStockValue}</div>
       {/*prettier-ignore*/}
       <div  className= {IsConnected ? "alert alert-success connection-alert connected-alert text-center fadeIn":  "fadeOut"}>
         <strong>Connected!</strong>

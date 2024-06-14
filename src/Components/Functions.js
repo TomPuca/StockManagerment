@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 
 export function strimstring(stringitem) {
+  // console.log(stringitem);
   if (stringitem.length > 2) {
     let temp = (parseInt(stringitem) * 10).toLocaleString("en-US", {
       style: "decimal",

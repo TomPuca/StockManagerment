@@ -27,6 +27,15 @@ function Version() {
       <div style={{ display: "flex", marginLeft: 10 }}>
         Change log: Fix Sell Stocks.
       </div>
+      <div style={{ color: "blue", display: "flex", marginLeft: 10 }}>
+        <h1> Version: 1.0.2</h1>
+      </div>
+      <div style={{ display: "flex", marginLeft: 10 }}>
+        <h2>Date Change: 14/06/2024</h2>
+      </div>
+      <div style={{ display: "flex", marginLeft: 10 }}>
+        Change log: Turning Code using ChatGPT.
+      </div>
     </div>
   );
 }

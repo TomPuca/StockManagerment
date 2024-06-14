@@ -263,6 +263,14 @@ function Realtime() {
   //     );
   //   });
 
+  const updateElementContent = (selector, newContent) => {
+    const element = document.querySelector(selector);
+    if (element && element.innerHTML !== newContent) {
+      ChangeBackground(selector);
+      element.innerHTML = newContent;
+    }
+  };
+
   //Cap nhat thong tin ve bang gia, neu ben ban thi la S, mua la B
   function updatestock(item) {
     //Neu gia khop la san ha noi se co id la 3310 voi thong tin tong mua, ban ngoai bang
@@ -277,102 +285,51 @@ function Realtime() {
     let tempID;
     tempID = document.querySelector("#" + item.sym);
     // console.log(tempID);
+    //prettier-ignore
     if (tempID) {
       if (isStockItems.current === true) {
         if (item.id === 3210) {
           // console.log(item.side);
           if (item.side === "B") {
-            //buy 1
-            tempID = document.querySelector("#" + item.sym + "-g1-vol");
-            //prettier-ignore
-            if (tempID.innerHTML !== strimstring(item.g1.split("|")[1])) {
-              ChangeBackground("#" + item.sym + "-g1-vol")
-              tempID.innerHTML = strimstring(item.g1.split("|")[1]);
-            }
-            tempID = document.querySelector("#" + item.sym + "-g1-price");
-            //prettier-ignore
-            if (tempID.innerHTML !== item.g1.split("|")[0]) {
-              ChangeBackground("#" + item.sym + "-g1-price")
-              tempID.innerHTML = item.g1.split("|")[0];
-            }
-            //prettier-ignore
+          //buy 1
+            updateElementContent("#" + item.sym + "-g1-vol", strimstring(item.g1.split("|")[1]));
+            updateElementContent("#" + item.sym + "-g1-price", (item.g1.split("|")[0]));
             ChangeClolorBuySell (("#" + item.sym + "-g1"), ColorPrice(item.g1.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
             //buy 2
-            tempID = document.querySelector("#" + item.sym + "-g2-vol");
-            //prettier-ignore
-            if (tempID.innerHTML !== strimstring(item.g2.split("|")[1])) {
-              ChangeBackground("#" + item.sym + "-g2-vol")
-              tempID.innerHTML = strimstring(item.g2.split("|")[1]);
-            }
-            tempID = document.querySelector("#" + item.sym + "-g2-price");
-            //prettier-ignore
-            if (tempID.innerHTML !== item.g2.split("|")[0]) {
-              ChangeBackground("#" + item.sym + "-g2-price")
-              tempID.innerHTML = item.g2.split("|")[0];
-            }
-            //prettier-ignore
+            updateElementContent("#" + item.sym + "-g2-vol", strimstring(item.g2.split("|")[1]));
+            updateElementContent("#" + item.sym + "-g2-price", (item.g2.split("|")[0]));
             ChangeClolorBuySell (("#" + item.sym + "-g2"), ColorPrice(item.g2.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
             //buy 3
-            tempID = document.querySelector("#" + item.sym + "-g3-vol");
-            //prettier-ignore
-            if (tempID.innerHTML !== strimstring(item.g3.split("|")[1])) {
-              ChangeBackground("#" + item.sym + "-g3-vol")
-              tempID.innerHTML = strimstring(item.g3.split("|")[1]);
-            }
-            tempID = document.querySelector("#" + item.sym + "-g3-price");
-            //prettier-ignore
-            if (tempID.innerHTML !== item.g3.split("|")[0]) {
-              ChangeBackground("#" + item.sym + "-g3-price")
-              tempID.innerHTML = item.g3.split("|")[0];
-            }
-            //prettier-ignore
+            updateElementContent("#" + item.sym + "-g3-vol", strimstring(item.g3.split("|")[1]));
+            updateElementContent("#" + item.sym + "-g3-price", (item.g3.split("|")[0]));
             ChangeClolorBuySell (("#" + item.sym + "-g3"), ColorPrice(item.g3.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
           } else {
             //buy 4
-            tempID = document.querySelector("#" + item.sym + "-g4-vol");
-            // prettier - ignore;
-            if (tempID.innerHTML !== strimstring(item.g1.split("|")[1])) {
-              ChangeBackground("#" + item.sym + "-g4-vol");
-              tempID.innerHTML = strimstring(item.g1.split("|")[1]);
-            }
-            tempID = document.querySelector("#" + item.sym + "-g4-price");
-            //prettier-ignore
-            if (tempID.innerHTML !== item.g1.split("|")[0]) {
-              ChangeBackground("#" + item.sym + "-g4-price")
-              tempID.innerHTML = item.g1.split("|")[0];
-            }
-            //prettier-ignore
+            updateElementContent("#" + item.sym + "-g4-vol", strimstring(item.g1.split("|")[1]));
+            updateElementContent("#" + item.sym + "-g4-price", (item.g1.split("|")[0]));
             ChangeClolorBuySell (("#" + item.sym + "-g4"), ColorPrice(item.g1.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
             //buy 5
-            tempID = document.querySelector("#" + item.sym + "-g5-vol");
-            // prettier - ignore;
-            if (tempID.innerHTML !== strimstring(item.g2.split("|")[1])) {
-              ChangeBackground("#" + item.sym + "-g5-vol");
-              tempID.innerHTML = strimstring(item.g2.split("|")[1]);
-            }
-            tempID = document.querySelector("#" + item.sym + "-g5-price");
-            //prettier-ignore
-            if (tempID.innerHTML !== item.g2.split("|")[0]) {
-              ChangeBackground("#" + item.sym + "-g5-price")
-              tempID.innerHTML = item.g2.split("|")[0];
-            }
-            //prettier-ignore
+            updateElementContent("#" + item.sym + "-g5-vol", strimstring(item.g2.split("|")[1]));
+            updateElementContent("#" + item.sym + "-g5-price", (item.g2.split("|")[0]));
             ChangeClolorBuySell (("#" + item.sym + "-g5"), ColorPrice(item.g2.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
             //buy 6
-            tempID = document.querySelector("#" + item.sym + "-g6-vol");
-            // prettier - ignore;
-            if (tempID.innerHTML !== strimstring(item.g3.split("|")[1])) {
-              ChangeBackground("#" + item.sym + "-g6-vol");
-              tempID.innerHTML = strimstring(item.g3.split("|")[1]);
-            }
-            tempID = document.querySelector("#" + item.sym + "-g6-price");
-            //prettier-ignore
-            if (tempID.innerHTML !== item.g3.split("|")[0]) {
-              ChangeBackground("#" + item.sym + "-g6-price")
-              tempID.innerHTML = item.g3.split("|")[0];
-            }
-            //prettier-ignore
+            updateElementContent("#" + item.sym + "-g6-vol", strimstring(item.g3.split("|")[1]));
+            updateElementContent("#" + item.sym + "-g6-price", (item.g3.split("|")[0]));
             ChangeClolorBuySell (("#" + item.sym + "-g6"), ColorPrice(item.g3.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+            // tempID = document.querySelector("#" + item.sym + "-g6-vol");
+            // // prettier - ignore;
+            // if (tempID.innerHTML !== strimstring(item.g3.split("|")[1])) {
+            //   ChangeBackground("#" + item.sym + "-g6-vol");
+            //   tempID.innerHTML = strimstring(item.g3.split("|")[1]);
+            // }
+            // tempID = document.querySelector("#" + item.sym + "-g6-price");
+            // //prettier-ignore
+            // if (tempID.innerHTML !== item.g3.split("|")[0]) {
+            //   ChangeBackground("#" + item.sym + "-g6-price")
+            //   tempID.innerHTML = item.g3.split("|")[0];
+            // }
+            // //prettier-ignore
+            // ChangeClolorBuySell (("#" + item.sym + "-g6"), ColorPrice(item.g3.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
           }
         }
         //{"id":3220,"sym":"TCB","lastPrice":25.3,"lastVol":100,"cl":"i","change":"0.50","changePc":"2.02","totalVol":108810,"time":"10:49:56","hp":25.3,"ch":"i","lp":24.9,"lc":"i","ap":25.1,"ca":"i"}

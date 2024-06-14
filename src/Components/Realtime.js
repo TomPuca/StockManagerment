@@ -346,6 +346,7 @@ function Realtime() {
         ...prevArr,
         {
           stockid: item.sym,
+          stockside: item.side,
           timematch: item.time.substring(0, 5),
           volumematch: item.lastVol,
           pricematch: item.lastPrice,
@@ -550,53 +551,37 @@ function Realtime() {
   }
   //Cap nhat thong tin ve khop lenh
 
+  // prettier-ignore
   const addstocktolistclick = async (e) => {
-    e.preventDefault();
-    // prettier-ignore
-    const array = [...Stocklist]; // make a separate copy of the array
-    // console.log(document.getElementById("stockcodeinput").value.toUpperCase());
-    let tempstock = document
-      .getElementById("stockcodeinput")
-      .value.toUpperCase();
-    const index = array.indexOf(tempstock);
-    if (index === -1) {
-      let newStocklist = Stocklist;
-      setStocklist([tempstock, ...newStocklist]);
-      isNewStockItems.current = true;
+    e.preventDefault(); // Prevent default form submission behavior
+
+    const array = [...Stocklist]; // Create a separate copy of the Stocklist array
+
+    let tempstock = document.getElementById("stockcodeinput").value.toUpperCase(); // Get the stock symbol input and convert to uppercase
+    const index = array.indexOf(tempstock); // Check if the stock symbol already exists in the array
+
+    if (index === -1) { // If the stock symbol is not already in the array
+      let newStocklist = Stocklist; // Store current Stocklist (not typically necessary in React functional component state updates)
+      setStocklist([tempstock, ...newStocklist]); // Update Stocklist state by adding tempstock at the beginning
+      isNewStockItems.current = true; // Set a flag indicating new stock items have been added
     }
 
-    // let tempstock = document.getElementById("stockcodeinput").value.toUpperCase();
-    // // let tempstock = document
-    // //   .getElementById("stockcodeinput")
-    // //   .value.toUpperCase();
-    // if (tempstock !== "") {
-    //   let index = Stocklist.findIndex(
-    //     (StocklistItem) => StocklistItem === tempstock
-    //   );
-    //   // console.log(tempindex);
-    //   if (index >= 0) {
-    //     console.log("khong can thay doi");
-    //   } else {
-    //     console.log("updatelist", tempstock);
-    //     let newStocklist = Stocklist;
-    //     setStocklist([tempstock, ...newStocklist]);
-    //   }
-    // }
-    // isNewStockItems.current = true;
+
   };
   const delstocktolistclick = (e) => {
-    e.preventDefault();
-    // prettier-ignore
-    const array = [...Stocklist]; // make a separate copy of the array
-    // console.log(document.getElementById("stockcodeinput").value.toUpperCase());
+    e.preventDefault(); // Prevent default form submission behavior
+
+    const array = [...Stocklist]; // Create a separate copy of the Stocklist array
+
     const index = array.indexOf(
       document.getElementById("stockcodeinput").value.toUpperCase()
-    );
+    ); // Get the index of the stock symbol to be deleted from the input field
+
     if (index !== -1) {
-      array.splice(index, 1);
-      console.log(array);
-      setStocklist(array);
-      isNewStockItems.current = true;
+      // If the stock symbol is found in the array
+      array.splice(index, 1); // Remove the item from the array
+      setStocklist(array); // Update Stocklist state with the modified array
+      isNewStockItems.current = true; // Set a flag indicating new stock items have been modified
     }
   };
 

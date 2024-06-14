@@ -2,40 +2,46 @@ import React, { memo } from "react";
 import { FixedSizeList } from "react-window";
 import "./ListComponent.css";
 
-const ListComponent = memo((props) => {
-  const propsLength = props.stockitem.length;
+// prettier-ignore
+const ListComponent = memo(({ stockitem }) => {
+    const propsLength = stockitem.length;
 
-  const Row = ({ index, style }) => (
-    <div className="MatchRow" style={style}>
-      <div className="MatchRowTime" style={{ fontSize: 11 }}>
-        {props.stockitem[propsLength - index - 1].timematch === "null"
-          ? "ATC"
-          : props.stockitem[propsLength - index - 1].timematch}
-      </div>
-      <div className="MatchRowPrice" style={{ fontSize: 11 }}>
-        {props.stockitem[propsLength - index - 1].pricematch}
-      </div>
-      <div className="MatchRowVolume" style={{ fontSize: 11 }}>
-        {(
-          props.stockitem[propsLength - index - 1].volumematch * 10
-        ).toLocaleString("en-US", {
-          style: "decimal",
-          currency: "USD",
-        })}
-      </div>
-    </div>
-  );
+    const Row = ({ index, style }) => {
+        const item = stockitem[propsLength - index - 1];
+        return (
+            <div className="MatchRow" style={style}>
+                <div className="MatchRowTime" style={{ fontSize: 11 }}>
+                    {item.timematch === "null" ? "ATC" : item.timematch}
+                </div>
+                <div
+                    className={item.stockside === "B" ? "MatchSideBuy" : "MatchSideSell"}
+                    style={{ fontSize: 11 }}
+                >
+                    {item.stockside}
+                </div>
+                <div className="MatchRowPrice" style={{ fontSize: 11 }}>
+                    {item.pricematch}
+                </div>
+                <div className="MatchRowVolume" style={{ fontSize: 11 }}>
+                    {(item.volumematch * 10).toLocaleString("en-US", {
+                        style: "decimal",
+                        currency: "USD",
+                    })}
+                </div>
+            </div>
+        );
+    };
 
-  return (
-    <FixedSizeList
-      height={100}
-      width={120}
-      itemSize={15}
-      itemCount={props.stockitem.length}
-    >
-      {Row}
-    </FixedSizeList>
-  );
+    return (
+        <FixedSizeList
+            height={100}
+            width={120}
+            itemSize={15}
+            itemCount={stockitem.length}
+        >
+            {Row}
+        </FixedSizeList>
+    );
 });
 
 export default ListComponent;

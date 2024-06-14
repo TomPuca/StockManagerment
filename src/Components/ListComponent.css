@@ -3,7 +3,7 @@
 }
 
 .MatchRowTime {
-    width: 45px;
+    width: 35px;
 }
 
 .MatchRowPrice {
@@ -14,6 +14,20 @@
 .MatchRowVolume {
     width: 40px;
     text-align:right ;
+}
+
+.MatchSideBuy{
+    width: 15px;
+    font-weight: bold;
+    text-align:left ;
+    color: blue;
+}
+
+.MatchSideSell{
+    width: 15px;
+    font-weight: bold;
+    text-align:left ;
+    color: red;
 }
 
 ::-webkit-scrollbar {

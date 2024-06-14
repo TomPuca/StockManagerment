@@ -372,10 +372,10 @@ function Realtime() {
 
     // Update DOM elements
     updateDomElement("#" + item.sym + "-ot", item.change);
-    updateDomElement("#" + item.sym + "-lastPrice", item.change);
-    updateDomElement("#" + item.sym + "-lastVolume", item.change);
-    updateDomElement("#" + item.sym + "-changePc", item.change);
-    updateDomElement("#" + item.sym + "-lot", item.change);
+    updateDomElement("#" + item.sym + "-lastPrice", item.lastPrice,true);
+    updateDomElement("#" + item.sym + "-lastVolume", strimstring(item.lastVol.toString()));
+    updateDomElement("#" + item.sym + "-changePc", item.changePc + "%");
+    updateDomElement("#" + item.sym + "-lot", strimstring(item.totalVol.toString()));
     tempID = document.querySelector("#" + item.sym + "-Max");
     if (tempID && tempID.innerHTML !== item.hp) {
       tempID.innerHTML = item.hp;
@@ -393,7 +393,7 @@ function Realtime() {
   // prettier-ignore
   function updateDomElement(selector, newValue, isNumeric = false) {
     const element = document.querySelector(selector);
-    // console.log(selector)
+    // console.log(newValue + "|" + selector)
     if (element && element.innerHTML !== (isNumeric ? parseFloat(newValue) : newValue)) {
       element.innerHTML = newValue;
       ChangeBackground(selector);

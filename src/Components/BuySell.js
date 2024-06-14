@@ -6,53 +6,21 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Button from "@material-ui/core/Button";
 import db from "./firebase";
 import TextField from "@material-ui/core/TextField";
-// import "bootstrap/dist/css/bootstrap.min.css";
 import { useStateValue } from "../StateProvider";
 import { getCurrentDate } from "./Functions";
-// import { ExpectedInterest } from "./TransactionItem";
 import SellDialog from "./SellDialog";
-// import HistoryTransactions from "./HistoryTransactions";
-// import { Link } from "react-router-dom";
-
 import { withStyles } from "@material-ui/core/styles";
 import Tooltip from "@material-ui/core/Tooltip";
 
-//import db from "../firebase.js";
-//twitter 2:36:00
-
+// prettier-ignore
 function BuySell() {
   const [stocks, setStocks] = useState([]);
   const [buystocks, setBuyStocks] = useState([]);
   const [sellstocks, setSellStocks] = useState([]);
   const [showbought, setShowBought] = useState(false);
-  // const [ExpectProfit, setExpectProfit] = useState(0);
-  // var ExpectProfit = 0;
   const [{ currentstockprice }] = useStateValue();
-  // const [{ currentstockprice }, dispatch] = useStateValue();
-  // const [soldTotal, setsoldTotal] = useState(0);
-  // var stockrecentbuy = {
-  //   MaCK: "",
-  //   SoldPrice: 0,
-  //   BoughtPrice: 0,
-  //   Amount: 0,
-  //   Gain: 0,
-  //   Percent: 0,
-  //   IsSold: false,
-  // };
-  // const [buytemp, setbuytemp] = useState();
-  // const [soldtemp, setsoldtemp] = useState();
-  // const [ratiotemp, setratiotemp] = useState("0");
-  // const tempstock = {
-  //   buytemp: 0,
-  //   soldtemp: 0,
-  //   ratiotemp: 0,
-  // };
   const [ratiopercent, setratiopercent] = useState("0");
-  const [ratiotemp, setRatiotemp] = useState({
-    buytemp: 0,
-    soldtemp: 0,
-    // ratiotemp: 0,
-  });
+  const [ratiotemp, setRatiotemp] = useState({ buytemp: 0, soldtemp: 0 });
 
   const LightTooltip = withStyles((theme) => ({
     tooltip: {
@@ -76,8 +44,7 @@ function BuySell() {
       })
     );
   }, [ratiotemp]);
-  // console.log(stockrecentbuy);
-  // console.log("current price :", currentstockprice);
+
   useEffect(() => {
     const fetchData = async () => {
       let now = new Date();
@@ -89,28 +56,18 @@ function BuySell() {
           setStocks(snapshot.docs.map((doc) => doc.data()));
         });
     };
-
     fetchData();
   }, []);
 
   useEffect(() => {
     const data = stocks.filter((item) => !item.IsSold);
     setBuyStocks(data.sort((a, b) => a.MaCK.localeCompare(b.MaCK)));
-
     setSellStocks(stocks.filter((item) => item.IsSold));
   }, [stocks]);
 
-  var GainTotal = sellstocks.reduce(function (prev, cur) {
-    return prev + cur.Gain;
-  }, 0);
-
-  var soldTotal = sellstocks.reduce(function (prev, cur) {
-    return prev + cur.BoughtPrice * cur.Amount * 1000;
-  }, 0);
-
-  let BuyTotal = buystocks.reduce(function (prev, cur) {
-    return prev + cur.BoughtPrice * cur.Amount * 1000;
-  }, 0);
+  const GainTotal = sellstocks.reduce((prev, cur) => prev + cur.Gain, 0);
+  const soldTotal = sellstocks.reduce((prev, cur) => prev + cur.BoughtPrice * cur.Amount * 1000, 0);
+  const BuyTotal = buystocks.reduce((prev, cur) => prev + cur.BoughtPrice * cur.Amount * 1000, 0);
 
   var expectTotal = buystocks.reduce(function (prev, cur) {
     return (
@@ -166,187 +123,82 @@ function BuySell() {
   }
   // console.log(stocks);
 
-  const ShowBuyStock = (items, buysell) =>
-    items &&
-    items.map((item, index) => (
-      <div className="stocks" key={index}>
-        <div>
-          {/*Tooltip bought date*/}
-          {buysell ? (
-            <LightTooltip title={item.DayBought + "/" + item.MonthBought}>
-              <div className="mack">{item.MaCK}</div>
-            </LightTooltip>
-          ) : (
-            <LightTooltip title={item.DaySold + "/" + item.MonthSold}>
-              <div className="mack">{item.MaCK}</div>
-            </LightTooltip>
-          )}
-        </div>
-        <div className="buyprice">{item.BoughtPrice}</div>
-        <div className="sell">
-          {item.IsSold
-            ? item.SoldPrice
-            : currentstockprice[
-                currentstockprice.findIndex(
-                  (CRItem) => CRItem.sym === item.MaCK
-                )
-              ]?.lastPrice}
-        </div>
-        <div className="Amount">
-          {item.Amount.toLocaleString("en-US", {
-            style: "decimal",
-            currency: "USD",
-          })}
-        </div>
-        <div className="lailo">
-          {item.IsSold
-            ? item.Gain.toLocaleString("en-US", {
-                style: "decimal",
-                currency: "USD",
-              })
-            : // ExpectedInterest(
-              //   item.BoughtPrice,
-              //   item.SoldPrice,
-              //   item.Amount
-              // )[0].toLocaleString("en-US", {
-              //   style: "decimal",
-              //   currency: "USD",
-              // })
-              ExpectedInterest(
-                item.BoughtPrice,
-                currentstockprice[
-                  currentstockprice.findIndex(
-                    (CRItem) => CRItem.sym === item.MaCK
-                  )
-                ]?.lastPrice,
-                item.Amount
-              )[0].toLocaleString("en-US", {
-                style: "decimal",
-                currency: "USD",
-              })}
-        </div>
-        <div className="tyle">
-          {item.IsSold
-            ? item.Percent.toLocaleString("en-US", {
-                style: "decimal",
-                currency: "USD",
-              })
-            : ExpectedInterest(
-                item.BoughtPrice,
-                currentstockprice[
-                  currentstockprice.findIndex(
-                    (CRItem) => CRItem.sym === item.MaCK
-                  )
-                ]?.lastPrice,
-                item.Amount
-              )[1].toLocaleString("en-US", {
-                style: "decimal",
-                currency: "USD",
-              })}
-        </div>
-        {/* <div>
-          {ExpectedInterest(item.BoughtPrice, item.SoldPrice, item.Amount)[0]}
-        </div> */}
+  const ShowBuyStock = (items, buysell) => (
+      items && items.map((item, index) => {
+        const currentPrice = currentstockprice.find((CRItem) => CRItem.sym === item.MaCK)?.lastPrice || 0;
+        const expectedInterest = ExpectedInterest(item.BoughtPrice, currentPrice, item.Amount);
 
-        {item.IsSold ? (
-          <div className="datesold" style={{ textAlign: "right !importance" }}>
-            {item.DaySold + "/" + item.MonthSold}
-          </div>
-        ) : (
-          <div className="sellbutton">
-            <SellDialog stockitem={item} />
-          </div>
-        )}
-      </div>
-      // console.log(random(5)),
-    ));
+        return (
+            <div className="stocks" key={index}>
+              <div>
+                <LightTooltip title={buysell ? `${item.DayBought}/${item.MonthBought}` : `${item.DaySold}/${item.MonthSold}`}>
+                  <div className="mack">{item.MaCK}</div>
+                </LightTooltip>
+              </div>
+              <div className="buyprice">{item.BoughtPrice}</div>
+              <div className="sell">{item.IsSold ? item.SoldPrice : currentPrice}</div>
+              <div className="Amount">{item.Amount.toLocaleString("en-US", { style: "decimal", currency: "USD" })}</div>
+              <div className="lailo">{item.IsSold ? item.Gain.toLocaleString("en-US", { style: "decimal", currency: "USD" }) : expectedInterest[0].toLocaleString("en-US", { style: "decimal", currency: "USD" })}</div>
+              <div className="tyle">{item.IsSold ? item.Percent.toLocaleString("en-US", { style: "decimal", currency: "USD" }) : expectedInterest[1]}</div>
+              {item.IsSold ? (
+                  <div className="datesold" style={{ textAlign: "right !importance" }}>
+                    {item.DaySold}/{item.MonthSold}
+                  </div>
+              ) : (
+                  <div className="sellbutton">
+                    <SellDialog stockitem={item} />
+                  </div>
+              )}
+            </div>
+        );
+      })
+  );
 
   return (
     <div className="buysell">
       <div className="addstockform">
         <form>
           <div className="stockadd">
-            {/*prettier-ignore*/}
-            {/*<input className="form-control form-control-sm" type="text" placeholder=".form-control-sm" aria-label=".form-control-sm example" />*/}
             <div>
-              <TextField
+            <TextField
                 id="StockCodeID"
                 label="Stock Code"
                 style={{ marginTop: 5 }}
                 placeholder="0"
-                // margin="dense"
                 variant="outlined"
                 size="small"
-                // value={stockrecentbuy.MaCK}
-                onChange={(e) => {
-                  // stockrecentbuy.MaCK = e.target.value.toUpperCase();
-                  // e.target.value = stockrecentbuy.MaCK;
-                  // console.log(stockrecentbuy);
-                  e.target.value = e.target.value.toUpperCase();
-                  // console.log(document.getElementById("StockCodeID").value);
-                }}
-              />
+                onChange={(e) => (e.target.value = e.target.value.toUpperCase())}
+            />
             </div>
             <div>
-              <TextField
+            <TextField
                 id="StockAmount"
                 label="Volume"
                 style={{ marginTop: 5 }}
                 placeholder="0"
-                // margin="normal"
                 variant="outlined"
                 size="small"
-                // value={stockrecentbuy.Amount}
-                onChange={(e) => {
-                  // stockrecentbuy.Amount = parseInt(e.target.value);
-                  // console.log(stockrecentbuy);
-                  // console.log(document.getElementById("StockAmount").value);
-                }}
-              />
+            />
             </div>
             <div>
-              <TextField
+            <TextField
                 id="BuyPrice"
                 label="Purchase Price"
                 style={{ marginTop: 5 }}
                 placeholder="0"
-                // margin="normal"
                 size="small"
-                // InputLabelProps={{
-                //   shrink: true,
-                // }}
                 variant="outlined"
-                // value={stockrecentbuy.BoughtPrice}
-                onChange={(e) => {
-                  // stockrecentbuy.BoughtPrice = parseFloat(e.target.value);
-                  // console.log(stockrecentbuy);
-                  // console.log(document.getElementById("BuyPrice").value);
-                }}
-              />
+            />
             </div>
-
-            {/* <input
-              // value=""
-              onChange={(e) => {
-                stockrecentbuy.MaCK = e.target.value.toUpperCase();
-                e.target.value = stockrecentbuy.MaCK;
-                console.log(stockrecentbuy);
-              }}
-              className="profit__Input"
-              placeholder={"0"}
-            /> */}
           </div>
           <Button
-            variant="outlined"
-            style={{ marginTop: 5, fontSize: "12px" }}
-            size="small"
-            onClick={addstockclick}
+              variant="outlined"
+              style={{ marginTop: 5, fontSize: "12px" }}
+              size="small"
+              onClick={addstockclick}
           >
             Add Stock
           </Button>
-          {/* <button className="addstock" onClick={addstockclick}>
-            Add Stock
-          </button> */}
         </form>
       </div>
       <div className="buysell__title">
@@ -381,7 +233,8 @@ function BuySell() {
           {/* <div className="minusstock1" onClick={showboughtClick}></div> */}
         </div>
 
-        {showbought ? ShowBuyStock(sellstocks, false) : null}
+        {/*{showbought ? ShowBuyStock(sellstocks, false) : null}*/}
+        {showbought && ShowBuyStock(sellstocks, false)}
         <div style={{ display: "flex" }}>
           {/*<div className="total" style={{ width: "150px" }}>*/}
           <div className="totalitemleft">

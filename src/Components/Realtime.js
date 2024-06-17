@@ -39,7 +39,7 @@ function Realtime() {
 
   useEffect(() => {
     if (isNewStockItems.current) {
-      initstockitems();
+      initStockItems();
       //update stockid data
       localStorage.setItem("stockid", JSON.stringify(Stocklist));
       isNewStockItems.current = false;
@@ -78,7 +78,7 @@ function Realtime() {
         isNewStockItems.current = true;
         // console.log("StockID: " + data);
       }
-      initstockitems();
+      initStockItems();
       getVNindex();
       isFirstRef.current = false;
       isStockItems.current = true;
@@ -216,43 +216,57 @@ function Realtime() {
 
   //thiet lap vong lap lay du lieu
 
+  // prettier-ignore
   async function getVNindex() {
-    // prettier-ignore
-    const response = await fetch("https://bgapidatafeed.vps.com.vn/getlistindexdetail/10");
-    const body = await response.json();
-    // console.log(body);
-    if (body !== undefined) {
-      let tempindex = { ...VNIndex };
-      tempindex.idx = body[0].cIndex;
-      tempindex.idxopen = body[0].oIndex;
-      tempindex.idxchg = body[0].ot.split("|")[0];
-      tempindex.idxpct = body[0].ot.split("|")[1];
-      // tempindex.ttrd = indexcontent.ttrd;
-      tempindex.tval = body[0].ot.split("|")[2];
-      tempindex.tvol = body[0].vol;
-      tempindex.status = body[0].status;
-      // console.log(tempindex);
-      setVNIndex(tempindex);
+    try {
+      const response = await fetch("https://bgapidatafeed.vps.com.vn/getlistindexdetail/10");
+      const body = await response.json();
+
+      if (body !== undefined && body.length > 0) {
+        const indexData = body[0];
+        const [chg, pct, tval] = indexData.ot.split("|");
+
+        const tempindex = {
+          ...VNIndex,
+          idx: indexData.cIndex,
+          idxopen: indexData.oIndex,
+          idxchg: chg,
+          idxpct: pct,
+          tval: tval,
+          tvol: indexData.vol,
+          status: indexData.status
+        };
+
+        setVNIndex(tempindex);
+      }
+    } catch (error) {
+      console.error("Failed to fetch VN index data:", error);
     }
-    // console.log(VNIndex.idx);
   }
-  async function initstockitems() {
-    console.log("getdata");
-    // prettier-ignore
-    const response = await fetch(`https://bgapidatafeed.vps.com.vn/getliststockdata/${Stocklist.join(",")}`);
-    const body = await response.json();
-    if (body !== undefined) {
-      setStockItems((current) => body);
+
+  //prettier-ignore
+  async function initStockItems() {
+    console.log("Fetching stock data");
+
+    try {
+      const response = await fetch(`https://bgapidatafeed.vps.com.vn/getliststockdata/${Stocklist.join(",")}`);
+      const body = await response.json();
+
+      if (body !== undefined) {
+        setStockItems(() => body);
+      }
+
+      setInitStockItems(true);
+    } catch (error) {
+      console.error("Failed to fetch stock data:", error);
     }
-    setInitStockItems(true);
-    // showlog();
   }
 
   //Cap nhat thong tin ve bang gia, neu ben ban thi la S, mua la B
   const updateElementContent = (selector, newContent) => {
     const element = document.querySelector(selector);
     if (element && element.innerHTML !== newContent) {
-      ChangeBackground(selector);
+      changeBackground(selector);
       element.innerHTML = newContent;
     }
   };
@@ -277,28 +291,28 @@ function Realtime() {
           //buy 1
             updateElementContent("#" + item.sym + "-g1-vol", strimstring(item.g1.split("|")[1]));
             updateElementContent("#" + item.sym + "-g1-price", (item.g1.split("|")[0]));
-            ChangeClolorBuySell (("#" + item.sym + "-g1"), ColorPrice(item.g1.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+            changeColorBuySell (("#" + item.sym + "-g1"), ColorPrice(item.g1.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
             //buy 2
             updateElementContent("#" + item.sym + "-g2-vol", strimstring(item.g2.split("|")[1]));
             updateElementContent("#" + item.sym + "-g2-price", (item.g2.split("|")[0]));
-            ChangeClolorBuySell (("#" + item.sym + "-g2"), ColorPrice(item.g2.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+            changeColorBuySell (("#" + item.sym + "-g2"), ColorPrice(item.g2.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
             //buy 3
             updateElementContent("#" + item.sym + "-g3-vol", strimstring(item.g3.split("|")[1]));
             updateElementContent("#" + item.sym + "-g3-price", (item.g3.split("|")[0]));
-            ChangeClolorBuySell (("#" + item.sym + "-g3"), ColorPrice(item.g3.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+            changeColorBuySell (("#" + item.sym + "-g3"), ColorPrice(item.g3.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
           } else {
             //buy 4
             updateElementContent("#" + item.sym + "-g4-vol", strimstring(item.g1.split("|")[1]));
             updateElementContent("#" + item.sym + "-g4-price", (item.g1.split("|")[0]));
-            ChangeClolorBuySell (("#" + item.sym + "-g4"), ColorPrice(item.g1.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+            changeColorBuySell (("#" + item.sym + "-g4"), ColorPrice(item.g1.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
             //buy 5
             updateElementContent("#" + item.sym + "-g5-vol", strimstring(item.g2.split("|")[1]));
             updateElementContent("#" + item.sym + "-g5-price", (item.g2.split("|")[0]));
-            ChangeClolorBuySell (("#" + item.sym + "-g5"), ColorPrice(item.g2.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+            changeColorBuySell (("#" + item.sym + "-g5"), ColorPrice(item.g2.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
             //buy 6
             updateElementContent("#" + item.sym + "-g6-vol", strimstring(item.g3.split("|")[1]));
             updateElementContent("#" + item.sym + "-g6-price", (item.g3.split("|")[0]));
-            ChangeClolorBuySell (("#" + item.sym + "-g6"), ColorPrice(item.g3.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+            changeColorBuySell (("#" + item.sym + "-g6"), ColorPrice(item.g3.split("|")[0],document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
           }
         }
         //{"id":3220,"sym":"TCB","lastPrice":25.3,"lastVol":100,"cl":"i","change":"0.50","changePc":"2.02","totalVol":108810,"time":"10:49:56","hp":25.3,"ch":"i","lp":24.9,"lc":"i","ap":25.1,"ca":"i"}
@@ -380,15 +394,15 @@ function Realtime() {
     tempID = document.querySelector("#" + item.sym + "-Max");
     if (tempID && tempID.innerHTML !== item.hp) {
       tempID.innerHTML = item.hp;
-      ChangeBackground("#" + item.sym + "-Max");
-      ChangeClolorBuySell(("#" + item.sym + "-MaxAll"),ColorPrice(item.hp,document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+      changeBackground("#" + item.sym + "-Max");
+      changeColorBuySell(("#" + item.sym + "-MaxAll"),ColorPrice(item.hp,document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
     }
     // tempstock.highPrice = item.hp;
     tempID = document.querySelector("#" + item.sym + "-Min");
     if (tempID && tempID.innerHTML !== item.hp) {
       tempID.innerHTML = item.lp;
-      ChangeBackground("#" + item.sym + "-Min");
-      ChangeClolorBuySell(("#" + item.sym + "-MinAll"),ColorPrice(item.lp,document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
+      changeBackground("#" + item.sym + "-Min");
+      changeColorBuySell(("#" + item.sym + "-MinAll"),ColorPrice(item.lp,document.querySelector("#" +item.sym + "-r").innerHTML,document.querySelector("#" +item.sym + "-f").innerHTML,document.querySelector("#" +item.sym + "-c").innerHTML))
     }
   }
   // prettier-ignore
@@ -397,7 +411,7 @@ function Realtime() {
     // console.log(newValue + "|" + selector)
     if (element && element.innerHTML !== (isNumeric ? parseFloat(newValue) : newValue)) {
       element.innerHTML = newValue;
-      ChangeBackground(selector);
+      changeBackground(selector);
     }
   }
 
@@ -519,69 +533,71 @@ function Realtime() {
     ));
 
   //doi nen background sang gray khi co thay doi
-  function ChangeClolorBuySell(DivID, newstyle) {
-    //boi den thong so neu co thay doi
-    // let temp = "#" + item.sym + "-lastPrice";
-    // console.log(newstyle);
-    let tempID = document.querySelector(DivID);
-    // console.log("classlist", tempID.classList.item(1));
-    let tempstyle = tempID.classList.item(1);
-    // console.log(connectioncircleID);
-    // connectioncircleID.style.backgroundColor = "lightgray";
-    // prettier-ignore
-    if(tempstyle !== newstyle){
-      tempID.classList.replace(tempstyle , newstyle);
+  function changeColorBuySell(divID, newStyle) {
+    const element = document.querySelector(divID);
+    if (element) {
+      const currentStyle = element.classList.item(1);
+      if (currentStyle !== newStyle) {
+        element.classList.replace(currentStyle, newStyle);
+      }
     }
   }
 
   //doi nen background sang gray khi co thay doi
-  function ChangeBackground(DivID) {
-    //boi den thong so neu co thay doi
-    // let temp = "#" + item.sym + "-lastPrice";
+  function changeBackground(divID) {
+    const element = document.querySelector(divID);
+    if (element) {
+      // Change background to gray
+      element.classList.replace("backgroundwhite", "backgroundgray");
 
-    let connectioncircleID = document.querySelector(DivID);
-    // console.log(connectioncircleID);
-    // connectioncircleID.style.backgroundColor = "lightgray";
-    // prettier-ignore
-    connectioncircleID.classList.replace("backgroundwhite" , "backgroundgray");
-    const timeout = setTimeout(() => {
-      // prettier-ignore
-      connectioncircleID.classList.replace("backgroundgray","backgroundwhite");
-    }, 3000);
+      // Revert background to white after 3 seconds
+      setTimeout(() => {
+        element.classList.replace("backgroundgray", "backgroundwhite");
+      }, 3000);
+    } else {
+      console.error(`Element with ID '${divID}' not found.`);
+    }
   }
+
   //Cap nhat thong tin ve khop lenh
+  // prettier-ignore
+  const addStockToListClick = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+
+    const tempStock = document.getElementById("stockcodeinput").value.trim().toUpperCase(); // Get and clean the stock symbol input
+
+    if (tempStock) { // Ensure tempStock is not empty
+      const existingIndex = Stocklist.indexOf(tempStock);
+
+      if (existingIndex === -1) { // If the stock symbol is not already in the array
+        setStocklist((currentStocklist) => [tempStock, ...currentStocklist]); // Update Stocklist state by adding tempStock at the beginning
+        isNewStockItems.current = true; // Set a flag indicating new stock items have been added (assuming isNewStockItems is a useRef)
+      } else {
+        console.log(`${tempStock} is already in the list.`);
+      }
+    } else {
+      console.log("Please enter a valid stock symbol.");
+    }
+  };
 
   // prettier-ignore
-  const addstocktolistclick = async (e) => {
+  const delStockFromListClick = (e) => {
     e.preventDefault(); // Prevent default form submission behavior
 
-    const array = [...Stocklist]; // Create a separate copy of the Stocklist array
+    const tempStock = document.getElementById("stockcodeinput").value.trim().toUpperCase(); // Get and clean the stock symbol input
 
-    let tempstock = document.getElementById("stockcodeinput").value.toUpperCase(); // Get the stock symbol input and convert to uppercase
-    const index = array.indexOf(tempstock); // Check if the stock symbol already exists in the array
+    if (tempStock) { // Ensure tempStock is not empty
+      const index = Stocklist.indexOf(tempStock); // Find the index of the stock symbol in Stocklist
 
-    if (index === -1) { // If the stock symbol is not already in the array
-      let newStocklist = Stocklist; // Store current Stocklist (not typically necessary in React functional component state updates)
-      setStocklist([tempstock, ...newStocklist]); // Update Stocklist state by adding tempstock at the beginning
-      isNewStockItems.current = true; // Set a flag indicating new stock items have been added
-    }
-
-
-  };
-  const delstocktolistclick = (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-
-    const array = [...Stocklist]; // Create a separate copy of the Stocklist array
-
-    const index = array.indexOf(
-      document.getElementById("stockcodeinput").value.toUpperCase()
-    ); // Get the index of the stock symbol to be deleted from the input field
-
-    if (index !== -1) {
-      // If the stock symbol is found in the array
-      array.splice(index, 1); // Remove the item from the array
-      setStocklist(array); // Update Stocklist state with the modified array
-      isNewStockItems.current = true; // Set a flag indicating new stock items have been modified
+      if (index !== -1) { // If the stock symbol is found in the array
+        const newArray = Stocklist.filter((item, idx) => idx !== index); // Create a new array excluding the item to be deleted
+        setStocklist(newArray); // Update Stocklist state with the new array
+        isNewStockItems.current = true; // Set a flag indicating new stock items have been modified (assuming isNewStockItems is a useRef)
+      } else {
+        console.log(`${tempStock} is not found in the list.`);
+      }
+    } else {
+      console.log("Please enter a valid stock symbol.");
     }
   };
 
@@ -619,11 +635,11 @@ function Realtime() {
             </div>
             <div>
               {/*prettier-ignore*/}
-              <button className="addstocktolist" onClick={addstocktolistclick}>Add Stock</button>
+              <button className="addstocktolist" onClick={addStockToListClick}>Add Stock</button>
             </div>
             <div>
               {/*prettier-ignore*/}
-              <button className="addstocktolist" onClick={delstocktolistclick}>Del Stock</button>
+              <button className="addstocktolist" onClick={delStockFromListClick}>Del Stock</button>
             </div>
           </div>
         {/*</form>*/}

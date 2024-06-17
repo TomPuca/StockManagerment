@@ -1,5 +1,6 @@
 .MatchRow {
     display: flex;
+    font-size: 11px;
 }
 
 .MatchRowTime {
@@ -16,18 +17,18 @@
     text-align:right ;
 }
 
-.MatchSideBuy{
-    width: 15px;
-    font-weight: bold;
-    text-align:left ;
+.MatchRowBuy{
     color: blue;
 }
 
-.MatchSideSell{
+.MatchRowSell{
+    color: red;
+}
+
+.MatchSide{
     width: 15px;
     font-weight: bold;
     text-align:left ;
-    color: red;
 }
 
 ::-webkit-scrollbar {

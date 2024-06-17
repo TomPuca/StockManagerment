@@ -9,20 +9,20 @@ const ListComponent = memo(({ stockitem }) => {
     const Row = ({ index, style }) => {
         const item = stockitem[propsLength - index - 1];
         return (
-            <div className="MatchRow" style={style}>
-                <div className="MatchRowTime" style={{ fontSize: 11 }}>
+            <div className={item.stockside === "B" ? "MatchRowBuy MatchRow" : "MatchRowSell MatchRow"}   style={style}>
+                <div className="MatchRowTime" >
                     {item.timematch === "null" ? "ATC" : item.timematch}
                 </div>
                 <div
-                    className={item.stockside === "B" ? "MatchSideBuy" : "MatchSideSell"}
+                    className="MatchSide"
                     style={{ fontSize: 11 }}
                 >
                     {item.stockside=== "null" ? "" : item.stockside}
                 </div>
-                <div className="MatchRowPrice" style={{ fontSize: 11 }}>
+                <div className="MatchRowPrice" >
                     {item.pricematch}
                 </div>
-                <div className="MatchRowVolume" style={{ fontSize: 11 }}>
+                <div className="MatchRowVolume" >
                     {(item.volumematch * 10).toLocaleString("en-US", {
                         style: "decimal",
                         currency: "USD",

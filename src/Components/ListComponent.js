@@ -15,7 +15,6 @@ const ListComponent = memo(({ stockitem }) => {
                 </div>
                 <div
                     className="MatchSide"
-                    style={{ fontSize: 11 }}
                 >
                     {item.stockside=== "null" ? "" : item.stockside}
                 </div>

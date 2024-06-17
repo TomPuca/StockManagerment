@@ -39,9 +39,13 @@ function Realtime() {
 
   useEffect(() => {
     if (isNewStockItems.current) {
+      // Initialize stock items
       initStockItems();
-      //update stockid data
+
+      // Update local storage with Stocklist
       localStorage.setItem("stockid", JSON.stringify(Stocklist));
+
+      // Reset isNewStockItems flag
       isNewStockItems.current = false;
     }
     // đăng ký lại room
@@ -50,16 +54,21 @@ function Realtime() {
     // console.log(ReactSession.get("Stock_List"));
     socket.emit("regs", msg);
     console.log("CONNECTED");
+    // Update UI to indicate connection status
     setIsConnected(true);
     const connectioncircleID = document.querySelector("#connectioncircle");
-    // console.log(connectioncircleID);
-    connectioncircleID.style.backgroundColor = "blue";
-    // connectioncircleID.classList.replace("notconnected", "connected");
+    if (connectioncircleID) {
+      connectioncircleID.style.backgroundColor = "blue";
+    }
+    // Set a timeout to reset isConnected state after 3 seconds
     const timeout = setTimeout(() => {
       setIsConnected(false);
     }, 3000);
 
-    // showlog();
+    // Clean up the timeout to avoid memory leaks
+    return () => clearTimeout(timeout);
+
+    // Dependency array ensures useEffect runs when Stocklist changes
   }, [Stocklist]);
 
   // let socket;
@@ -99,69 +108,55 @@ function Realtime() {
   }, []);
 
   useEffect(() => {
-    BuyStocksTemp.map((item) => {
-      // let tempstock = document
-      //   .getElementById("stockcodeinput")
-      //   .value.toUpperCase();
-      // console.log(Stocklist.current);
+    BuyStocksTemp.forEach((item) => {
       if (item.MaCK !== "") {
-        let index = Stocklist.findIndex(
-          (StocklistItem) => StocklistItem === item.MaCK
-        );
-        // console.log(tempindex);
-        if (index >= 0) {
-          console.log("khong can thay doi");
+        let index = Stocklist.findIndex((stock) => stock === item.MaCK);
+
+        if (index === -1) {
+          setStocklist((currentStocklist) => [item.MaCK, ...currentStocklist]);
+          isNewStockItems.current = true;
+          console.log("Added new stock:", item.MaCK);
         } else {
-          console.log("updatelist", item.MaCK);
-          let newStocklist = Stocklist;
-          setStocklist([item.MaCK, ...newStocklist]);
+          console.log("Stock already exists:", item.MaCK);
         }
       }
-      isNewStockItems.current = true;
-      console.log("Ma CK da mua");
-      console.log(item.MaCK);
     });
   }, [BuyStocksTemp]);
 
   useEffect(() => {
-    StockItems.map((item) =>
+    StockItems.forEach((item) => {
       dispatch({
         type: "UPDATE_TO_CURRENTSTOCKPRICE",
         item: {
           sym: item.sym,
           lastPrice: item.lastPrice,
         },
-      })
-    );
-    // showlog();
-  }, [StockItems]);
-  // useEffect(() => {
-  //   // {people.filter(person => person.age < 60).map(filteredPerson => (
-  //   //     <li>
-  //   //       {filteredPerson.name}
-  //   //     </li>
-  //   // ))}
-  //   // console.log("log");
-  //   // const temparray = matchStockValue.filter((item) => item.stockid === "CEO");
-  //   // matchStockValue
-  //   //   .filter((item) => item.stockid === "CEO")
-  //   //   .map((filteritem) => console.log(filteritem.stockid));
-  //   // console.log(matchStockValue);
-  // }, [matchStockValue]);
+      });
+    });
+  }, [StockItems, dispatch]);
 
   async function getdata() {
-    console.log("before", Stocklist);
-    const response = await fetch(
-      "https://bgapidatafeed.vps.com.vn/getliststockdata/" + Stocklist.join(",")
-    );
-    const body = await response.json();
-    console.log("data", body);
-    if (body !== undefined) {
-      setStockItems((current) => body);
-      console.log("After", StockItems);
+    try {
+      console.log("Before fetching data", Stocklist);
+
+      const response = await fetch(
+        "https://bgapidatafeed.vps.com.vn/getliststockdata/" +
+          Stocklist.join(",")
+      );
+
+      const body = await response.json();
+      console.log("Fetched data", body);
+
+      if (body !== undefined) {
+        setStockItems(body);
+        console.log("After updating StockItems", body);
+      }
+    } catch (error) {
+      console.error("Failed to fetch data:", error);
     }
   }
 
+  // prettier-ignore
   function socketConnect() {
     socket.on("board", function (zdata) {
       // sendQueue(zdata.data);
@@ -173,15 +168,9 @@ function Realtime() {
 
       // console.log(zdata.data);
       // console.log(isStockItems.current);
-      if (
-        isStockItems.current && //Check if still in Main Page then update match value
-        document.getElementById("MainCheck")
-      ) {
-        // console.log(document.querySelector("#MainCheck"));
-        updatestock(zdata.data);
-        // console.log(zdata.data);
+      if (isStockItems.current && document.getElementById("MainCheck")) {
+        updateStock(zdata.data);
       }
-      // console.log(socket);
     });
 
     socket.on("index", function (zdata) {
@@ -189,23 +178,17 @@ function Realtime() {
     });
     //Nếu khớp lệnh trả về thông tin khớp, chỉ trả về thông tin mã khớp
     socket.on("stock", function (zdata) {
-      // console.log(socket);
-      if (
-        isStockItems.current && //Check if still in Main Page then update match value
-        document.getElementById("MainCheck")
-      ) {
-        // console.log(document.getElementById("MainCheck"));
-        updatestockmatch(zdata.data);
+      if (isStockItems.current && document.getElementById("MainCheck")) {
+        updateStockMatch(zdata.data);
       }
     });
     socket.on("disconnect", () => {
-      socket.removeAllListeners();
-      setIsConnected(false);
+      socket.removeAllListeners(); // Remove all event listeners from the socket
+      setIsConnected(false); // Update state to indicate socket is disconnected
+
       const connectioncircleID = document.querySelector("#connectioncircle");
-      // console.log(connectioncircleID);
-      if (connectioncircleID !== "null") {
+      if (connectioncircleID) {
         connectioncircleID.style.backgroundColor = "gray";
-        // $('#status-connect').text('Disconnect').css('color', '#DA5664');
       }
     });
   }
@@ -272,7 +255,7 @@ function Realtime() {
   };
   //Cap nhat thong tin ve bang gia, neu ben ban thi la S, mua la B
   //prettier-ignore
-  function updatestock(item) {
+  function updateStock(item) {
     //Neu gia khop la san ha noi se co id la 3310 voi thong tin tong mua, ban ngoai bang
     // if (item.id === 3310) console.log("Board", item);
     // if (item.id != 3310 && item.id != 3210) console.log("Board", item);
@@ -318,7 +301,7 @@ function Realtime() {
         //{"id":3220,"sym":"TCB","lastPrice":25.3,"lastVol":100,"cl":"i","change":"0.50","changePc":"2.02","totalVol":108810,"time":"10:49:56","hp":25.3,"ch":"i","lp":24.9,"lc":"i","ap":25.1,"ca":"i"}
         else if (item.id === 3220) {
           //Check if still in Main Page then update match value
-          updatestockmatch(item);
+          updateStockMatch(item);
         }
       }
     }
@@ -347,7 +330,7 @@ function Realtime() {
   }
   //Cap nhat thong tin ve bang gia, neu ben ban thi la S, mua la B
   // prettier-ignore
-  async function updatestockmatch(item) {
+  async function updateStockMatch(item) {
     // Example item: {"id":3220,"sym":"TCB","lastPrice":25.3,"lastVol":100,"cl":"i","change":"0.50","changePc":"2.02","totalVol":108810,"time":"10:49:56","hp":25.3,"ch":"i","lp":24.9,"lc":"i","ap":25.1,"ca":"i"}
     let date = new Date();
     let hours = date.getHours();

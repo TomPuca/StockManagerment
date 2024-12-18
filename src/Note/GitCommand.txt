@@ -26,6 +26,20 @@ npm install -g gh-pages
 git remote -v
 
 
+7. Re-initialize the Repository (as a Last Resort)
+If none of the above works:
+rm -rf .git
+git init
+git remote add origin https://github.com/TomPuca/StockManagerment.git
+git add .
+git commit -m "Initial commit"
+git push -u origin main
+npx gh-pages -d build
+
+git remote set-url origin https://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@github.com/TomPuca/StockManagerment.git
+
+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
+
 
 
 brew upgrade yarn

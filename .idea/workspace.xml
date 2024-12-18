@@ -227,7 +227,8 @@
       <workItem from="1725846840455" duration="588000" />
       <workItem from="1733966310674" duration="4136000" />
       <workItem from="1734333198377" duration="272000" />
-      <workItem from="1734400237663" duration="2085000" />
+      <workItem from="1734400237663" duration="2896000" />
+      <workItem from="1734489183901" duration="471000" />
     </task>
     <servers />
   </component>
@@ -280,7 +281,6 @@
           <url>file://$PROJECT_DIR$/src/Components/Version.js</url>
           <line>29</line>
           <log-expression expression="      &lt;div style={{ display: &quot;flex&quot;, marginLeft: 10 }}&gt;&#10;        &lt;h2&gt;Date Change: 14/06/2024&lt;/h2&gt;&#10;      &lt;/div&gt;&#10;      &lt;div style={{ display: &quot;flex&quot;, marginLeft: 10 }}&gt;&#10;        Change log: Code standardization using ChatGPT !!!&#10;      &lt;/div&gt;" language="JavaScript" />
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>

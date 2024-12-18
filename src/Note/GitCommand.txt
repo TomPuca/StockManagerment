@@ -26,6 +26,12 @@ npm install -g gh-pages
 git remote -v
 
 
+
+git config --global user.name "TomPuca"
+git config --global user.email hung1504@yahoo.com
+
+
+
 7. Re-initialize the Repository (as a Last Resort)
 If none of the above works:
 rm -rf .git

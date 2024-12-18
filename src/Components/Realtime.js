@@ -9,6 +9,7 @@ import db from "./firebase";
 
 import ListComponent from "./ListComponent";
 import { Link } from "react-router-dom";
+import AnnuallOutcome from "./AnuallOutcome/AnnuallOutcome";
 
 //index link: https://bgapidatafeed.vps.com.vn/getlistindexdetail/10
 
@@ -639,6 +640,12 @@ function Realtime() {
         <Link to="/AnnualIncome">
           <div style={{ marginTop: 10, marginRight: 20 }}>
             <span className="Header-cartCount">Annual Income</span>
+          </div>
+        </Link>
+
+        <Link to="/AnnuallOutcome">
+          <div style={{ marginTop: 10, marginRight: 20 }}>
+            <span className="Header-cartCount">Annual Outcome</span>
           </div>
         </Link>
 

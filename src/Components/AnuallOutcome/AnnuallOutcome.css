@@ -1,0 +1,18 @@
+
+.input-container {
+    margin: 10px;
+    display: flex;
+}
+
+.chartjs-render-monitor {
+    width: 500px !important;
+    height: 250px !important;
+    /*transform: scale(0.9)*/
+}
+
+.anualIncomeCard {
+    /*display: flex;*/
+    columns:  2;
+    width: 480px;
+    /*column-gap: 40px;*/
+}

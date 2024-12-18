@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="41c6bcc6-2d69-48a0-a864-942c25f8fb48" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Components/AnuallOutcome/AnnuallOutcome.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Components/AnuallOutcome/AnnuallOutcome.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Components/AnuallOutcome/ListItemOutcome.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Components/AnuallOutcome/ListItemOutcome.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/AnnualIncome/ListItemIncome.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/AnnualIncome/ListItemIncome.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/AnnualIncome/ListItemIncome.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/AnnualIncome/ListItemIncome.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/ListComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/ListComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Realtime.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Realtime.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Version.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Version.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,31 +34,30 @@
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="1ngv3Tja9B9wr7cqENHAX75D04M" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Components" />
-    <property name="list.type.of.created.stylesheet" value="CSS" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.path.for.package.eslint" value="project" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
-    <property name="settings.editor.selected.configurable" value="editing.templates" />
-    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
-    <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;last_opened_file_path&quot;: &quot;/Users/hungtd/React/stockmanagerment/src/Components/AnuallOutcome&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/Components/AnuallOutcome" />
       <recent name="$PROJECT_DIR$/src/Components" />
       <recent name="$PROJECT_DIR$/src/Components/CSS" />
       <recent name="$PROJECT_DIR$/src" />
@@ -61,6 +67,13 @@
       <recent name="$PROJECT_DIR$/public" />
       <recent name="$PROJECT_DIR$/src/Note" />
     </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-WS-241.17890.13" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -202,7 +215,25 @@
       <workItem from="1714648121503" duration="84000" />
       <workItem from="1716951103403" duration="1697000" />
       <workItem from="1717378609035" duration="18273000" />
-      <workItem from="1718587166296" duration="6068000" />
+      <workItem from="1718587166296" duration="10276000" />
+      <workItem from="1720751236119" duration="525000" />
+      <workItem from="1720754016909" duration="316000" />
+      <workItem from="1721012527263" duration="110000" />
+      <workItem from="1721123208671" duration="503000" />
+      <workItem from="1721180095852" duration="310000" />
+      <workItem from="1721618390256" duration="302000" />
+      <workItem from="1721787560224" duration="295000" />
+      <workItem from="1722237247267" duration="319000" />
+      <workItem from="1722244623534" duration="598000" />
+      <workItem from="1722247789620" duration="34000" />
+      <workItem from="1722247833724" duration="6258000" />
+      <workItem from="1722828421551" duration="483000" />
+      <workItem from="1722847847859" duration="327000" />
+      <workItem from="1723444527670" duration="303000" />
+      <workItem from="1725846840455" duration="588000" />
+      <workItem from="1733966310674" duration="4136000" />
+      <workItem from="1734333198377" duration="272000" />
+      <workItem from="1734400237663" duration="950000" />
     </task>
     <servers />
   </component>
@@ -219,7 +250,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="true" />
@@ -251,6 +281,13 @@
           <url>file://$PROJECT_DIR$/src/Components/Realtime-backup.js</url>
           <line>280</line>
           <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="NONE" type="javascript">
+          <url>file://$PROJECT_DIR$/src/Components/Version.js</url>
+          <line>29</line>
+          <log-expression expression="      &lt;div style={{ display: &quot;flex&quot;, marginLeft: 10 }}&gt;&#10;        &lt;h2&gt;Date Change: 14/06/2024&lt;/h2&gt;&#10;      &lt;/div&gt;&#10;      &lt;div style={{ display: &quot;flex&quot;, marginLeft: 10 }}&gt;&#10;        Change log: Code standardization using ChatGPT !!!&#10;      &lt;/div&gt;" language="JavaScript" />
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

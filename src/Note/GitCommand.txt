@@ -21,6 +21,13 @@ npm run deploy
 npm outdated
 rfce
 
+update git command
+npm install -g gh-pages
+git remote -v
+
+
+
+
 brew upgrade yarn
 
 npm install @material-ui/lab

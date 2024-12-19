@@ -16,6 +16,7 @@ git init
 git remote add origin https://github.com/TomPuca/StockManagement.git
 git add .
 git commit -m "begin upload"
+git push origin master
 npm run deploy
 
 npm outdated
@@ -31,12 +32,18 @@ git config --global user.name "TomPuca"
 git config --global user.email hung1504@yahoo.com
 
 
+git push origin master
+git config --global http.postBuffer 157286400
+git remote -v
+
 
 7. Re-initialize the Repository (as a Last Resort)
 If none of the above works:
 rm -rf .git
 git init
 git remote add origin https://github.com/TomPuca/StockManagerment.git
+
+git remote set-url origin https://github.com/TomPuca/StockManagement.git
 git add .
 git commit -m "Initial commit"
 git push -u origin main

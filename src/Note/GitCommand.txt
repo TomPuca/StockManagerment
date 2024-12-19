@@ -25,7 +25,7 @@ update git command
 npm install -g gh-pages
 git remote -v
 
-
+npm prune
 
 git config --global user.name "TomPuca"
 git config --global user.email hung1504@yahoo.com

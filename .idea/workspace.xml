@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="41c6bcc6-2d69-48a0-a864-942c25f8fb48" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/build/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/asset-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/css/main.de3970f2.chunk.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/css/main.de3970f2.chunk.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/AnuallOutcome/AnnuallOutcome.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/AnuallOutcome/AnnuallOutcome.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Note/GitCommand.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Note/GitCommand.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -234,7 +231,7 @@
       <workItem from="1733966310674" duration="4136000" />
       <workItem from="1734333198377" duration="272000" />
       <workItem from="1734400237663" duration="2896000" />
-      <workItem from="1734489183901" duration="12290000" />
+      <workItem from="1734489183901" duration="12571000" />
     </task>
     <servers />
   </component>

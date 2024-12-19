@@ -6,12 +6,14 @@ import TextField from "@material-ui/core/TextField";
 import CurrencyFormat from "react-currency-format";
 import db from "../firebase";
 import Stack from "@mui/material/Stack";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import Chart from "../Chart/BarChart";
 import ListItemOutcome from "./ListItemOutcome";
 import { VNCurrency } from "../Functions";
+import {DatePicker} from "@mui/x-date-pickers/DatePicker";
+
+
 
 function AnnuallOutcome() {
   const [year, setYear] = useState("Outcome");
@@ -231,7 +233,7 @@ function AnnuallOutcome() {
         <div>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Stack spacing={3}>
-              <DesktopDatePicker
+              <DatePicker
                 label="Date Outcome"
                 inputFormat="MM/dd/yyyy"
                 value={dateOutcome}

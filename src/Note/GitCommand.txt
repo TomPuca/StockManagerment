@@ -14,10 +14,14 @@ add package.json
 "homepage": "http://TomPuca.github.io/StockManagement",
 git init
 git remote add origin https://github.com/TomPuca/StockManagement.git
+
+Update thông tin lên gihub
 git add .
 git commit -m "begin upload"
-git push origin master
+
 npm run deploy
+
+git push origin master
 
 npm outdated
 rfce
@@ -46,14 +50,16 @@ git remote add origin https://github.com/TomPuca/StockManagerment.git
 git remote set-url origin https://github.com/TomPuca/StockManagement.git
 git add .
 git commit -m "Initial commit"
-git push -u origin main
+git push origin master
 npx gh-pages -d build
 
-git remote set-url origin https://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@github.com/TomPuca/StockManagerment.git
+git remote set-url origin https://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@github.com/TomPuca/StockManagement.git
 
-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
+git remote set-url origin https://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@github.com/TomPuca/StockManagement.git
 
 
+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
+https://github.com/TomPuca/StockManagement.git
 
 brew upgrade yarn
 

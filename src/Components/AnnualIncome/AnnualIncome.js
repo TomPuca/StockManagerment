@@ -5,13 +5,14 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import CurrencyFormat from "react-currency-format";
 import db from "../firebase";
-import Stack from "@mui/material/Stack";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Chart from "../Chart/BarChart";
 import ListItemIncome from "./ListItemIncome";
 import { VNCurrency } from "../Functions";
+import {Stack} from "@mui/material";
+
 
 function AnnualIncome() {
   const [year, setYear] = useState("Income");
@@ -231,7 +232,7 @@ function AnnualIncome() {
         <div>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Stack spacing={3}>
-              <DesktopDatePicker
+              <DatePicker
                 label="Date Income"
                 inputFormat="MM/dd/yyyy"
                 value={dateincome}

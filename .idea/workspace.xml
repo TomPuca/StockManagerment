@@ -6,8 +6,20 @@
   <component name="ChangeListManager">
     <list default="true" id="41c6bcc6-2d69-48a0-a864-942c25f8fb48" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/asset-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/css/main.de3970f2.chunk.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/static/css/main.de3970f2.chunk.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/css/main.de3970f2.chunk.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/build/static/css/main.de3970f2.chunk.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/2.2a45b4d6.chunk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/2.2a45b4d6.chunk.js.LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/2.2a45b4d6.chunk.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/3.7c1f9fc3.chunk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/3.7c1f9fc3.chunk.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/main.6ccccf57.chunk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/main.6ccccf57.chunk.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/runtime-main.3e77213b.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/runtime-main.3e77213b.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Note/GitCommand.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Note/GitCommand.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -230,7 +242,7 @@
       <workItem from="1733966310674" duration="4136000" />
       <workItem from="1734333198377" duration="272000" />
       <workItem from="1734400237663" duration="2896000" />
-      <workItem from="1734489183901" duration="5668000" />
+      <workItem from="1734489183901" duration="7727000" />
     </task>
     <servers />
   </component>

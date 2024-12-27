@@ -61,14 +61,17 @@ function BarChart(props) {
   }, [props]);
 
   return (
-    <div>
+    <div >
       <Bar
+        width={375}
         data={data}
         options={{
+          responsive: false,
+          maintainAspectRatio: false,
           title: {
             display: true,
             text: props.MainLabel,
-            fontSize: 20,
+            fontSize: 12,
           },
           //No Display legend in the page
           legend: {

@@ -2,7 +2,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px 20px;
-    width: 480px;
 }
 
 .Month {
@@ -11,6 +10,7 @@
     /*padding: 8px;*/
     border-bottom: 1px solid #f0f0f0;
     margin-left: 10px;
+    margin-right: 10px;
     align-items: center;
     /*border: 1px solid #e0e0e0; !* Viền cho từng ô tháng *!*/
     border-radius: 4px; /* Bo tròn viền từng ô */
@@ -19,23 +19,39 @@
 
 .Month_text {
     font-weight: bold;
-    width: 90px;
+    width: 75px;
+    font-size: 12px;
 }
 
 .Month_value {
     color: #1890ff;
-    width: 100px;
+    width: 70px;
+    font-size: 12px;
 }
 
 .anualIncomeCard {
     columns:  2;
-    width: 480px;
+    /*width: 375px;*/
+    margin-right: 5px;
+    margin-left: 10px;
 }
 
 .input-container {
     margin: 10px;
     display: flex;
 }
-body {
-    width: 100vw; /* Chiều rộng màn hình đầy đủ */
+
+.chart-container {
+    /*width: 375px !important; ? !* Chiếm 100% chiều rộng của phần tử chứa *!*/
+    max-width: 100vw;  /* Đảm bảo không vượt quá chiều rộng màn hình */
+    height: auto;  /* Chiều cao tự động điều chỉnh */
+    padding: 0;
+    margin: 0;
 }
+.chartjs-render-monitor {
+    width: 100% !important;  /* Chiếm 100% chiều rộng của phần tử chứa */
+    height: auto !important; /* Tự động điều chỉnh chiều cao theo tỷ lệ */
+    max-width: 100vw !important; /* Đảm bảo không vượt quá chiều rộng màn hình */
+    /* transform: scale(0.9);*/ /* Xóa hoặc điều chỉnh nếu cần */
+}
+

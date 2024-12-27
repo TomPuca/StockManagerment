@@ -5,7 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="41c6bcc6-2d69-48a0-a864-942c25f8fb48" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Components/Chart/BarChart_BK.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/asset-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/AnnualIncome/AnnualIncome.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/AnnualIncome/AnnualIncome.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/AnnualIncome/AnnualIncome.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/AnnualIncome/AnnualIncome.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/AnnualIncome/ListItemIncome.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/AnnualIncome/ListItemIncome.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/AnuallOutcome/ListItemOutcome.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/AnuallOutcome/ListItemOutcome.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Chart/BarChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Chart/BarChart.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +49,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
-    "last_opened_file_path": "/Users/hungtd/React/stockmanagerment/src/Components/AnnualIncome",
+    "last_opened_file_path": "/Users/hungtd/React/stockmanagerment/src/Components/Chart",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -53,11 +61,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/Components/Chart" />
       <recent name="$PROJECT_DIR$/src/Components/AnnualIncome" />
       <recent name="$PROJECT_DIR$/src/Components/AnuallOutcome" />
       <recent name="$PROJECT_DIR$/src/Components" />
       <recent name="$PROJECT_DIR$/src/Components/CSS" />
-      <recent name="$PROJECT_DIR$/src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/Components" />
@@ -232,7 +240,7 @@
       <workItem from="1734333198377" duration="272000" />
       <workItem from="1734400237663" duration="2896000" />
       <workItem from="1734489183901" duration="15007000" />
-      <workItem from="1735265377125" duration="5864000" />
+      <workItem from="1735265377125" duration="12354000" />
     </task>
     <servers />
   </component>

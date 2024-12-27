@@ -104,7 +104,7 @@ function AnnualIncome() {
             <div className="Month_all">
                 {[...Array(12)].map((_, i) => (
                     <div key={i} className="Month">
-                        <Text className="Month_text">{dayjs().month(i).format("MMMM")}:</Text>
+                        <Text className="Month_text" >{dayjs().month(i).format("MMMM")}:</Text>
                         <Text className="Month_value">{VNCurrency(IncomeTotalPerMonth(i + 1))}</Text>
                     </div>
                 ))}
@@ -113,7 +113,8 @@ function AnnualIncome() {
     }
 
     return (
-        <div>
+        <div style={{   width: "375px"}}>
+        {/*// <div>*/}
             <div style={{marginBottom: 16, marginLeft: 10, display: 'flex', height: '30px',alignItems: 'center'}}>
                 <Link to="/">
                     <Title level={4}>Main</Title>
@@ -123,11 +124,12 @@ function AnnualIncome() {
                 {YearButton("2022")}
             </div>
 
-            <div style={{margin: "10px 0", marginLeft: 10, fontWeight: "bold"}}>
-                <Text>Total Income: </Text>
-                <Text>{VNCurrency(TotalIncome)}</Text>
+            <div style={{margin: "10px 0", marginLeft: 10, fontWeight: "bold" }}>
+                <Text style={{ fontSize: "13px" }}>Total Income: </Text>
+                <Text style={{ fontSize: "13px" }}>{VNCurrency(TotalIncome)}</Text>
                 <Text
                     style={{
+                        fontSize: "13px",
                         marginLeft: 10,
                         color: TotalIncome - BeforeTotalIncome > 0 ? 'blue' : 'red' // Màu xanh nếu dương, đỏ nếu âm
                     }}
@@ -148,12 +150,12 @@ function AnnualIncome() {
                     style={{width: 150, marginLeft: '10px',}}
                 />
                 <Button type="primary"  style={{ marginLeft: '10px', backgroundColor: 'transparent',color: 'black', borderColor: '#1890ff'  }} onClick={addincomeclick}>
-                    Add Income
+                    Add
                 </Button>
             </div>
 
             {/* Chart Income Per Month */}
-            <div>
+            <div className="chart-container" >
                 <Chart
                     data={Array.from({ length: 12 }, (_, i) => IncomeTotalPerMonth(i + 1))}
                     Total={TotalIncome / 12}
@@ -163,7 +165,7 @@ function AnnualIncome() {
             </div>
 
             {/* List Income per month */}
-            <div style={{ margin: "10px 0" }}>{IncomePerMonth()}</div>
+            <div style={{ margin: "10px 0"}}>{IncomePerMonth()}</div>
 
             {/* List all Income */}
             <div className="anualIncomeCard">{ShowIncome(TotalIncomes)}</div>

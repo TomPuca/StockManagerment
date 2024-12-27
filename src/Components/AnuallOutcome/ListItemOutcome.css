@@ -3,16 +3,16 @@
     border: 1px solid lightgray;
     display: flex;
     margin-left: 10px;
-    width: 230px;
+    /*width: 120px;*/
 }
 
 .dateContainer {
     border-right: 1px solid lightgray;
-    width: 100px;
+    /*width: 100px;*/
     text-align: right;
 }
 
 .outcomeContainer {
     text-align: right;
-    width: 130px;
+    /*width: 130px;*/
 }

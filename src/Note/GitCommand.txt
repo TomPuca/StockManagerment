@@ -2,6 +2,7 @@
 npm install -g npm-check
 npm-check
 npm uninstall <package_name>
+npm install antd @ant-design/icons dayjs react-currency-format
 
 
 //remove git

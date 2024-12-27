@@ -1,304 +1,180 @@
 import React, { useEffect, useState } from "react";
 import "./AnnualIncome.css";
 import { Link } from "react-router-dom";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
+import { Button, DatePicker, Input, Space, Typography } from "antd";
 import CurrencyFormat from "react-currency-format";
 import db from "../firebase";
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Chart from "../Chart/BarChart";
 import ListItemIncome from "./ListItemIncome";
 import { VNCurrency } from "../Functions";
-import {Stack} from "@mui/material";
+import dayjs from "dayjs";
 
+const { Title, Text } = Typography;
 
 function AnnualIncome() {
-  const [year, setYear] = useState("Income");
-  const [dateincome, setDateIncome] = React.useState(new Date());
-  const [TotalIncomes, setTotalIncomes] = useState([]);
-  const [BeforeTotalIncomes, setBeforeTotalIncomes] = useState([]);
-  const [IsAddIncome, setIsAddIncome] = useState(false);
-  // let TotalIncome = 10000000;
+    const [year, setYear] = useState("Income");
+    const [dateincome, setDateIncome] = useState(dayjs());
+    const [TotalIncomes, setTotalIncomes] = useState([]);
+    const [BeforeTotalIncomes, setBeforeTotalIncomes] = useState([]);
+    const [IsAddIncome, setIsAddIncome] = useState(false);
 
-  let TotalIncome = TotalIncomes.reduce(function (prev, cur) {
-    return prev + cur.Income;
-  }, 0);
+    let TotalIncome = TotalIncomes.reduce((prev, cur) => prev + cur.Income, 0);
+    let BeforeTotalIncome = BeforeTotalIncomes.reduce((prev, cur) => prev + cur.Income, 0);
 
-  let BeforeTotalIncome = BeforeTotalIncomes.reduce(function (prev, cur) {
-    return prev + cur.Income;
-  }, 0);
-
-  function IncomeTotalPerMonth(i) {
-    let GainTotal = TotalIncomes.reduce(function (prev, cur) {
-      if (cur.Month === i) {
-        return prev + cur.Income;
-      } else {
-        return prev;
-      }
-    }, 0);
-    return parseInt(GainTotal);
-  }
-
-  const ShowIncome = (items) =>
-    items &&
-    items.map((item, index) => (
-      <div key={index}>
-        <div>
-          <ListItemIncome IncomeItem={item} />
-        </div>
-      </div>
-    ));
-
-  // Do at load page and each time year change
-  useEffect(() => {
-    //  Get data from Firebase
-    let now = new Date();
-    let BeforeYear = now.getFullYear() - 1;
-    if (year === "Income") {
-      db.collection("Income" + now.getFullYear())
-        .orderBy("Month", "asc")
-        .orderBy("Day", "asc")
-        .onSnapshot((snapshot) => {
-          setTotalIncomes(snapshot.docs.map((doc) => doc.data()));
-        });
-    } else {
-      db.collection(year)
-        .orderBy("Month", "asc")
-        .orderBy("Day", "asc")
-        .onSnapshot((snapshot) => {
-          setTotalIncomes(snapshot.docs.map((doc) => doc.data()));
-        });
-      BeforeYear = parseInt(year.substr(6, 4)) - 1;
+    function IncomeTotalPerMonth(i) {
+        return TotalIncomes.reduce((prev, cur) => (cur.Month === i ? prev + cur.Income : prev), 0);
     }
-    db.collection("Income" + BeforeYear)
-      .orderBy("Month", "asc")
-      .orderBy("Day", "asc")
-      .onSnapshot((snapshot) => {
-        setBeforeTotalIncomes(snapshot.docs.map((doc) => doc.data()));
-      });
-  }, [year]);
 
-  useEffect(() => {
-    const now = new Date();
-    const BeforeYear = now.getFullYear() - 1;
-    // console.log(BeforeYear);
-    // console.log("Income" + BeforeYear);
-    setYear("Income" + now.getFullYear());
-    db.collection("Income" + BeforeYear)
-      .orderBy("Month", "asc")
-      .orderBy("Day", "asc")
-      .onSnapshot((snapshot) => {
-        setBeforeTotalIncomes(snapshot.docs.map((doc) => doc.data()));
-      });
-    // console.log(BeforeTotalIncomes);
-  }, []);
+    const ShowIncome = (items) =>
+        items?.map((item, index) => (
+            <div key={index}>
+                <ListItemIncome IncomeItem={item} />
+            </div>
+        ));
 
-  const datehandleChange = (newValue) => {
-    setDateIncome(newValue);
-    // console.log(dateincome.getFullYear());
-  };
+    // Fetch data on load and year change
+    useEffect(() => {
+        let now = new Date();
+        let BeforeYear = now.getFullYear() - 1;
 
-  const addincomeclick = (e) => {
-    e.preventDefault();
-    // console.log(
-    //   parseFloat(document.getElementById("IncomeID").value.replace(",", "."))
-    // );
-    // console.log(year);
-    db.collection(year).add({
-      Income: parseFloat(
-        document.getElementById("IncomeID").value.replaceAll(",", "")
-      ),
-      Day: dateincome.getDate(),
-      Month: dateincome.getMonth() + 1,
-      Year: dateincome.getFullYear(),
-    });
-    setIsAddIncome(true);
-    // const timeout = setTimeout(() => {
-    //   setIsAddIncome(false);
-    //   console.log(IsAddIncome);
-    // }, 3000);
-    // console.log(dateincome.getMonth());
-  };
+        if (year === "Income") {
+            db.collection(`Income${now.getFullYear()}`)
+                .orderBy("Month", "asc")
+                .orderBy("Day", "asc")
+                .onSnapshot((snapshot) => {
+                    setTotalIncomes(snapshot.docs.map((doc) => doc.data()));
+                });
+        } else {
+            db.collection(year)
+                .orderBy("Month", "asc")
+                .orderBy("Day", "asc")
+                .onSnapshot((snapshot) => {
+                    setTotalIncomes(snapshot.docs.map((doc) => doc.data()));
+                });
+            BeforeYear = parseInt(year.substr(6, 4)) - 1;
+        }
 
-  function YearButton(year) {
-    // console.log("Income" + year);
+        db.collection(`Income${BeforeYear}`)
+            .orderBy("Month", "asc")
+            .orderBy("Day", "asc")
+            .onSnapshot((snapshot) => {
+                setBeforeTotalIncomes(snapshot.docs.map((doc) => doc.data()));
+            });
+    }, [year]);
+
+    useEffect(() => {
+        const now = new Date();
+        const BeforeYear = now.getFullYear() - 1;
+
+        setYear(`Income${now.getFullYear()}`);
+
+        db.collection(`Income${BeforeYear}`)
+            .orderBy("Month", "asc")
+            .orderBy("Day", "asc")
+            .onSnapshot((snapshot) => {
+                setBeforeTotalIncomes(snapshot.docs.map((doc) => doc.data()));
+            });
+    }, []);
+
+    const datehandleChange = (date) => {
+        setDateIncome(date);
+    };
+
+    const addincomeclick = (e) => {
+        e.preventDefault();
+        db.collection(year).add({
+            Income: parseFloat(document.getElementById("IncomeID").value.replaceAll(",", "")),
+            Day: dateincome.date(),
+            Month: dateincome.month() + 1,
+            Year: dateincome.year(),
+        });
+        setIsAddIncome(true);
+    };
+
+    function YearButton(year) {
+        return (
+            <Button type="primary" style={{ marginLeft: '10px',marginTop: '5px', backgroundColor: 'transparent',color: 'black', borderColor: '#1890ff'  }} onClick={() => setYear(`Income${year}`)}>
+                {year}
+            </Button>
+        );
+    }
+
+    function IncomePerMonth() {
+        return (
+            <div className="Month_all">
+                {[...Array(12)].map((_, i) => (
+                    <div key={i} className="Month">
+                        <Text className="Month_text">{dayjs().month(i).format("MMMM")}:</Text>
+                        <Text className="Month_value">{VNCurrency(IncomeTotalPerMonth(i + 1))}</Text>
+                    </div>
+                ))}
+            </div>
+        );
+    }
+
     return (
-      <div>
-        <button className="YearButton" onClick={() => setYear("Income" + year)}>
-          {year}
-        </button>
-      </div>
-    );
-  }
-
-  function IncomePerMonth() {
-    return (
-      <div className="Month_all">
-        <div className="Month">
-          <div className="Month_text">January :</div>
-          <div className="Month_value">
-            {VNCurrency(IncomeTotalPerMonth(1))}
-          </div>
-          <span className="tab"> </span>
-          <div className="Month_text">February :</div>
-          <div className="Month_value">
-            {VNCurrency(IncomeTotalPerMonth(2))}
-          </div>
-        </div>
-        <div className="Month">
-          <div className="Month_text">March :</div>
-          <div className="Month_value">
-            {VNCurrency(IncomeTotalPerMonth(3))}
-          </div>
-          <span className="tab"> </span>
-          <div className="Month_text">April :</div>
-          <div className="Month_value">
-            {VNCurrency(IncomeTotalPerMonth(4))}
-          </div>
-        </div>
-        <div className="Month">
-          <div className="Month_text">May :</div>
-          <div className="Month_value">
-            {VNCurrency(IncomeTotalPerMonth(5))}
-          </div>
-          <span className="tab"> </span>
-          <div className="Month_text">June :</div>
-          <div className="Month_value">
-            {VNCurrency(IncomeTotalPerMonth(6))}
-          </div>
-        </div>
-        <div className="Month">
-          <div className="Month_text">July :</div>
-          <div className="Month_value">
-            {VNCurrency(IncomeTotalPerMonth(7))}
-          </div>
-          <span className="tab"> </span>
-          <div className="Month_text">August :</div>
-          <div className="Month_value">
-            {VNCurrency(IncomeTotalPerMonth(8))}
-          </div>
-        </div>
-        <div className="Month">
-          <div className="Month_text">September :</div>
-          <div className="Month_value">
-            {VNCurrency(IncomeTotalPerMonth(9))}
-          </div>
-          <span className="tab"> </span>
-          <div className="Month_text">October :</div>
-          <div className="Month_value">
-            {VNCurrency(IncomeTotalPerMonth(10))}
-          </div>
-        </div>
-        <div className="Month">
-          <div className="Month_text">November :</div>
-          <div className="Month_value">
-            {VNCurrency(IncomeTotalPerMonth(11))}
-          </div>
-          <span className="tab"> </span>
-          <div className="Month_text">December :</div>
-          <div className="Month_value">
-            {VNCurrency(IncomeTotalPerMonth(12))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div>
-      <div style={{ color: "blue", display: "flex", marginLeft: 10 }}>
-        <Link to="/">
-          <div>
-            <span className="Header-cartCount">Main</span>
-          </div>
-        </Link>
-        {YearButton("2024")}
-        {YearButton("2023")}
-        {YearButton("2022")}
-      </div>
-      {/*prettier-ignore*/}
-      <div style={{ color: "blue", display: "flex", width: "700px" ,fontWeight : "bold", marginLeft:"10px" , marginTop : "10px" }}>
-        <div>Total Income: </div>
-        {/*prettier-ignore*/}
-        <div style={{marginLeft:"10px",marginRight : "10px"}}>{VNCurrency(TotalIncome)} ({VNCurrency(TotalIncome/12)})</div>
-        <div style={{marginLeft:"10px",marginRight : "10px"}}>({VNCurrency(TotalIncome - BeforeTotalIncome ) })</div>
-      {/*    {
-            parseInt(TotalIncome/12).toLocaleString("en-US", {style: "decimal",currency: "USD",})}*/}
-      </div>
-      {/*  Input Area*/}
-      <div className="input-container">
         <div>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Stack spacing={3}>
-              <DatePicker
-                label="Date Income"
-                inputFormat="MM/dd/yyyy"
-                value={dateincome}
-                onChange={datehandleChange}
-                renderInput={(params) => <TextField {...params} />}
-              />
-            </Stack>
-          </LocalizationProvider>
-        </div>
+            <div style={{marginBottom: 16, marginLeft: 10, display: 'flex', height: '30px',alignItems: 'center'}}>
+                <Link to="/">
+                    <Title level={4}>Main</Title>
+                </Link>
+                {YearButton("2024")}
+                {YearButton("2023")}
+                {YearButton("2022")}
+            </div>
 
-        <CurrencyFormat
-          id="IncomeID"
-          label="Income"
-          customInput={TextField}
-          thousandSeparator
-          prefix=""
-          style={{ marginTop: 10, fontSize: "12px", marginLeft: 10 }}
-          // decimalScale={0}
-          variant="outlined"
-          size="small"
-          // onChange={handleNewAmount}
-        />
-        <Button
-          variant="outlined"
-          style={{ marginTop: 10, fontSize: "12px", marginLeft: 10 }}
-          size="small"
-          onClick={addincomeclick}
-        >
-          Add Income
-        </Button>
-      </div>
-      {/*Chart income per month*/}
-      <div>
-        <Chart
-          data={[
-            IncomeTotalPerMonth(1),
-            IncomeTotalPerMonth(2),
-            IncomeTotalPerMonth(3),
-            IncomeTotalPerMonth(4),
-            IncomeTotalPerMonth(5),
-            IncomeTotalPerMonth(6),
-            IncomeTotalPerMonth(7),
-            IncomeTotalPerMonth(8),
-            IncomeTotalPerMonth(9),
-            IncomeTotalPerMonth(10),
-            IncomeTotalPerMonth(11),
-            IncomeTotalPerMonth(12),
-          ]}
-          // Total={TotalIncome}
-          Total={TotalIncome / 12}
-          MainLabel="Total Income"
-          SubLabel="Income Per Month"
-        />
-      </div>
-      {/*  List Income per month*/}
-      <div style={{ marginLeft: "10px", marginBottom: "10px" }}>
-        {IncomePerMonth()}
-      </div>
-      {/*    List all Income*/}
-      <div className="anualIncomeCard">{ShowIncome(TotalIncomes)}</div>
-      {/*prettier-ignore*/}
-      <div  className= {IsAddIncome ? "alert alert-success connection-alert connected-alert text-center fadeIn":  "fadeOut"}>
-            <strong>Added!</strong>
+            <div style={{margin: "10px 0", marginLeft: 10, fontWeight: "bold"}}>
+                <Text>Total Income: </Text>
+                <Text>{VNCurrency(TotalIncome)}</Text>
+                <Text
+                    style={{
+                        marginLeft: 10,
+                        color: TotalIncome - BeforeTotalIncome > 0 ? 'blue' : 'red' // Màu xanh nếu dương, đỏ nếu âm
+                    }}
+                >
+                    ({VNCurrency(TotalIncome / 12)})  ({VNCurrency(TotalIncome - BeforeTotalIncome)})
+                </Text>
+            </div>
+
+
+            {/* Input Area */}
+            <div className="input-container">
+                <DatePicker value={dateincome} onChange={datehandleChange} format="MM/DD/YYYY"/>
+                <CurrencyFormat
+                    id="IncomeID"
+                    customInput={Input}
+                    thousandSeparator
+                    prefix=""
+                    style={{width: 150, marginLeft: '10px',}}
+                />
+                <Button type="primary"  style={{ marginLeft: '10px', backgroundColor: 'transparent',color: 'black', borderColor: '#1890ff'  }} onClick={addincomeclick}>
+                    Add Income
+                </Button>
+            </div>
+
+            {/* Chart Income Per Month */}
+            <div>
+                <Chart
+                    data={Array.from({ length: 12 }, (_, i) => IncomeTotalPerMonth(i + 1))}
+                    Total={TotalIncome / 12}
+                    MainLabel="Total Income"
+                    SubLabel="Income Per Month"
+                />
+            </div>
+
+            {/* List Income per month */}
+            <div style={{ margin: "10px 0" }}>{IncomePerMonth()}</div>
+
+            {/* List all Income */}
+            <div className="anualIncomeCard">{ShowIncome(TotalIncomes)}</div>
+
+            {IsAddIncome && (
+                <div className="alert alert-success connection-alert connected-alert text-center fadeIn">
+                    <strong>Added!</strong>
+                </div>
+            )}
         </div>
-    </div>
-  );
+    );
 }
 
 export default AnnualIncome;

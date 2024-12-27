@@ -9,7 +9,7 @@ import db from "./firebase";
 
 import ListComponent from "./ListComponent";
 import { Link } from "react-router-dom";
-import AnnuallOutcome from "./AnuallOutcome/AnnuallOutcome";
+
 
 //index link: https://bgapidatafeed.vps.com.vn/getlistindexdetail/10
 

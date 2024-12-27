@@ -23,7 +23,6 @@ function VnIndexChart() {
   let eDay = date.getDate();
   let eHour = 11;
   let eMin = 0;
-  let stockChart;
   let newOptions;
   // let openIndex = 1075.56;
 
@@ -67,7 +66,7 @@ function VnIndexChart() {
     }
 
     if (zdata != null) {
-      let code = zdata.marketCode;
+      // let code = zdata.marketCode;
       let openIndex = 0;
       if (zdata.hasOwnProperty("openIndex")) {
         openIndex = zdata.openIndex;
@@ -132,10 +131,10 @@ function VnIndexChart() {
   }
 
   function initChart(chartName, marketCode, indexData, openIndex, volumeData) {
-    let stockCode = "VNIndex";
-    let iMin = openIndex;
-    let mColor = "#ffd700";
-    let vMax = 1000000;
+    // let stockCode = "VNIndex";
+    // let iMin = openIndex;
+    // let mColor = "#ffd700";
+    // let vMax = 1000000;
     // console.log("index data:", indexData);
     // console.log("volume data:", volumeData);
     newOptions = {

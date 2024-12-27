@@ -5,8 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="41c6bcc6-2d69-48a0-a864-942c25f8fb48" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Components/AnnualIncome/AnnualIncome_MUI.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/AnnualIncome/AnnualIncome.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/AnnualIncome/AnnualIncome.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/AnnualIncome/AnnualIncome.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/AnnualIncome/AnnualIncome.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/AnnualIncome/ListItemIncome.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/AnnualIncome/ListItemIncome.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/AnuallOutcome/ListItemOutcome.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/AnuallOutcome/ListItemOutcome.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Realtime.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Realtime.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/VNIndexChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/VNIndexChart.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Note/GitCommand.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Note/GitCommand.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +52,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
-    "last_opened_file_path": "/Users/hungtd/React/stockmanagerment/src/Components/AnuallOutcome",
+    "last_opened_file_path": "/Users/hungtd/React/stockmanagerment/src/Components/AnnualIncome",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -54,6 +64,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/Components/AnnualIncome" />
       <recent name="$PROJECT_DIR$/src/Components/AnuallOutcome" />
       <recent name="$PROJECT_DIR$/src/Components" />
       <recent name="$PROJECT_DIR$/src/Components/CSS" />
@@ -231,7 +242,8 @@
       <workItem from="1733966310674" duration="4136000" />
       <workItem from="1734333198377" duration="272000" />
       <workItem from="1734400237663" duration="2896000" />
-      <workItem from="1734489183901" duration="12571000" />
+      <workItem from="1734489183901" duration="15007000" />
+      <workItem from="1735265377125" duration="5234000" />
     </task>
     <servers />
   </component>
@@ -273,7 +285,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/Components/VNIndexChart.js</url>
-          <line>211</line>
+          <line>210</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">

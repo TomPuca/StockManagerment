@@ -1,18 +1,38 @@
+.Month_all {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 20px;
+    width: 480px;
+}
+
+.Month {
+    display: flex;
+    justify-content: space-between;
+    /*padding: 8px;*/
+    border-bottom: 1px solid #f0f0f0;
+    margin-left: 10px;
+    align-items: center;
+    /*border: 1px solid #e0e0e0; !* Viền cho từng ô tháng *!*/
+    border-radius: 4px; /* Bo tròn viền từng ô */
+    background-color: #fff; /* Màu nền cho ô */
+}
+
+.Month_text {
+    font-weight: bold;
+    width: 90px;
+}
+
+.Month_value {
+    color: #1890ff;
+    width: 100px;
+}
+
+.anualIncomeCard {
+    columns:  2;
+    width: 480px;
+}
 
 .input-container {
     margin: 10px;
     display: flex;
-}
-
-.chartjs-render-monitor {
-    width: 500px !important;
-    height: 250px !important;
-    /*transform: scale(0.9)*/
-}
-
-.anualIncomeCard {
-    /*display: flex;*/
-    columns:  2;
-    width: 480px;
-    /*column-gap: 40px;*/
 }

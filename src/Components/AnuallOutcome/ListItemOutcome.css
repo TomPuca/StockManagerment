@@ -1,3 +1,4 @@
+
 .outcomeItemContainer {
     border: 1px solid lightgray;
     display: flex;
@@ -8,7 +9,7 @@
 .dateContainer {
     border-right: 1px solid lightgray;
     width: 100px;
-    text-align: center;
+    text-align: right;
 }
 
 .outcomeContainer {

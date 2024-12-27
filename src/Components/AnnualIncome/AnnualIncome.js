@@ -113,7 +113,7 @@ function AnnualIncome() {
     }
 
     return (
-        <div style={{   width: "375px"}}>
+        <div style={{ border: "2px solid black",  width: "430px"}}>
         {/*// <div>*/}
             <div style={{marginBottom: 16, marginLeft: 10, display: 'flex', height: '30px',alignItems: 'center'}}>
                 <Link to="/">
